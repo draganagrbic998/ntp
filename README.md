@@ -18,7 +18,7 @@ U pitanju je mikroservisna arhitektura (nismo na fakultetu radili takav projekat
 1. User Service<br>
 Ovo ce biti Django aplikacija (preciznije koristicu Django Rest Framework) i ona ce implementirati prijavu (zajedno sa slanjem JWT tokena kojim ce se korisnik autentifikovati ostatku sistema), registraciju korisnika (zajedno sa verifikacijom email-a), pregled profila od strane korisnika i izmena profila.
 2. Product Service<br>
-Ovo ce biti Golang aplikacija koja se nuditi REST API koji ce pcelarima omoguciti da kreiraju proizvode koje prave kod sebe. Proizvod planiram da opisem jednostanim atributima (naziv, opis, kategorija, tip, cena, itd.) i skupom slika. Pcelar ce moci da kreira svoje proizvode, menja, brise, pregleda, pretrazuje. Gosti mogu da pregledaju proizvode, filtriraju po razlicitim kriterijumima itd.
+Ovo ce biti Golang aplikacija koja se nuditi REST API koji ce pcelarima omoguciti da kreiraju proizvode koje prave kod sebe. Proizvod planiram da opisem jednostanim atributima (naziv, opis, kategorija, tip, cena, itd.) i skupom slika. Pcelar ce moci da kreira svoje proizvode, menja, brise, pregleda. I pcelari i gosti mogu da pregledaju proizvode, filtriraju i paginiraju.
 3. Comment Service<br>
 Ovo ce biti Django Rest aplikacija koja ce omogucavati gostima da komentarisu medne proizvode. Komentari ce imati podkomentare, lajkove i dislajkove. Gosti mogu da postave komentare, mogu da ih obrisu, mogu da menjaju svoje komentare.
 4. Event Service<br>
