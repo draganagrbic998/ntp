@@ -9,9 +9,7 @@ Korisnici sistema bice:
 Izgled arhitekture bio bi sledeci:
 <br><br><br>
 
-<div style="text-align="center">
-                               ![alt text](https://github.com/draganagrbic998/ntp/blob/main/ntp_diagram.png)</div>
-
+                               ![alt text](https://github.com/draganagrbic998/ntp/blob/main/ntp_diagram.png)
 <br><br>
 U pitanju je mikroservisna arhitektura (nismo na fakultetu radili takav projekat, pa mi se to bas svidelo :D). Svaki mikroservis ima svoju posebnu bazu kojom samo on upravlja. Sve baze u sistemu ce biti Postgre baze i koristicu ORM mapiranje (i kod Python aplikacija i kod Golang aplikacija). Sva komunikacija izmedju klijenta i servisa odvijace se preko REST API-a. Stvari koje planiram da implementiram su:
 1. User Service
