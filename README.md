@@ -7,9 +7,9 @@ Korisnici sistema bice:
 1. pcelari - kreiraju svoje proizvode i dogadjaje na kojima ce ih prezentovati
 2. ljubitelji mednih proizvoda (u daljem tekstu zvacu ih GOST) - komentarisu medne proizvode, pretrazuju i pregledaju ih
 Izgled arhitekture bio bi sledeci:
-
+<br><br><br>
 ![alt text](https://github.com/draganagrbic998/ntp/blob/main/ntp_diagram.png)
-
+<br><br>
 U pitanju je mikroservisna arhitektura (nismo na fakultetu radili takav projekat, pa mi se to bas svidelo :D). Svaki mikroservis ima svoju posebnu bazu kojom samo on upravlja. Sve baze u sistemu ce biti Postgre baze i koristicu ORM mapiranje (i kod Python aplikacija i kod Golang aplikacija). Sva komunikacija izmedju klijenta i servisa odvijace se preko REST API-a. Stvari koje planiram da implementiram su:
 1. User Service
 Ovo ce biti Django aplikacija (preciznije koristicu Django Rest Framework) i ona ce implementirati prijavu (zajedno sa slanjem JWT tokena kojim ce se korisnik autentifikovati ostatku sistema), registraciju korisnika (zajedno sa verifikacijom email-a), pregled profila od strane korisnika i izmena profila.
@@ -22,6 +22,6 @@ Ovo ce biti Golang aplikacija koja ce nuditi REST API koji ce pcelarima omogucit
 5. Client
 Sistem ce imati jednu frontend aplikaciju koja ce pozivate metode sva cetri navedena servisa i u pitanju ce biti Angular aplikacija. 
 Neka odstupanja od gore navedenih funkcionalnosti mozda uvedem kako budem implementirala projekat, al sustina ce ostati ista.
-
-<b>Napomena:</b><br><br>
+<br>
+<b>Napomena:</b><br>
 Znam da u obavestenju pise da je obavezno koristiti Pharo i Golang jezike u projektu, a da ja Python opcion, ali nisam mogla da smislim gde bih mogla da koristim Pharo u ovakvom projektu, osim eventualno da vizualizujem neku zavisnost (npr. koliko se koja kategorija proizvoda reklamira ili tako nesto). Da li je obavezno da koristim Pharo u ovom projektu onda? Ako jeste, da li je u redu ga iskoristim da npr. vizualizujem koliko se koje kategorije reklamiraju ili nesto slicno? 
