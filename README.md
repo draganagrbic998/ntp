@@ -2,8 +2,7 @@
 
 Tema projekta (samostalno definisani projekat):<br>
 
-
-![alt text](https://github.com/draganagrbic998/ntp/blob/main/pcelica.jpg)
+<img src="https://github.com/draganagrbic998/ntp/blob/main/pcelica.jpg" alt="drawing" width="200" height="200"/>
 
 Implementacija sistema koja ce omogucavati pcelarima da reklamiraju svoje proizvoda i ljubiteljima mednih proizvoda da pretrazuju te proizvode i komentarisu ih.
 Korisnici sistema bice:
