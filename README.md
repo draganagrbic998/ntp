@@ -1,6 +1,6 @@
 # Projekat iz predmeta Napredne tehnike programiranja
 
-Tema projekta (samostalno definisani projekat):
+Tema projekta (samostalno definisani projekat):<br>
 Implementacija sistema koja ce omogucavati pcelarima da reklamiraju svoje proizvoda i ljubiteljima mednih proizvoda da pretrazuju te proizvode i komentarisu ih.
 Korisnici sistema bice:
 1. pcelari - kreiraju svoje proizvode i dogadjaje na kojima ce ih prezentovati
