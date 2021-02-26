@@ -23,5 +23,5 @@ Sistem ce imati jednu frontend aplikaciju koja ce pozivate metode sva cetri nave
 
 Neka odstupanja od gore navedenih funkcionalnosti mozda uvedem kako budem implementirala projekat, al sustina ce ostati ista.
 
-Napomena:
+<b>Napomena:</b><br>
 Znam da u obavestenju pise da je obavezno koristiti Pharo i Golang jezike u projektu, a da ja Python opcion, ali nisam mogla da smislim gde bih mogla da koristim Pharo u ovakvom projektu, osim eventualno da vizualizujem neku zavisnost (npr. koliko se koja kategorija proizvoda reklamira ili tako nesto). Da li je obavezno da koristim Pharo u ovom projektu onda? Ako jeste, da li je u redu ga iskoristim da npr. vizualizujem koliko se koje kategorije reklamiraju ili nesto slicno? 
