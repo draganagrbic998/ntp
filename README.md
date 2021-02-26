@@ -1,8 +1,8 @@
 # Projekat iz predmeta Napredne tehnike programiranja
 
-<div style="text-align: center">
+<div style="width: 100%; text-align: center">
   
-<img src="https://github.com/draganagrbic998/ntp/blob/main/pcelica.jpg" alt="drawing" width="200" height="200"/>
+<img src="https://github.com/draganagrbic998/ntp/blob/main/pcelica.jpg" alt="drawing" width="200" height="200" style="margin: auto"/>
   </div>
 
 Tema projekta (samostalno definisani projekat):<br>
