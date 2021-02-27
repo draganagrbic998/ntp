@@ -1,0 +1,48 @@
+<div class="root mat-elevation-z24">
+    <mat-card>
+        <mat-card-content>
+            <h6>{{event.Name}}, {{event.Category}}</h6><br>
+            <div>
+                <app-bold-text>From: </app-bold-text>{{event.From}}<app-bold-text> to: </app-bold-text>{{event.To}}
+            </div>
+            <div>
+                <app-bold-text>In: </app-bold-text>{{event.Place}}
+            </div>
+            <br>
+            <div>
+                <app-bold-text>Description: </app-bold-text>
+            </div>
+            <div class="text">
+                {{event.Description}}
+            </div>
+            <div>
+                <app-bold-text>Published On: </app-bold-text>{{event.CreatedOn}}
+            </div>
+
+            <br>
+
+            <app-carousel *ngIf="event.Images.length" [images]="event.Images"></app-carousel>
+            
+            <br>
+
+            <app-spacer-container>
+                <button 
+                matTooltip="Delete"
+                *ngIf="event.UserId===id"
+                mat-button 
+                color="warn"
+                (click)="delete()">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                <button 
+                matTooltip="Edit"
+                *ngIf="event.UserId===id"
+                mat-button 
+                color="primary"
+                (click)="edit()">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </app-spacer-container>
+            
+        </mat-card-content>
+    </mat-card>

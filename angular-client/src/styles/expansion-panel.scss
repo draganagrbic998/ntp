@@ -1,0 +1,14 @@
+.mat-expansion-panel-header-title{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled=true]) {
+    background: none !important
+}
+
+.mat-expansion-panel-body{
+    padding: 0px !important;
+}

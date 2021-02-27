@@ -1,0 +1,99 @@
+<app-form-container>
+    <h2>{{edit ? 'Edit' : 'New'}} Event</h2><br>
+    <form [formGroup]="eventForm">
+        <div [class.disabled]="savePending">
+            <mat-form-field>
+                <mat-label>Category</mat-label>
+                <mat-select formControlName="Category" placeholder="Enter category">
+                    <mat-option value="kat1">kat1</mat-option>
+                    <mat-option value="kat2">kat2</mat-option>
+                    <mat-option value="kat3">kat3</mat-option>
+                </mat-select>
+                <mat-error>
+                    Category is required!
+                </mat-error>    
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Name</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="Name" 
+                placeholder="Enter name">
+                <mat-error>
+                    Name is required!
+                </mat-error>    
+            </mat-form-field>
+            <mat-form-field> 
+                <mat-label>From</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="From" 
+                placeholder="Enter start date"
+                [matDatepicker]="fromDate">
+                <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
+                <mat-datepicker #fromDate></mat-datepicker>
+                <mat-error>
+                    Start date is required!
+                </mat-error>    
+            </mat-form-field>
+            <mat-form-field> 
+                <mat-label>To</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="To" 
+                placeholder="Enter end date"
+                [matDatepicker]="toDate">
+                <mat-datepicker-toggle matSuffix [for]="toDate"></mat-datepicker-toggle>
+                <mat-datepicker #toDate></mat-datepicker>
+                <mat-error>
+                    End date is required!
+                </mat-error>    
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Place</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="Place" 
+                placeholder="Enter place">
+                <mat-error>
+                    Place is required!
+                </mat-error>    
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Description</mat-label>
+                <textarea 
+                matInput 
+                formControlName="Description"
+                placeholder="Enter description"
+                ></textarea>
+                <mat-error>
+                    Description is required!
+                </mat-error>    
+            </mat-form-field>
+            <br>
+            <app-images-input [images]="images"></app-images-input>
+        </div>
+        <br>
+        <app-spacer-container>
+            <span>
+                <button 
+                *ngIf="!savePending"
+                mat-raised-button 
+                color="primary"
+                (click)="location.back()">Back</button>
+            </span>
+            <span>
+                <button 
+                *ngIf="!savePending"
+                mat-raised-button 
+                color="accent"
+                (click)="save()">Save</button>
+                <app-spinner-button *ngIf="savePending"></app-spinner-button>    
+            </span>
+        </app-spacer-container>
+    </form>
+</app-form-container>

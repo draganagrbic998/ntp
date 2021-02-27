@@ -1,0 +1,21 @@
+@import "../../../../styles/constants";
+
+.root{
+    width: 450px;
+    margin-top: $padding-10;
+    margin-bottom: $padding-10;
+}
+
+.mat-card-content{
+    padding: $padding-5;
+}
+
+.text{
+    border: 1px inset rgba(200, 200, 200, 0.3);
+    border-radius: $padding-5;
+    padding: 2%;
+    margin-top: 2%;
+    margin-bottom: 5%;
+    overflow-wrap: break-word;
+    overflow-y: auto;
+}

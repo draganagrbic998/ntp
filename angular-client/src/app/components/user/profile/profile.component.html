@@ -1,0 +1,30 @@
+<div class="root">
+    
+    <div>
+        <app-bold-text>Email: </app-bold-text><span>{{profile.email}}</span>
+    </div>
+    <div>
+        <app-bold-text>First name: </app-bold-text><span>{{profile.first_name}}</span>
+    </div>
+    <div>
+        <app-bold-text>Last name: </app-bold-text><span>{{profile.last_name}}</span>
+    </div>   
+    <br>
+    <div>
+        <app-bold-text>Address: </app-bold-text><span>{{profile.address}}</span>
+    </div>
+    <div>
+        <app-bold-text>City: </app-bold-text><span>{{profile.city}}</span>
+    </div>
+    <div>
+        <app-bold-text>Zip code: </app-bold-text><span>{{profile.zip_code}}</span>
+    </div>   
+
+    <br>
+
+    <app-spacer-container>
+        <span></span>
+        <button mat-stroked-button (click)="edit()">Edit</button>
+    </app-spacer-container>        
+
+</div>

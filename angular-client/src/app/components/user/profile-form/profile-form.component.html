@@ -1,0 +1,126 @@
+<app-form-container>
+    <h2>Profile</h2><br>
+    <form [formGroup]="profileForm">
+        <div [class.disabled]="savePending">
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="email" 
+                placeholder="Enter email">
+                <mat-error>
+                    Email is required!
+                </mat-error>    
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>First name</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="first_name"
+                placeholder="Enter first name">
+                <mat-error>
+                    First name is required!
+                </mat-error>    
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Last name</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="last_name"
+                placeholder="Enter last name">
+                <mat-error>
+                    Last name is required!
+                </mat-error>    
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Address</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="address"
+                placeholder="Enter address">
+                <mat-error>
+                    Address is required!
+                </mat-error>    
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>City</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="city"
+                placeholder="Enter city">
+                <mat-error>
+                    City is required!
+                </mat-error>    
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Zip code</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="zip_code"
+                placeholder="Enter zip code">
+                <mat-error>
+                    Zip code is required!
+                </mat-error>    
+            </mat-form-field>
+
+            <br>
+            <mat-form-field>
+                <mat-label>Old password</mat-label>
+                <input 
+                type="password"
+                matInput 
+                autocomplete="off"
+                formControlName="old_password" 
+                placeholder="Enter old password">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>New password</mat-label>
+                <input 
+                type="password"
+                matInput 
+                autocomplete="off"
+                formControlName="new_password" 
+                placeholder="Enter new password">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>New password confirmation</mat-label>
+                <input 
+                type="password"
+                matInput 
+                autocomplete="off"
+                formControlName="new_password_confirmation" 
+                placeholder="Confirm new password">
+            </mat-form-field>
+            <mat-error *ngIf="profileForm.hasError('oldPasswordError')">
+                Old password is required!
+            </mat-error>
+            <mat-error *ngIf="profileForm.hasError('newPasswordError')">
+                Passwords do not match!
+            </mat-error>
+        </div>
+        <br><br>
+        <app-spacer-container>
+            <span>
+                <button 
+                *ngIf="!savePending"
+                mat-raised-button 
+                color="primary"
+                (click)="location.back()">Back</button>
+            </span>
+            <span>
+                <button 
+                *ngIf="!savePending"
+                mat-raised-button 
+                color="accent"
+                (click)="save()">Save</button>
+                <app-spinner-button *ngIf="savePending"></app-spinner-button>    
+            </span>
+        </app-spacer-container>
+    </form>
+</app-form-container>

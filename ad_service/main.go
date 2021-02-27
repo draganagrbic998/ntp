@@ -48,7 +48,7 @@ type Advertisement struct {
 	Email       string
 	Name        string
 	Category    string
-	Price       int
+	Price       string
 	Description string
 	Images      []Image
 }
@@ -134,7 +134,8 @@ func createAd(response http.ResponseWriter, request *http.Request) {
 
 	json.NewDecoder(request.Body).Decode(&ad)
 	ad.CreatedOn = "no date"
-	ad.UserId = claims["user_id"].(int)
+	fmt.Println(claims)
+	ad.UserId = int(claims["user_id"].(float64))
 	ad.Email = claims["email"].(string)
 	db.Create(&ad)
 
@@ -163,17 +164,19 @@ func updateAd(response http.ResponseWriter, request *http.Request) {
 
 	db.Where("id = ?", mux.Vars(request)["id"]).Find(&ad)
 	json.NewDecoder(request.Body).Decode(&ad)
-	if claims["user_id"].(int) != ad.UserId {
+	if int(claims["user_id"].(float64)) != ad.UserId {
 		response.WriteHeader(403)
 		return
 	}
 
-	ad.UserId = claims["user_id"].(int)
+	ad.UserId = int(claims["user_id"].(float64))
 	ad.Email = claims["email"].(string)
 	db.Save(&ad)
 	var images []Image
 	db.Model(&Image{}).Where("prod_ref = ?", ad.ID).Find(&images)
-	db.Model(&Image{}).Delete(&images)
+	for _, image := range images {
+		db.Delete(&image)
+	}
 
 	for _, image := range ad.Images {
 		image.ProdRef = ad.ID
@@ -205,7 +208,7 @@ func deleteAd(response http.ResponseWriter, request *http.Request) {
 	if count == 0 {
 		response.WriteHeader(404)
 	}
-	if claims["user_id"].(int) != ad.UserId {
+	if int(claims["user_id"].(float64)) != ad.UserId {
 		response.WriteHeader(403)
 		return
 	}
@@ -215,8 +218,8 @@ func deleteAd(response http.ResponseWriter, request *http.Request) {
 func databaseInit() {
 	openDatabase()
 	defer db.Close()
-	//db.DropTableIfExists("ads")
-	//db.DropTableIfExists("images")
+	db.DropTableIfExists("advertisements")
+	db.DropTableIfExists("images")
 	db.AutoMigrate(&Advertisement{})
 	db.AutoMigrate(&Image{})
 }
