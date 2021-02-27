@@ -15,8 +15,8 @@ Izgled arhitekture bio bi sledeci:
 ![alt text](https://github.com/draganagrbic998/ntp/blob/main/ntp_diagram.png)
 <br><br>
 U pitanju je mikroservisna arhitektura (nismo na fakultetu radili takav projekat, pa mi se to bas svidelo :D). Svaki mikroservis ima svoju posebnu bazu kojom samo on upravlja. Sve baze u sistemu ce biti Postgre baze i koristicu ORM mapiranje (i kod Python aplikacija i kod Golang aplikacija). Sva komunikacija izmedju klijenta i servisa odvijace se preko REST API-a. Stvari koje planiram da implementiram su:
-1. User Service<br>
-Ovo ce biti Django aplikacija (preciznije koristicu Django Rest Framework) i ona ce implementirati prijavu (zajedno sa slanjem JWT tokena kojim ce se korisnik autentifikovati ostatku sistema), registraciju korisnika (zajedno sa verifikacijom email-a), pregled profila od strane korisnika i izmena profila.
+1. Users Service<br>
+Djnago REST aplikacija koja omogucava prijavu korisnika, registraciju (uz verifikaciju email-a), izmenu profila korisnika i koriscenje ugradjenog Django admin sistema za administraciju korisnika (kreiranje, brisanje, izmena i pregled). Servis prilikom prijave generise JWT token koji ce korisnik koristiti za autentifikaciju na ostalim servisima i definise SECRET_KEY koji ce ostali servisi koristiti za dekodovanje JWT tokena. <b>Port mikroservisa je 8000.</b>
 2. Product Service<br>
 Ovo ce biti Golang aplikacija koja se nuditi REST API koji ce pcelarima omoguciti da kreiraju proizvode koje prave kod sebe. Proizvod planiram da opisem jednostanim atributima (naziv, opis, kategorija, tip, cena, itd.) i skupom slika. Pcelar ce moci da kreira svoje proizvode, menja, brise, pregleda. I pcelari i gosti mogu da pregledaju proizvode, filtriraju i paginiraju.
 3. Comment Service<br>
