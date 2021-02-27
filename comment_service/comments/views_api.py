@@ -24,11 +24,11 @@ def listing(request):
     except:
         pass
     try:
-        size = int(request.GET["page"])
+        size = int(request.GET["size"])
     except:
         pass
 
-    comments = Comment.objects.filter(product_id=product_id, parent_id=None).order_by('-created_on')[page * size:(page + 1) * size]
+    comments = Comment.objects.filter(product_id=product_id, parent=None).order_by('-created_on')[page * size:(page + 1) * size]
     data = []
 
     for comment in comments:
@@ -39,7 +39,6 @@ def listing(request):
             'email': comment.email,
             'product_id': comment.product_id,
             'text': comment.text,
-            'replies': len(Comment.objects.filter(parent_id=comment.id)),
             'likes': len(Like.objects.filter(comment_id=comment.id, dislike=False)),
             'dislikes': len(Like.objects.filter(comment_id=comment.id, dislike=True)),
             'liked': len(Like.objects.filter(user_id=user_id, comment_id=comment.id, dislike=False)) > 0,
@@ -54,7 +53,12 @@ def listing(request):
 
 
 def create(request):
-    comment = Comment.objects.create(product_id=int(request.data['product_id']), text=request.data['text'], parent_id=int(request.data['parent_id']))
+    parent_id = None
+    try:
+        parent_id = int(request.data['parent_id'])
+    except:
+        pass
+    comment = Comment.objects.create(product_id=int(request.data['product_id']), text=request.data['text'], parent_id=parent_id)
     #datum komentara
     comment.user_id = jwt_decode_handler(request.headers["Authorization"][4:])["user_id"]
     comment.email = jwt_decode_handler(request.headers["Authorization"][4:])["email"]
@@ -108,7 +112,6 @@ def replies(request, key):
             'email': comment.email,
             'product_id': comment.product_id,
             'text': comment.text,
-            'replies': len(Comment.objects.filter(parent_id=comment.id)),
             'likes': len(Like.objects.filter(comment_id=comment.id, dislike=False)),
             'dislikes': len(Like.objects.filter(comment_id=comment.id, dislike=True)),
             'liked': len(Like.objects.filter(user_id=user_id, comment_id=comment.id, dislike=False)) > 0,

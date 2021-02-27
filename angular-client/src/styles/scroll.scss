@@ -1,0 +1,17 @@
+@import "./constants";
+@import "./theme";
+
+::-webkit-scrollbar{
+    width: $padding-5;
+    height: $padding-5;
+}
+
+::-webkit-scrollbar-track{
+    box-shadow: inset $zero $zero $padding-5 grey;
+    border-radius: $padding-10;
+}
+
+::-webkit-scrollbar-thumb{
+    background: $primary;
+    border-radius: $padding-10;
+}

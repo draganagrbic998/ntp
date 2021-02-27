@@ -1,0 +1,18 @@
+@import "./constants";
+@import "./theme";
+
+html, body{
+    height: $full-size;
+}    
+
+body{
+    margin: $zero;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    background-color: $background-primary !important;
+    background-image: url('../assets/background.png');
+}
+
+h1, h2, h3, h4, h5, h6{
+    text-align: center;
+}
+

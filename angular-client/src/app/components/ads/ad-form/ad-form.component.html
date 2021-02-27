@@ -1,0 +1,76 @@
+<app-form-container>
+    <h2>{{edit ? 'Edit' : 'New'}} Advertisement</h2><br>
+    <form [formGroup]="adForm">
+        <div [class.disabled]="savePending">
+            <mat-form-field>
+                <mat-label>Category</mat-label>
+                <mat-select formControlName="Category" placeholder="Enter category">
+                    <mat-option value="HONEY">HONEY</mat-option>
+                    <mat-option value="POLLEN">POLLEN</mat-option>
+                    <mat-option value="ROYAL JELLY">ROYAL JELLY</mat-option>
+                    <mat-option value="PROPOLIS">PROPOLIS</mat-option>
+                    <mat-option value="WAX">WAX</mat-option>
+                    <mat-option value="BEE VENOM">BEE VENOM</mat-option>
+                    <mat-option value="OTHER">OTHER</mat-option>
+                </mat-select>
+                <mat-error>
+                    Category is required!
+                </mat-error>    
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Name</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="Name" 
+                placeholder="Enter name">
+                <mat-error>
+                    Name is required!
+                </mat-error>    
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Price</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="Price"
+                placeholder="Enter price">
+                <mat-error>
+                    Valid price is required!
+                </mat-error>    
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Description</mat-label>
+                <textarea 
+                matInput 
+                formControlName="Description"
+                placeholder="Enter description"
+                ></textarea>
+                <mat-error>
+                    Description is required!
+                </mat-error>    
+            </mat-form-field>
+            <br>
+            <app-images-input [images]="images"></app-images-input>
+        </div>
+        <br>
+        <app-spacer-container>
+            <span>
+                <button 
+                *ngIf="!savePending"
+                mat-raised-button 
+                color="primary"
+                (click)="location.back()">Back</button>
+            </span>
+            <span>
+                <button 
+                [disabled]="adForm.invalid || !images.length"
+                *ngIf="!savePending"
+                mat-raised-button 
+                color="accent"
+                (click)="save()">Save</button>
+                <app-spinner-button *ngIf="savePending"></app-spinner-button>    
+            </span>
+        </app-spacer-container>
+    </form>
+</app-form-container>

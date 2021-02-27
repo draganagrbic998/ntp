@@ -1,0 +1,19 @@
+<div *ngIf="images.length">
+    <app-image-input
+    *ngFor="let image of images; let i = index"
+    [image]="image"
+    (deleted)="images.splice(i, 1)">
+    </app-image-input>       
+</div>   
+
+<input 
+#fileInput
+type="file" 
+accept="image/*" 
+(change)="addImage(fileInput.files[0]); fileInput.value=null">    
+
+<app-center-container>
+    <button 
+    mat-stroked-button 
+    (click)="fileInput.click()">Add image</button>
+</app-center-container>

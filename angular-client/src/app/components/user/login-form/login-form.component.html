@@ -1,0 +1,42 @@
+<br><br><br><br>
+<app-form-container>
+    <br>
+    <h2>Log In</h2><br><br>
+    <form [formGroup]="loginForm">
+        <div [class.disabled]="loginPending">
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="username" 
+                placeholder="Enter email">
+                <mat-error>
+                    Email is required!
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Password</mat-label>
+                <input 
+                type="password" 
+                matInput 
+                autocomplete="off"
+                formControlName="password"
+                placeholder="Enter password">
+                <mat-error>
+                    Password is required!
+                </mat-error>    
+            </mat-form-field>
+        </div>
+        <br><br>
+        <app-center-container>
+            <button 
+            *ngIf="!loginPending"
+            mat-raised-button 
+            color="primary"
+            (click)="login()">Login</button>
+            <app-spinner-button *ngIf="loginPending"></app-spinner-button>
+        </app-center-container>
+    </form>
+    <br>
+</app-form-container>

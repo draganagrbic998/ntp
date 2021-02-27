@@ -1,0 +1,23 @@
+@import "./constants";
+    
+button:focus{
+    border: $zero !important;
+    outline: $zero !important;
+}
+
+.mat-form-field{
+    display: block !important;
+}
+
+input[type="file"]{
+    display: none;
+}
+
+textarea{
+    height: 100px;
+}
+
+.disabled{
+    pointer-events: none;
+    opacity: $disabled-opacity;
+}

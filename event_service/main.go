@@ -15,6 +15,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
+	_ "github.com/lib/pq"
 	"github.com/rs/cors"
 )
 
@@ -117,7 +118,7 @@ func createEvent(response http.ResponseWriter, request *http.Request) {
 
 	json.NewDecoder(request.Body).Decode(&event)
 	event.CreatedOn = "no date"
-	event.UserId = claims["user_id"].(int)
+	event.UserId = int(claims["user_id"].(float64))
 	event.Email = claims["email"].(string)
 	db.Create(&event)
 
@@ -146,12 +147,12 @@ func updateEvent(response http.ResponseWriter, request *http.Request) {
 
 	db.Where("id = ?", mux.Vars(request)["id"]).Find(&event)
 	json.NewDecoder(request.Body).Decode(&event)
-	if claims["user-id"].(int) != event.UserId {
+	if int(claims["user_id"].(float64)) != event.UserId {
 		response.WriteHeader(403)
 		return
 	}
 
-	event.UserId = claims["user_id"].(int)
+	event.UserId = int(claims["user_id"].(float64))
 	event.Email = claims["email"].(string)
 	db.Save(&event)
 	var images []Image
@@ -188,7 +189,7 @@ func deleteEvent(response http.ResponseWriter, request *http.Request) {
 	if count == 0 {
 		response.WriteHeader(404)
 	}
-	if claims["user_id"].(int) != event.UserId {
+	if int(claims["user_id"].(float64)) != event.UserId {
 		response.WriteHeader(403)
 		return
 	}
@@ -206,10 +207,10 @@ func databaseInit() {
 
 func routerInit() {
 	router := mux.NewRouter()
-	router.HandleFunc("/api/ads", allEvents).Methods("GET")
-	router.HandleFunc("/api/ads", createEvent).Methods("POST")
-	router.HandleFunc("/api/ads/{id}", updateEvent).Methods("PUT")
-	router.HandleFunc("/api/ads/{id}", deleteEvent).Methods("DELETE")
+	router.HandleFunc("/api/events", allEvents).Methods("GET")
+	router.HandleFunc("/api/events", createEvent).Methods("POST")
+	router.HandleFunc("/api/events/{id}", updateEvent).Methods("PUT")
+	router.HandleFunc("/api/events/{id}", deleteEvent).Methods("DELETE")
 
 	cors := cors.New(cors.Options{
 		AllowedOrigins:   []string{"http://localhost:4200"},

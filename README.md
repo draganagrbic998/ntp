@@ -10,15 +10,12 @@ Korisnici sistema bice:
 1. pcelari - kreiraju svoje proizvode i dogadjaje na kojima ce ih prezentovati
 2. ljubitelji mednih proizvoda (u daljem tekstu zvacu ih GOST) - komentarisu medne proizvode, pretrazuju i pregledaju ih
 Izgled arhitekture bio bi sledeci:
-<br><br><br>
-
-![alt text](https://github.com/draganagrbic998/ntp/blob/main/ntp_diagram.png)
 <br><br>
 
 <h2>Arhitektura sistema</h2>
-Arhitektura sistema bazirana je mikroservisima. Svaki mikroservis poseduje zasebnu bazu podataka (konkretno PostgreSQL) i u njoj cuva podatke kojima samo ona upravlja. Sva komunikacija izmedju klijenta i servisa odvija se preko REST API-a. Mikroservis za autentifikaciju (Users Microservice) definise SECRET_KEY koji ostali servisi koriste za dekodovanje JWT tokena i dobavljanje podataka o prijavljenom korisniku.
+Arhitektura sistema bazirana je mikroservisima. Svaki mikroservis poseduje zasebnu bazu podataka (konkretno PostgreSQL) i u njoj cuva podatke kojima samo on upravlja. Sva komunikacija izmedju klijenta i servisa odvija se preko REST API-a. Mikroservis za autentifikaciju (Users Microservice) definise SECRET_KEY koji ostali servisi koriste za dekodovanje JWT tokena i dobavljanje podataka o prijavljenom korisniku.
 
-<h2>Pregled mikroservisa</h2>
+<br><h2>Pregled mikroservisa</h2>
 <h6>Users Microservice</h6>
 Django REST aplikacija koja omogucava prijavu, registraciju (uz verifikaciju email-a), izmenu profila korisnika i koriscenje ugradjenog Django admin sistema za administraciju korisnika (kreiranje, brisanje, izmena i pregled). Servis prilikom prijave generise JWT token koji ce korisnik koristiti za autentifikaciju na svim servisima i definise SECRET_KEY koji ce ostali servisi koristiti za dekodovanje JWT tokena. <b>Port mikroservisa je 8000.</b> Mikroservis se pokrece komandom: <b>python manage.py runserver </b>. 
 <h6>Advertisements Microservice</h6>
@@ -26,7 +23,45 @@ Golang REST aplikacija koja omogucava authentifikovanim korisnicima kreiranje, i
 <h6>Events Microservice</h6>
 Golang REST aplikacija koja omogucava autentifikovanim korisnicima kreiranje, izmenu, brisanje, pregled i paginaciju dogadjaja na kojima se prezentuje neki medni proizvod. <b>Podaci kojima je opisan dogadjaj je: </b>datum objave, ime dogadjaja, kategorija dogadjaja (sajam, manifestacija...), period i mesto odrzavanja dogadjaja, opis dogadjaja i skup slika. <b>Port mikroservisa je 8002. </b>Mikroservis se pokrece komandom <b>go run main.go</b>.
 <h6>Comments Microservice</h6>
-Django REST aplikacija koja omogucava komentarisanje reklamiranih proizvoda, pregled i paginaciju komantara i podkomentara i like/dislike komentara. <b>Port mikroservisa je 8003. </b> Mikroservis se pokrece komandom <b>python manage.py runserver 8003</b>. 
+Django REST aplikacija koja omogucava komentarisanje reklamiranih proizvoda, pregled i paginaciju komantara i podkomentara i like/dislike komentara. <b>Port mikroservisa je 8003. </b> Mikroservis se pokrece komandom <b>python manage.py runserver 8003</b>.
+
+<br><h2>Uputstvo za pokretanje</h2>
+<ol>
+  <li>
+    Koristeci komandu <b>python -m venv venv</b> (ili python3 -m venv venv ako su na racunaru instalirani i pajton2 i pajton3) kreirati virtuelno okruzenje
+  </li>
+  <li>
+    U virtuelno okruzenje instalirati sve biblioteke navedene u <b>requirements.txt</b> fajlu
+  </li>
+  <li>
+    Aktivirati virtuelno okruzenje, pozicionirati se u <b>user_service</b> i pokrenuti komandu <b>python manage.py runserver</b>
+  </li>
+  <li>
+    Aktivirati virtuelno okruzenje, pozitionirati se u <b>comment_service</b> i pokrenuti komandu <b>python manage.py runserver 8003</b>
+  </li>
+  <li>
+    Pokrenuti komande za preuzimanje neophodnih Golang biblioteka:
+    <ul>
+      <li>go get -u -v github.com/dgrijalva/jwt-go</li>
+      <li>go get -u -v github.com/gorilla/mux</li>
+      <li>go get -u -v github.com/jinzhu/gorm</li>
+      <li>go get -u -v github.com/lib/pq</li>
+      <li>go get -u -v github.com/rs/cors</li>
+    </ul>
+  </li>
+  <li>
+    Pozicionirati se u <b>ad_service</b> i pokrenuti komandu <b>go run main.go</b>
+  </li>
+  <li>
+    Pozicionirati se u <b>event_service</b> i pokrenuti komandru <b>go run main.go</b>
+  </li>
+  <li>
+    Pozicionirati se u <b>angular-client</b> i pokrenuti komande <b>npm install</b> i <b>ng serve</b>
+  </li>
+  <li>
+    U URL browsera uneti putanju <b>localhost:4200</b> ako zelite da koristiti Angular klijenta
+  </li>
+</ol>
 
 <br><br><br>
 5. Client<br>

@@ -1,0 +1,22 @@
+<div class="root">
+
+    <div class="header">
+        <h3>Delete confirmation</h3>
+    </div>
+
+    <div class="content">
+        <p>
+            Are you sure you want to delete selected item?
+        </p>
+        <app-spacer-container>
+            <span>
+                <button *ngIf="!deletePending" mat-button (click)="dialogRef.close()">Cancel</button>
+            </span>
+            <span>
+                <button *ngIf="!deletePending" mat-button (click)="confirm()">Confirm</button>
+                <app-spinner-button *ngIf="deletePending"></app-spinner-button>
+            </span>
+        </app-spacer-container>    
+    </div>
+        
+</div>
