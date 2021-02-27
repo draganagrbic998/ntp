@@ -65,16 +65,18 @@
                             </button>
                         </mat-panel-title>
                     </mat-expansion-panel-header>
-                    <mat-form-field appearance="outline">
-                        <textarea 
-                        matInput 
-                        [formControl]="reply"
-                        placeholder="Enter comment..."
-                        ></textarea>
-                        <mat-error>
-                            Some text is required!
-                        </mat-error>    
-                    </mat-form-field>  
+                    <div class="padding">
+                        <mat-form-field appearance="outline">
+                            <textarea 
+                            matInput 
+                            [formControl]="reply"
+                            placeholder="Enter comment..."
+                            ></textarea>
+                            <mat-error>
+                                Some text is required!
+                            </mat-error>    
+                        </mat-form-field>      
+                    </div>
                     <app-spacer-container>
                         <span></span>
                         <button 

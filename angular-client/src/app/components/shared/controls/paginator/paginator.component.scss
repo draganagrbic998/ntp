@@ -8,11 +8,13 @@
 }
 
 .left-arrow{
-    flex: 1;
     margin-left: $padding-30;
 }
 
 .right-arrow{
-    flex: 1;
     margin-right: $padding-30;
+}
+
+.center{
+    flex: 1;
 }

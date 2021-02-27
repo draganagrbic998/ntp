@@ -33,7 +33,7 @@
                     *ngFor="let comment of replies"
                     [comment]="comment">
                     </app-comment-details>
-                    <div *ngIf="!replies?.length">
+                    <div *ngIf="!replies?.length" class="padding">
                         No Replies
                     </div>
                 </mat-expansion-panel>
@@ -77,16 +77,19 @@
                             </mat-icon> 
                         </mat-panel-title>
                     </mat-expansion-panel-header>
-                    <mat-form-field appearance="outline">
-                        <textarea 
-                        matInput 
-                        [formControl]="reply"
-                        placeholder="Enter reply..."
-                        ></textarea>
-                        <mat-error>
-                            Some text is required!
-                        </mat-error>    
-                    </mat-form-field>  
+                    <div class="padding">
+                        <mat-form-field appearance="outline">
+                            <textarea 
+                            matInput 
+                            [formControl]="reply"
+                            placeholder="Enter reply..."
+                            ></textarea>
+                            <mat-error>
+                                Some text is required!
+                            </mat-error>    
+                        </mat-form-field>  
+    
+                    </div>
                     <app-spacer-container>
                         <span></span>
                         <button 

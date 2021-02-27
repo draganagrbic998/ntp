@@ -1,6 +1,4 @@
-<app-preloader *ngIf="fetchPending"></app-preloader>
-
-<div *ngIf="!fetchPending">
+<div>
     <app-event-details
     *ngFor="let event of events"
     [event]="event"

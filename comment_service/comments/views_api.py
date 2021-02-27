@@ -48,7 +48,7 @@ def listing(request):
     return Response(data=data, status=status.HTTP_200_OK, content_type='application/json', headers={
         'Access-Control-Expose-Headers': 'First-Page, Last-Page',
         'First-Page': page == 0,
-        'Last-Page': (page + 1) * size >= Comment.objects.count()
+        'Last-Page': (page + 1) * size >= len(Comment.objects.filter(product_id=product_id, parent=None))
     })
 
 

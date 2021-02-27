@@ -38,8 +38,8 @@ export class CommentListComponent implements OnInit {
         if (data){
           this.comments = data.body;
           const headers: HttpHeaders = data.headers;
-          this.pagination.firstPage = headers.get(FIRST_PAGE_HEADER) === 'false' ? false : true;
-          this.pagination.lastPage = headers.get(LAST_PAGE_HEADER) === 'false' ? false : true;
+          this.pagination.firstPage = headers.get(FIRST_PAGE_HEADER) === 'False' ? false : true;
+          this.pagination.lastPage = headers.get(LAST_PAGE_HEADER) === 'False' ? false : true;
         }
         else{
           this.comments = [];

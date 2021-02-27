@@ -1,3 +1,5 @@
+<app-preloader *ngIf="fetchPending"></app-preloader>
+
 <div *ngIf="!fetchPending">
     <app-ad-details [ad]="ad"></app-ad-details>
     <app-comment-list [productId]="ad.ID"></app-comment-list>
