@@ -41,7 +41,7 @@ const (
 var db *gorm.DB = nil
 var err error = nil
 
-type Advertisment struct {
+type Advertisement struct {
 	ID          int
 	CreatedOn   string
 	UserId      int
@@ -81,7 +81,7 @@ func parseJWT(request *http.Request) jwt.MapClaims {
 func allAds(response http.ResponseWriter, request *http.Request) {
 	openDatabase()
 	defer db.Close()
-	var ads []Advertisment
+	var ads []Advertisement
 	var count int
 
 	page, _ := strconv.Atoi(request.URL.Query().Get("page"))
@@ -91,8 +91,8 @@ func allAds(response http.ResponseWriter, request *http.Request) {
 	}
 	search := "%" + strings.ToLower(request.URL.Query().Get("search")) + "%"
 
-	db.Model(&Advertisment{}).Offset(page*size).Limit(size).Where("lower(name) like ? or lower(category) like ? or lower(description) like ?", search, search, search).Find(&ads)
-	db.Model(&Advertisment{}).Where("lower(name) like ? or lower(category) like ? or lower(description) like ?", search, search, search).Count(&count)
+	db.Model(&Advertisement{}).Offset(page*size).Limit(size).Where("lower(name) like ? or lower(category) like ? or lower(description) like ?", search, search, search).Find(&ads)
+	db.Model(&Advertisement{}).Where("lower(name) like ? or lower(category) like ? or lower(description) like ?", search, search, search).Count(&count)
 	for index, product := range ads {
 		db.Model(&Image{}).Where("prod_ref = ?", product.ID).Find(&ads[index].Images)
 	}
@@ -110,10 +110,10 @@ func oneAd(response http.ResponseWriter, request *http.Request) {
 	//a ako je prazan token??
 	openDatabase()
 	defer db.Close()
-	var ad Advertisment
+	var ad Advertisement
 	var count int
 
-	db.Model(&Advertisment{}).Where("id = ?", mux.Vars(request)["id"]).Find(&ad).Count(&count)
+	db.Model(&Advertisement{}).Where("id = ?", mux.Vars(request)["id"]).Find(&ad).Count(&count)
 	if count == 0 {
 		response.WriteHeader(404)
 	}
@@ -130,7 +130,7 @@ func createAd(response http.ResponseWriter, request *http.Request) {
 	claims := parseJWT(request)
 	openDatabase()
 	defer db.Close()
-	var ad Advertisment
+	var ad Advertisement
 
 	json.NewDecoder(request.Body).Decode(&ad)
 	ad.UserId = claims["user_id"].(int)
@@ -158,7 +158,7 @@ func updateAd(response http.ResponseWriter, request *http.Request) {
 	claims := parseJWT(request)
 	openDatabase()
 	defer db.Close()
-	var ad Advertisment
+	var ad Advertisement
 
 	db.Where("id = ?", mux.Vars(request)["id"]).Find(&ad)
 	json.NewDecoder(request.Body).Decode(&ad)
@@ -193,10 +193,10 @@ func deleteAd(response http.ResponseWriter, request *http.Request) {
 	claims := parseJWT(request)
 	openDatabase()
 	defer db.Close()
-	var ad Advertisment
+	var ad Advertisement
 	var count int
 
-	db.Model(&Advertisment{}).Where("id = ?", mux.Vars(request)["id"]).Find(&ad).Count(&count)
+	db.Model(&Advertisement{}).Where("id = ?", mux.Vars(request)["id"]).Find(&ad).Count(&count)
 	if count == 0 {
 		response.WriteHeader(404)
 	}
@@ -212,7 +212,7 @@ func databaseInit() {
 	defer db.Close()
 	//db.DropTableIfExists("ads")
 	//db.DropTableIfExists("images")
-	db.AutoMigrate(&Advertisment{})
+	db.AutoMigrate(&Advertisement{})
 	db.AutoMigrate(&Image{})
 }
 
