@@ -14,18 +14,20 @@ Izgled arhitekture bio bi sledeci:
 
 ![alt text](https://github.com/draganagrbic998/ntp/blob/main/ntp_diagram.png)
 <br><br>
-U pitanju je mikroservisna arhitektura (nismo na fakultetu radili takav projekat, pa mi se to bas svidelo :D). Svaki mikroservis ima svoju posebnu bazu kojom samo on upravlja. Sve baze u sistemu ce biti Postgre baze i koristicu ORM mapiranje (i kod Python aplikacija i kod Golang aplikacija). Sva komunikacija izmedju klijenta i servisa odvijace se preko REST API-a. Stvari koje planiram da implementiram su:
+
+<h2>Arhitektura sistema</h2>
+Arhitektura sistema bazirana je mikroservisima. Svaki mikroservis poseduje zasebnu bazu podataka (konkretno PostgreSQL) i u njoj cuva podatke kojima samo ona upravlja. Sva komunikacija izmedju klijenta i servisa odvija se preko REST API-a. Mikroservis za autentifikaciju (Users Microservice) definise SECRET_KEY koji ostali servisi koriste za dekodovanje JWT tokena i dobavljanje podataka o prijavljenom korisniku.
+
+<h2>Pregled mikroservisa</h2>
 1. Users Microservice<br>
-Djnago REST aplikacija koja omogucava prijavu korisnika, registraciju (uz verifikaciju email-a), izmenu profila korisnika i koriscenje ugradjenog Django admin sistema za administraciju korisnika (kreiranje, brisanje, izmena i pregled). Servis prilikom prijave generise JWT token koji ce korisnik koristiti za autentifikaciju na ostalim servisima i definise SECRET_KEY koji ce ostali servisi koristiti za dekodovanje JWT tokena. <b>Port mikroservisa je 8000.</b> Mikroservis se pokrece komandom: <b>python manage.py runserver </b>. 
+Djnago REST aplikacija koja omogucava prijavu, registraciju (uz verifikaciju email-a), izmenu profila korisnika i koriscenje ugradjenog Django admin sistema za administraciju korisnika (kreiranje, brisanje, izmena i pregled). Servis prilikom prijave generise JWT token koji ce korisnik koristiti za autentifikaciju na svim servisima i definise SECRET_KEY koji ce ostali servisi koristiti za dekodovanje JWT tokena. <b>Port mikroservisa je 8000.</b> Mikroservis se pokrece komandom: <b>python manage.py runserver </b>. 
 2. Advertisements Microservice<br>
-Golang REST aplikacija koja omogucava authentifikovanim korisnicima kreiranje, izmenu, brisanje, pregled, paginaciju i pretragu mednih proizvoda. Servis koristi SECRET_KEY users mikroservisa da dekoduje JWT token i dobavi neophodne podatke o korisniku. <b>Podaci kojima je opisana reklama je: </b>datum objave, ime proizvoda koji se reklamira, kategorija proizvoda, cena proizvoda, opis proizvoda i skup slika proizvoda. <b>Port mikroservisa je 8001.</b> Mikroservis se pokrece komandom <b>go run main.go</b>. 
+Golang REST aplikacija koja omogucava authentifikovanim korisnicima kreiranje, izmenu, brisanje, pregled, paginaciju i pretragu mednih proizvoda. <b>Podaci kojima je opisana reklama je: </b>datum objave, ime proizvoda koji se reklamira, kategorija proizvoda, cena proizvoda, opis proizvoda i skup slika proizvoda. <b>Port mikroservisa je 8001.</b> Mikroservis se pokrece komandom <b>go run main.go</b>. 
 3. Events Microservice<br>
-Golang REST aplikacija koja omogucava autentifikovanim korisnicima kreiranje, izmenu, brisanje, pregled i paginaciju dogadjaja na kojima se prezentuje neki medni proizvod. Servis koristi SECRET_KEY users mikroservisa da dekoduje JWT token i dobavi neophodne podatke o korisniku. <b>Podaci kojima je opisan dogadjaj je: </b>datum objave, ime dogadjaja, kategorija dogadjaja (sajam, manifestacija...), period i mesto odrzavanja dogadjaja, opis dogadjaja i skup slika. <b>Port mikroservisa je 8002. </b>Mikroservis se pokrece komandom <b>go run main.go</b>.
-4. Comment Microservice<br>
-Ovo ce biti Django Rest aplikacija koja ce omogucavati gostima da komentarisu medne proizvode. Komentari ce imati podkomentare, lajkove i dislajkove. Gosti mogu da postave komentare, mogu da ih obrisu, mogu da menjaju svoje komentare.
+Golang REST aplikacija koja omogucava autentifikovanim korisnicima kreiranje, izmenu, brisanje, pregled i paginaciju dogadjaja na kojima se prezentuje neki medni proizvod. <b>Podaci kojima je opisan dogadjaj je: </b>datum objave, ime dogadjaja, kategorija dogadjaja (sajam, manifestacija...), period i mesto odrzavanja dogadjaja, opis dogadjaja i skup slika. <b>Port mikroservisa je 8002. </b>Mikroservis se pokrece komandom <b>go run main.go</b>.
+4. Comments Microservice<br>
+Django REST aplikacija koja omogucava komentarisanje reklamiranih proizvoda, pregled i paginaciju komantara i podkomentara i like/dislike komentara. <b>Port mikroservisa je 8003. </b> Mikroservis se pokrece komandom <b>python manage.py runserver 8003</b>. 
+
+<br><br><br>
 5. Client<br>
 Sistem ce imati jednu frontend aplikaciju koja ce pozivate metode sva cetri navedena servisa i u pitanju ce biti Angular aplikacija. 
-Neka odstupanja od gore navedenih funkcionalnosti mozda uvedem kako budem implementirala projekat, al sustina ce ostati ista.
-<br>
-<b>Napomena:</b><br>
-Znam da u obavestenju pise da je obavezno koristiti Pharo i Golang jezike u projektu, a da ja Python opcion, ali nisam mogla da smislim gde bih mogla da koristim Pharo u ovakvom projektu, osim eventualno da vizualizujem neku zavisnost (npr. koliko se koja kategorija proizvoda reklamira ili tako nesto). Da li je obavezno da koristim Pharo u ovom projektu onda? Ako jeste, da li je u redu ga iskoristim da npr. vizualizujem koliko se koje kategorije reklamiraju ili nesto slicno? 
