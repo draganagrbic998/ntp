@@ -162,6 +162,11 @@ func updateAd(response http.ResponseWriter, request *http.Request) {
 
 	db.Where("id = ?", mux.Vars(request)["id"]).Find(&ad)
 	json.NewDecoder(request.Body).Decode(&ad)
+	if claims["user_id"].(int) != ad.UserId {
+		response.WriteHeader(403)
+		return
+	}
+
 	ad.UserId = claims["user_id"].(int)
 	ad.Email = claims["email"].(string)
 	db.Save(&ad)
@@ -200,7 +205,7 @@ func deleteAd(response http.ResponseWriter, request *http.Request) {
 	if count == 0 {
 		response.WriteHeader(404)
 	}
-	if claims["user+id"].(int) != ad.UserId {
+	if claims["user_id"].(int) != ad.UserId {
 		response.WriteHeader(403)
 		return
 	}
