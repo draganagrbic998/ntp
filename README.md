@@ -10,8 +10,6 @@ Korisnici sistema bice:
 1. pcelari - kreiraju svoje proizvode i dogadjaje na kojima ce ih prezentovati
 2. ljubitelji mednih proizvoda (u daljem tekstu zvacu ih GOST) - komentarisu medne proizvode, pretrazuju i pregledaju ih
 Izgled arhitekture bio bi sledeci:
-<br><br><br>
-
 <br><br>
 
 <h2>Arhitektura sistema</h2>
