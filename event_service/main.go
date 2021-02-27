@@ -1,3 +1,5 @@
+//produci trajanje tokena
+
 package main
 
 import (
@@ -13,12 +15,11 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
-	_ "github.com/lib/pq"
 	"github.com/rs/cors"
 )
 
 const (
-	serviceUrl      = "http://localhost:8001"
+	serviceUrl      = "http://localhost:8002"
 	secretKey       = "k8@0y%m^4-)ltn%8frs&e6^%dus1)6%s3&_u436h04)hjd6v#o"
 	defaultPageSize = 10
 )
@@ -28,7 +29,7 @@ const (
 	port     = 5432
 	user     = "postgres"
 	password = "root"
-	dbname   = "ads"
+	dbname   = "events"
 )
 
 const (
@@ -41,22 +42,25 @@ const (
 var db *gorm.DB = nil
 var err error = nil
 
-type Advertisement struct {
+type Event struct {
 	ID          int
 	CreatedOn   string
 	UserId      int
 	Email       string
+	ProductId   int
 	Name        string
 	Category    string
-	Price       int
+	From        string
+	To          string
+	Place       string
 	Description string
 	Images      []Image
 }
 
 type Image struct {
-	ID      int
-	Path    string
-	ProdRef int
+	ID       int
+	Path     string
+	EventRef int
 }
 
 func openDatabase() {
@@ -78,68 +82,47 @@ func parseJWT(request *http.Request) jwt.MapClaims {
 	return claims
 }
 
-func allAds(response http.ResponseWriter, request *http.Request) {
+func allEvents(response http.ResponseWriter, request *http.Request) {
 	openDatabase()
 	defer db.Close()
-	var ads []Advertisement
+	var events []Event
 	var count int
 
 	page, _ := strconv.Atoi(request.URL.Query().Get("page"))
 	size, _ := strconv.Atoi(request.URL.Query().Get("size"))
 	if size == 0 {
-		size = defaultPageSize
+		size = 10
 	}
-	search := "%" + strings.ToLower(request.URL.Query().Get("search")) + "%"
+	product_id, _ := strconv.Atoi(request.URL.Query().Get("product"))
 
-	db.Model(&Advertisement{}).Offset(page*size).Limit(size).Where("lower(name) like ? or lower(category) like ? or lower(description) like ?", search, search, search).Find(&ads)
-	db.Model(&Advertisement{}).Where("lower(name) like ? or lower(category) like ? or lower(description) like ?", search, search, search).Count(&count)
-	for index, product := range ads {
-		db.Model(&Image{}).Where("prod_ref = ?", product.ID).Find(&ads[index].Images)
+	db.Model(&Event{}).Offset(page*size).Limit(size).Where("product_id = ?", product_id).Find(&events)
+	db.Model(&Event{}).Where("product_id = ?", product_id).Count(&count)
+	for index, event := range events {
+		db.Model(&Image{}).Where("event_ref = ?", event.ID).Find(&events[index].Images)
 	}
 
 	response.Header().Set(enableHeader, firstPageHeader+", "+lastPageHeader)
 	response.Header().Set(firstPageHeader, strconv.FormatBool(page == 0))
 	response.Header().Set(lastPageHeader, strconv.FormatBool(size*(page+1) >= count))
-
 	enc := json.NewEncoder(response)
 	enc.SetIndent("", "    ")
-	enc.Encode(ads)
+	enc.Encode(events)
 }
 
-func oneAd(response http.ResponseWriter, request *http.Request) {
-	//a ako je prazan token??
-	openDatabase()
-	defer db.Close()
-	var ad Advertisement
-	var count int
-
-	db.Model(&Advertisement{}).Where("id = ?", mux.Vars(request)["id"]).Find(&ad).Count(&count)
-	if count == 0 {
-		response.WriteHeader(404)
-	}
-
-	db.Model(&Image{}).Where("prod_ref = ?", ad.ID).Find(&ad.Images)
-	enc := json.NewEncoder(response)
-	enc.SetIndent("", "    ")
-	enc.Encode(ad)
-}
-
-func createAd(response http.ResponseWriter, request *http.Request) {
-	//400 validacija
-	//datum
+func createEvent(response http.ResponseWriter, request *http.Request) {
 	claims := parseJWT(request)
 	openDatabase()
 	defer db.Close()
-	var ad Advertisement
+	var event Event
 
-	json.NewDecoder(request.Body).Decode(&ad)
-	ad.CreatedOn = "no date"
-	ad.UserId = claims["user_id"].(int)
-	ad.Email = claims["email"].(string)
-	db.Create(&ad)
+	json.NewDecoder(request.Body).Decode(&event)
+	event.CreatedOn = "no date"
+	event.UserId = claims["user_id"].(int)
+	event.Email = claims["email"].(string)
+	db.Create(&event)
 
-	for _, image := range ad.Images {
-		image.ProdRef = ad.ID
+	for _, image := range event.Images {
+		image.EventRef = event.ID
 		var count int
 		db.Model(&Image{}).Count(&count)
 		data, _ := base64.StdEncoding.DecodeString(strings.Split(image.Path, ",")[1])
@@ -149,34 +132,34 @@ func createAd(response http.ResponseWriter, request *http.Request) {
 		db.Create(&image)
 	}
 
-	db.Model(&Image{}).Where("prod_ref = ?", ad.ID).Find(&ad.Images)
+	db.Where("event_ref = ?", event.ID).Find(&event.Images)
 	enc := json.NewEncoder(response)
 	enc.SetIndent("", "    ")
-	enc.Encode(ad)
+	enc.Encode(event)
 }
 
-func updateAd(response http.ResponseWriter, request *http.Request) {
+func updateEvent(response http.ResponseWriter, request *http.Request) {
 	claims := parseJWT(request)
 	openDatabase()
 	defer db.Close()
-	var ad Advertisement
+	var event Event
 
-	db.Where("id = ?", mux.Vars(request)["id"]).Find(&ad)
-	json.NewDecoder(request.Body).Decode(&ad)
-	if claims["user-id"].(int) != ad.UserId {
+	db.Where("id = ?", mux.Vars(request)["id"]).Find(&event)
+	json.NewDecoder(request.Body).Decode(&event)
+	if claims["user-id"].(int) != event.UserId {
 		response.WriteHeader(403)
 		return
 	}
 
-	ad.UserId = claims["user_id"].(int)
-	ad.Email = claims["email"].(string)
-	db.Save(&ad)
+	event.UserId = claims["user_id"].(int)
+	event.Email = claims["email"].(string)
+	db.Save(&event)
 	var images []Image
-	db.Model(&Image{}).Where("prod_ref = ?", ad.ID).Find(&images)
+	db.Model(&Image{}).Where("event_ref = ?", event.ID).Find(&images)
 	db.Model(&Image{}).Delete(&images)
 
-	for _, image := range ad.Images {
-		image.ProdRef = ad.ID
+	for _, image := range event.Images {
+		image.EventRef = event.ID
 		if image.ID == 0 {
 			var count int
 			db.Model(&Image{}).Count(&count)
@@ -188,46 +171,45 @@ func updateAd(response http.ResponseWriter, request *http.Request) {
 		db.Create(&image)
 	}
 
-	db.Model(&Image{}).Where("prod_ref = ?", ad.ID).Find(&ad.Images)
+	db.Where("event_ref = ?", event.ID).Find(&event.Images)
 	enc := json.NewEncoder(response)
 	enc.SetIndent("", "    ")
-	enc.Encode(ad)
+	enc.Encode(event)
 }
 
-func deleteAd(response http.ResponseWriter, request *http.Request) {
+func deleteEvent(response http.ResponseWriter, request *http.Request) {
 	claims := parseJWT(request)
 	openDatabase()
 	defer db.Close()
-	var ad Advertisement
+	var event Event
 	var count int
 
-	db.Model(&Advertisement{}).Where("id = ?", mux.Vars(request)["id"]).Find(&ad).Count(&count)
+	db.Model(&Event{}).Where("id = ?", mux.Vars(request)["id"]).Find(&event).Count(&count)
 	if count == 0 {
 		response.WriteHeader(404)
 	}
-	if claims["user-id"].(int) != ad.UserId {
+	if claims["user_id"].(int) != event.UserId {
 		response.WriteHeader(403)
 		return
 	}
-	db.Delete(&ad)
+	db.Delete(&event)
 }
 
 func databaseInit() {
 	openDatabase()
 	defer db.Close()
-	//db.DropTableIfExists("ads")
+	//db.DropTableIfExists("events")
 	//db.DropTableIfExists("images")
-	db.AutoMigrate(&Advertisement{})
+	db.AutoMigrate(&Event{})
 	db.AutoMigrate(&Image{})
 }
 
 func routerInit() {
 	router := mux.NewRouter()
-	router.HandleFunc("/api/ads", allAds).Methods("GET")
-	router.HandleFunc("/api/ads/{id}", oneAd).Methods("GET")
-	router.HandleFunc("/api/ads", createAd).Methods("POST")
-	router.HandleFunc("/api/ads/{id}", updateAd).Methods("PUT")
-	router.HandleFunc("/api/ads/{id}", deleteAd).Methods("DELETE")
+	router.HandleFunc("/api/ads", allEvents).Methods("GET")
+	router.HandleFunc("/api/ads", createEvent).Methods("POST")
+	router.HandleFunc("/api/ads/{id}", updateEvent).Methods("PUT")
+	router.HandleFunc("/api/ads/{id}", deleteEvent).Methods("DELETE")
 
 	cors := cors.New(cors.Options{
 		AllowedOrigins:   []string{"http://localhost:4200"},
@@ -243,7 +225,7 @@ func routerInit() {
 		Handler(http.StripPrefix(staticDir, http.FileServer(http.Dir("."+staticDir))))
 
 	server := http.Server{
-		Addr:    ":8001",
+		Addr:    ":8002",
 		Handler: cors.Handler(router),
 	}
 
