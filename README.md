@@ -20,7 +20,7 @@ Arhitektura sistema bazirana je mikroservisima. Svaki mikroservis poseduje zaseb
 
 <h2>Pregled mikroservisa</h2>
 <h6>Users Microservice</h6>
-Djnago REST aplikacija koja omogucava prijavu, registraciju (uz verifikaciju email-a), izmenu profila korisnika i koriscenje ugradjenog Django admin sistema za administraciju korisnika (kreiranje, brisanje, izmena i pregled). Servis prilikom prijave generise JWT token koji ce korisnik koristiti za autentifikaciju na svim servisima i definise SECRET_KEY koji ce ostali servisi koristiti za dekodovanje JWT tokena. <b>Port mikroservisa je 8000.</b> Mikroservis se pokrece komandom: <b>python manage.py runserver </b>. 
+Django REST aplikacija koja omogucava prijavu, registraciju (uz verifikaciju email-a), izmenu profila korisnika i koriscenje ugradjenog Django admin sistema za administraciju korisnika (kreiranje, brisanje, izmena i pregled). Servis prilikom prijave generise JWT token koji ce korisnik koristiti za autentifikaciju na svim servisima i definise SECRET_KEY koji ce ostali servisi koristiti za dekodovanje JWT tokena. <b>Port mikroservisa je 8000.</b> Mikroservis se pokrece komandom: <b>python manage.py runserver </b>. 
 <h6>Advertisements Microservice</h6>
 Golang REST aplikacija koja omogucava authentifikovanim korisnicima kreiranje, izmenu, brisanje, pregled, paginaciju i pretragu mednih proizvoda. <b>Podaci kojima je opisana reklama je: </b>datum objave, ime proizvoda koji se reklamira, kategorija proizvoda, cena proizvoda, opis proizvoda i skup slika proizvoda. <b>Port mikroservisa je 8001.</b> Mikroservis se pokrece komandom <b>go run main.go</b>. 
 <h6>Events Microservice</h6>
