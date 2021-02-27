@@ -12,13 +12,12 @@ Korisnici sistema bice:
 Izgled arhitekture bio bi sledeci:
 <br><br><br>
 
-![alt text](https://github.com/draganagrbic998/ntp/blob/main/ntp_diagram.png)
 <br><br>
 
 <h2>Arhitektura sistema</h2>
 Arhitektura sistema bazirana je mikroservisima. Svaki mikroservis poseduje zasebnu bazu podataka (konkretno PostgreSQL) i u njoj cuva podatke kojima samo on upravlja. Sva komunikacija izmedju klijenta i servisa odvija se preko REST API-a. Mikroservis za autentifikaciju (Users Microservice) definise SECRET_KEY koji ostali servisi koriste za dekodovanje JWT tokena i dobavljanje podataka o prijavljenom korisniku.
 
-<h2>Pregled mikroservisa</h2>
+<br><h2>Pregled mikroservisa</h2>
 <h6>Users Microservice</h6>
 Django REST aplikacija koja omogucava prijavu, registraciju (uz verifikaciju email-a), izmenu profila korisnika i koriscenje ugradjenog Django admin sistema za administraciju korisnika (kreiranje, brisanje, izmena i pregled). Servis prilikom prijave generise JWT token koji ce korisnik koristiti za autentifikaciju na svim servisima i definise SECRET_KEY koji ce ostali servisi koristiti za dekodovanje JWT tokena. <b>Port mikroservisa je 8000.</b> Mikroservis se pokrece komandom: <b>python manage.py runserver </b>. 
 <h6>Advertisements Microservice</h6>
@@ -26,9 +25,9 @@ Golang REST aplikacija koja omogucava authentifikovanim korisnicima kreiranje, i
 <h6>Events Microservice</h6>
 Golang REST aplikacija koja omogucava autentifikovanim korisnicima kreiranje, izmenu, brisanje, pregled i paginaciju dogadjaja na kojima se prezentuje neki medni proizvod. <b>Podaci kojima je opisan dogadjaj je: </b>datum objave, ime dogadjaja, kategorija dogadjaja (sajam, manifestacija...), period i mesto odrzavanja dogadjaja, opis dogadjaja i skup slika. <b>Port mikroservisa je 8002. </b>Mikroservis se pokrece komandom <b>go run main.go</b>.
 <h6>Comments Microservice</h6>
-Django REST aplikacija koja omogucava komentarisanje reklamiranih proizvoda, pregled i paginaciju komantara i podkomentara i like/dislike komentara. <b>Port mikroservisa je 8003. </b> Mikroservis se pokrece komandom <b>python manage.py runserver 8003</b>. 
+Django REST aplikacija koja omogucava komentarisanje reklamiranih proizvoda, pregled i paginaciju komantara i podkomentara i like/dislike komentara. <b>Port mikroservisa je 8003. </b> Mikroservis se pokrece komandom <b>python manage.py runserver 8003</b>.
 
-<h2>Uputstvo za pokretanje</h2>
+<br><h2>Uputstvo za pokretanje</h2>
 <ol>
   <li>
     Koristeci komandu <b>python -m venv venv</b> (ili python3 -m venv venv ako su na racunaru instalirani i pajton2 i pajton3) kreirati virtuelno okruzenje
