@@ -1,0 +1,35 @@
+@import "../../../../styles/constants";
+@import "../../../../styles/theme";
+
+.root{
+    display: inline-block;
+    margin: $padding-30;
+}
+
+.mat-card{
+    width: 500px;
+    min-height: 500px;
+}
+
+.details{
+    text-align: left;
+}
+
+.mat-card-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    min-height: 500px;
+}
+
+.mat-expansion-panel-header{
+    padding-right: 0px !important;
+}
+
+.mat-card{
+    padding: $zero;
+}
+
+.main{
+    padding: 16px;
+}

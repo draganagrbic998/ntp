@@ -1,0 +1,108 @@
+<div class="root mat-elevation-z24">
+    <mat-card>
+        <mat-card-content>
+            <div class="details">
+                <span>
+                    {{comment.created_on}}
+                </span>
+                <span *ngIf="comment.user_id !== id">{{comment.email}}</span>
+                <span *ngIf="comment.user_id === id">
+                    <button 
+                    mat-icon-button 
+                    color="warn"
+                    (click)="delete()">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </span>
+            </div>
+            <div class="text">
+                {{comment.text}}
+            </div>
+            <mat-accordion> 
+                <mat-expansion-panel hideToggle #repliesPanel (opened)="fetchReplies()">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <span></span>
+                            <mat-icon color="primary">
+                                {{repliesPanel.expanded ? 'fullscreen_exit' : 'question_answer'}}
+                            </mat-icon>        
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <app-comment-details
+                    *ngFor="let comment of replies"
+                    [comment]="comment">
+                    </app-comment-details>
+                    <div *ngIf="!replies?.length">
+                        No Replies
+                    </div>
+                </mat-expansion-panel>
+                <mat-expansion-panel hideToggle #replyPanel *ngIf="!repliesPanel.expanded">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title (click)="$event.stopPropagation()">
+                            <span>
+                                <app-spacer-container>
+                                    <span>
+                                        <button
+                                        class="like"
+                                        *ngIf="!replyPanel.expanded && !likePending"
+                                        (click)="like(false)"
+                                        [class.transparent]="!comment.liked"
+                                        mat-button 
+                                        color="primary">
+                                            <mat-icon>thumb_up</mat-icon>{{comment.likes}}
+                                        </button>       
+                                        <app-spinner-button
+                                        *ngIf="!replyPanel.expanded && likePending"
+                                        ></app-spinner-button>  
+                                    </span>
+                                    <span>
+                                        <button
+                                        class="like"
+                                        *ngIf="!replyPanel.expanded && !dislikePending"
+                                        (click)="like(true)"
+                                        [class.transparent]="!comment.disliked"
+                                        mat-button 
+                                        color="warn">
+                                            <mat-icon>thumb_down</mat-icon>{{comment.dislikes}}  
+                                        </button>   
+                                        <app-spinner-button
+                                        *ngIf="!replyPanel.expanded && dislikePending"
+                                        ></app-spinner-button>   
+                                    </span>    
+                                </app-spacer-container>
+                            </span>
+                            <mat-icon color="accent" (click)="replyPanel.toggle()">
+                                {{replyPanel.expanded ? 'fullscreen_exit' : 'reply'}}
+                            </mat-icon> 
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-form-field appearance="outline">
+                        <textarea 
+                        matInput 
+                        [formControl]="reply"
+                        placeholder="Enter reply..."
+                        ></textarea>
+                        <mat-error>
+                            Some text is required!
+                        </mat-error>    
+                    </mat-form-field>  
+                    <app-spacer-container>
+                        <span></span>
+                        <button 
+                        *ngIf="!replyPending"
+                        (click)="sendReply(repliesPanel)"
+                        [disabled]="reply.invalid"
+                        mat-button 
+                        color="primary">
+                            Reply
+                        </button>    
+                        <app-spinner-button *ngIf="replyPending"></app-spinner-button>
+                    </app-spacer-container>          
+                </mat-expansion-panel>
+
+            </mat-accordion>
+            
+        </mat-card-content>
+    </mat-card>
+</div>

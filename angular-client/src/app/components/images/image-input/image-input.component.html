@@ -1,0 +1,11 @@
+<div class="root mat-elevation-z24">
+    <div class="img">
+        <img [src]="image.Path">
+    </div>
+    <app-spacer-container>
+        <span></span>
+        <button mat-icon-button color="accent" matTooltip="remove" (click)="deleted.emit()">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </app-spacer-container>
+</div>

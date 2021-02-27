@@ -1,0 +1,13 @@
+<app-preloader *ngIf="fetchPending"></app-preloader>
+
+<div *ngIf="!fetchPending">
+    <app-comment-details
+    *ngFor="let comment of comments"
+    [comment]="comment"
+    ></app-comment-details>
+    <app-paginator
+    [pending]="fetchPending"
+    [pagination]="pagination"
+    (changedPage)="changePage($event)"
+    ></app-paginator>
+</div>

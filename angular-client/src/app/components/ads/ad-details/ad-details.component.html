@@ -1,0 +1,96 @@
+<div class="root mat-elevation-z24">
+    <mat-card>
+        <mat-card-content>
+            <div class="main">
+                <h4>{{ad.Name}}</h4>
+                <app-carousel [images]="ad.Images"></app-carousel>
+                <div class="details">
+                    <div>
+                        <app-bold-text>Category: </app-bold-text>{{ad.Category}}
+                    </div>
+                    <div>
+                        <app-bold-text>Description: </app-bold-text>{{ad.Description}}
+                    </div>
+                    <div>
+                        <app-bold-text>Price: </app-bold-text>{{ad.Price}}
+                    </div>    
+                </div>
+                <br>
+                <app-spacer-container>
+                    <span>
+                        <button 
+                        matTooltip="Delete"
+                        *ngIf="ad.UserId===id && !onPage"
+                        mat-icon-button 
+                        color="warn"
+                        (click)="delete()">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                        <button 
+                        matTooltip="Edit"
+                        *ngIf="ad.UserId===id && !onPage"
+                        mat-icon-button 
+                        color="primary"
+                        (click)="edit()">
+                            <mat-icon>edit</mat-icon>
+                        </button>    
+                    </span>
+                    <span>
+                        <button 
+                        *ngIf="!onPage"
+                        mat-button 
+                        color="accent"
+                        (click)="goPage()">
+                            Open Page
+                        </button>
+                        <button 
+                        *ngIf="ad.UserId===id && onPage"
+                        mat-button
+                        color="accent"
+                        (click)="create()">
+                            <mat-icon matTooltip="Add Event">event_note</mat-icon>Add Event
+                        </button>          
+                    </span>
+                </app-spacer-container>        
+            </div>
+            <mat-accordion *ngIf="onPage"> 
+                <mat-expansion-panel hideToggle #replyPanel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title (click)="$event.stopPropagation()">
+                            <span></span>
+                            <button mat-button color="primary" (click)="replyPanel.toggle()">
+                                <mat-icon color="primary">
+                                    {{replyPanel.expanded ? 'fullscreen_exit' : 'insert_comment'}}
+                                </mat-icon>{{replyPanel.expanded ? 'Close' : 'Comment'}}
+                            </button>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-form-field appearance="outline">
+                        <textarea 
+                        matInput 
+                        [formControl]="reply"
+                        placeholder="Enter comment..."
+                        ></textarea>
+                        <mat-error>
+                            Some text is required!
+                        </mat-error>    
+                    </mat-form-field>  
+                    <app-spacer-container>
+                        <span></span>
+                        <button 
+                        *ngIf="!replyPending"
+                        [disabled]="reply.invalid"
+                        mat-button 
+                        color="primary"
+                        (click)="sendReply()">
+                            Comment
+                        </button>    
+                        <app-spinner-button
+                        *ngIf="replyPending"></app-spinner-button>
+                    </app-spacer-container>          
+                </mat-expansion-panel>
+            </mat-accordion>                                      
+
+        </mat-card-content>
+    </mat-card>
+</div>

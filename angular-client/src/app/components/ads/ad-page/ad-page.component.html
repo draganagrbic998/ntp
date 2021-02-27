@@ -1,0 +1,5 @@
+<div *ngIf="!fetchPending">
+    <app-ad-details [ad]="ad"></app-ad-details>
+    <app-comment-list [productId]="ad.ID"></app-comment-list>
+    <app-event-list [productId]="ad.ID"></app-event-list>
+</div>

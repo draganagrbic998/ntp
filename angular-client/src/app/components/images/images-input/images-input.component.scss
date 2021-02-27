@@ -1,0 +1,11 @@
+@import "../../../../styles/constants";
+
+div{
+    display: flex;
+    flex-direction: row;
+    justify-content: normal;
+    align-items: normal;
+    height: 200px;
+    width: $full-size;
+    overflow-x: auto;
+}
