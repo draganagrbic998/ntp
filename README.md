@@ -29,23 +29,42 @@ Golang REST aplikacija koja omogucava autentifikovanim korisnicima kreiranje, iz
 Django REST aplikacija koja omogucava komentarisanje reklamiranih proizvoda, pregled i paginaciju komantara i podkomentara i like/dislike komentara. <b>Port mikroservisa je 8003. </b> Mikroservis se pokrece komandom <b>python manage.py runserver 8003</b>. 
 
 <h2>Uputstvo za pokretanje</h2>
-1. Koristeci komandu <b>python -m venv venv</b> (ili python3 -m venv venv ako su na racunaru instalirani i pajton2 i pajton3) kreirati virtuelno okruzenje
-2. U virtuelno okruzenje instalirati sve biblioteke navedene u <b>requirements.txt</b> fajlu
-3. Aktivirati virtuelno okruzenje, pozicionirati se u <b>user_service</b> i pokrenuti komandu <b>python manage.py runserver</b>
-4. Aktivirati virtuelno okruzenje, pozitionirati se u <b>comment_service</b> i pokrenuti komandu <b>python manage.py runserver 8003</b>
-5. Pokrenuti komande za preuzimanje neophodnih Goland biblioteka:
 <ol>
-  <li>go get -u -v github.com/dgrijalva/jwt-go</li>
-  <li>go get -u -v github.com/gorilla/mux</li>
-  <li>go get -u -v github.com/jinzhu/gorm</li>
-  <li>go get -u -v github.com/lib/pq</li>
-  <li>go get -u -v github.com/rs/cors</li>
+  <li>
+    Koristeci komandu <b>python -m venv venv</b> (ili python3 -m venv venv ako su na racunaru instalirani i pajton2 i pajton3) kreirati virtuelno okruzenje
+  </li>
+  <li>
+    U virtuelno okruzenje instalirati sve biblioteke navedene u <b>requirements.txt</b> fajlu
+  </li>
+  <li>
+    Aktivirati virtuelno okruzenje, pozicionirati se u <b>user_service</b> i pokrenuti komandu <b>python manage.py runserver</b>
+  </li>
+  <li>
+    Aktivirati virtuelno okruzenje, pozitionirati se u <b>comment_service</b> i pokrenuti komandu <b>python manage.py runserver 8003</b>
+  </li>
+  <li>
+    Pokrenuti komande za preuzimanje neophodnih Golang biblioteka:
+    <ul>
+      <li>go get -u -v github.com/dgrijalva/jwt-go</li>
+      <li>go get -u -v github.com/gorilla/mux</li>
+      <li>go get -u -v github.com/jinzhu/gorm</li>
+      <li>go get -u -v github.com/lib/pq</li>
+      <li>go get -u -v github.com/rs/cors</li>
+    </ul>
+  </li>
+  <li>
+    Pozicionirati se u <b>ad_service</b> i pokrenuti komandu <b>go run main.go</b>
+  </li>
+  <li>
+    Pozicionirati se u <b>event_service</b> i pokrenuti komandru <b>go run main.go</b>
+  </li>
+  <li>
+    Pozicionirati se u <b>angular-client</b> i pokrenuti komande <b>npm install</b> i <b>ng serve</b>
+  </li>
+  <li>
+    U URL browsera uneti putanju <b>localhost:4200</b> ako zelite da koristiti Angular klijenta
+  </li>
 </ol>
-6. Pozicionirati se u <b>ad_service</b> i pokrenuti komandu <b>go run main.go</b>
-7. Pozicionirati se u <b>event_service</b> i pokrenuti komandru <b>go run main.go</b>
-8. Pozicionirati se u <b>angular-client</b> i pokrenuti komande <b>npm install</b> i <b>ng serve</b>
-9. U URL browsera uneti putanju <b>localhost:4200</b> ako zelite da koristiti Angular klijenta
-10. TODO: Pharo klijent
 
 <br><br><br>
 5. Client<br>
