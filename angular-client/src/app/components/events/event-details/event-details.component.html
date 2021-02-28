@@ -3,7 +3,8 @@
         <mat-card-content>
             <h6>{{event.Name}}, {{event.Category}}</h6><br>
             <div>
-                <app-bold-text>From: </app-bold-text>{{event.From}}<app-bold-text> to: </app-bold-text>{{event.To}}
+                <app-bold-text>From: </app-bold-text>{{event.From | date: "dd MMM yyyy"}}
+                <app-bold-text> to: </app-bold-text>{{event.To | date: "dd MMM yyyy"}}
             </div>
             <div>
                 <app-bold-text>In: </app-bold-text>{{event.Place}}
@@ -16,7 +17,7 @@
                 {{event.Description}}
             </div>
             <div>
-                <app-bold-text>Published On: </app-bold-text>{{event.CreatedOn}}
+                <app-bold-text>Published On: </app-bold-text>{{event.CreatedOn | date: "dd MMM yyyy"}}
             </div>
 
             <br>

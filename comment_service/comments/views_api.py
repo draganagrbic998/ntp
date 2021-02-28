@@ -6,15 +6,24 @@ from comments.models import Comment, Like
 from comments.serializers import CommentSerializer
 
 
+def get_user_id(request):
+    try:
+        return jwt_decode_handler(request.headers["Authorization"][4:])["user_id"]
+    except:
+        return None
+
+
 @api_view(['GET', 'POST'])
 def manage_comments(request):
+    if not get_user_id(request):
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
     if request.GET:
         return listing(request)
     return create(request)
 
 
 def listing(request):
-    user_id = jwt_decode_handler(request.headers["Authorization"][4:])["user_id"]
+    user_id = get_user_id(request)
     product_id = request.GET["product"]
 
     page = 0
@@ -59,8 +68,7 @@ def create(request):
     except:
         pass
     comment = Comment.objects.create(product_id=int(request.data['product_id']), text=request.data['text'], parent_id=parent_id)
-    #datum komentara
-    comment.user_id = jwt_decode_handler(request.headers["Authorization"][4:])["user_id"]
+    comment.user_id = get_user_id(request)
     comment.email = jwt_decode_handler(request.headers["Authorization"][4:])["email"]
     comment.save()
     return Response(status=status.HTTP_200_OK)
@@ -68,7 +76,9 @@ def create(request):
 
 @api_view(['GET'])
 def like(request, key):
-    user_id = jwt_decode_handler(request.headers["Authorization"][4:])["user_id"]
+    user_id = get_user_id(request)
+    if not user_id:
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
     disliked = request.GET['dislike'] == "true"
     comment = Comment.objects.get(id=key)
 
@@ -100,7 +110,9 @@ def like(request, key):
 
 @api_view(['GET'])
 def replies(request, key):
-    user_id = jwt_decode_handler(request.headers["Authorization"][4:])["user_id"]
+    user_id = get_user_id(request)
+    if not user_id:
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
     comments = Comment.objects.filter(parent_id=key).order_by('-created_on')
     data = []
 
@@ -121,9 +133,17 @@ def replies(request, key):
     return Response(status=status.HTTP_200_OK, data=data, content_type='application/json')
 
 
-class DeleteComment(generics.DestroyAPIView):
-    serializer_class = CommentSerializer
-    queryset = Comment.objects.all()
+def delete_comment(request, key):
+    user_id = get_user_id(request)
+    if not user_id:
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
+    try:
+        comment = Comment.objects.get(id=key)
+        if comment.user_id != get_user_id(request):
+            return Response(status=status.HTTP_403_FORBIDDEN)
+        comment.delete()
+        return Response(status=status.HTTP_200_OK)
+    except Comment.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
-    #ne mogu da prisem ako nije moj komentar...
 

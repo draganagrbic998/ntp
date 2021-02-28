@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/mux"
@@ -18,7 +19,7 @@ import (
 )
 
 const (
-	serviceUrl      = "http://localhost:8001"
+	serviceURL      = "http://localhost:8001"
 	secretKey       = "k8@0y%m^4-)ltn%8frs&e6^%dus1)6%s3&_u436h04)hjd6v#o"
 	defaultPageSize = 10
 )
@@ -68,17 +69,30 @@ func openDatabase() {
 }
 
 func parseJWT(request *http.Request) jwt.MapClaims {
+	if len(request.Header.Get(jwtHeader)) < 4 {
+		return nil
+	}
 	token := request.Header.Get(jwtHeader)[4:]
 	claims := jwt.MapClaims{}
 
-	jwt.ParseWithClaims(token, &claims, func(token *jwt.Token) (interface{}, error) {
+	_, err := jwt.ParseWithClaims(token, &claims, func(token *jwt.Token) (interface{}, error) {
 		return []byte(secretKey), nil
 	})
+
+	if err != nil {
+		return nil
+	}
 
 	return claims
 }
 
 func allAds(response http.ResponseWriter, request *http.Request) {
+	claims := parseJWT(request)
+	if claims == nil {
+		response.WriteHeader(401)
+		return
+	}
+
 	openDatabase()
 	defer db.Close()
 	var ads []Advertisement
@@ -91,7 +105,9 @@ func allAds(response http.ResponseWriter, request *http.Request) {
 	}
 	search := "%" + strings.ToLower(request.URL.Query().Get("search")) + "%"
 
-	db.Model(&Advertisement{}).Offset(page*size).Limit(size).Where("lower(name) like ? or lower(category) like ? or lower(description) like ?", search, search, search).Find(&ads)
+	db.Model(&Advertisement{}).Offset(page*size).Limit(size).
+		Where("lower(name) like ? or lower(category) like ? or lower(description) like ?", search, search, search).
+		Order("created_on desc").Find(&ads)
 	db.Model(&Advertisement{}).Where("lower(name) like ? or lower(category) like ? or lower(description) like ?", search, search, search).Count(&count)
 	for index, product := range ads {
 		db.Model(&Image{}).Where("prod_ref = ?", product.ID).Find(&ads[index].Images)
@@ -107,7 +123,12 @@ func allAds(response http.ResponseWriter, request *http.Request) {
 }
 
 func oneAd(response http.ResponseWriter, request *http.Request) {
-	//a ako je prazan token??
+	claims := parseJWT(request)
+	if claims == nil {
+		response.WriteHeader(401)
+		return
+	}
+
 	openDatabase()
 	defer db.Close()
 	var ad Advertisement
@@ -125,15 +146,18 @@ func oneAd(response http.ResponseWriter, request *http.Request) {
 }
 
 func createAd(response http.ResponseWriter, request *http.Request) {
-	//400 validacija
-	//datum
 	claims := parseJWT(request)
+	if claims == nil {
+		response.WriteHeader(401)
+		return
+	}
+
 	openDatabase()
 	defer db.Close()
 	var ad Advertisement
 
 	json.NewDecoder(request.Body).Decode(&ad)
-	ad.CreatedOn = "no date"
+	ad.CreatedOn = time.Now().UTC().String()
 	fmt.Println(claims)
 	ad.UserId = int(claims["user_id"].(float64))
 	ad.Email = claims["email"].(string)
@@ -146,7 +170,7 @@ func createAd(response http.ResponseWriter, request *http.Request) {
 		data, _ := base64.StdEncoding.DecodeString(strings.Split(image.Path, ",")[1])
 		path := "image" + strconv.Itoa(count) + "." + strings.Split(strings.Split(image.Path, ";")[0], "/")[1]
 		ioutil.WriteFile(path, data, 0644)
-		image.Path = serviceUrl + "/" + path
+		image.Path = serviceURL + "/" + path
 		db.Create(&image)
 	}
 
@@ -158,6 +182,11 @@ func createAd(response http.ResponseWriter, request *http.Request) {
 
 func updateAd(response http.ResponseWriter, request *http.Request) {
 	claims := parseJWT(request)
+	if claims == nil {
+		response.WriteHeader(401)
+		return
+	}
+
 	openDatabase()
 	defer db.Close()
 	var ad Advertisement
@@ -186,7 +215,7 @@ func updateAd(response http.ResponseWriter, request *http.Request) {
 			data, _ := base64.StdEncoding.DecodeString(strings.Split(image.Path, ",")[1])
 			path := "image" + strconv.Itoa(count) + "." + strings.Split(strings.Split(image.Path, ";")[0], "/")[1]
 			ioutil.WriteFile(path, data, 0644)
-			image.Path = serviceUrl + "/" + path
+			image.Path = serviceURL + "/" + path
 		}
 		db.Create(&image)
 	}
@@ -199,6 +228,11 @@ func updateAd(response http.ResponseWriter, request *http.Request) {
 
 func deleteAd(response http.ResponseWriter, request *http.Request) {
 	claims := parseJWT(request)
+	if claims == nil {
+		response.WriteHeader(401)
+		return
+	}
+
 	openDatabase()
 	defer db.Close()
 	var ad Advertisement

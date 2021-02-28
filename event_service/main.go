@@ -1,5 +1,3 @@
-//produci trajanje tokena
-
 package main
 
 import (
@@ -11,6 +9,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/mux"
@@ -20,7 +19,7 @@ import (
 )
 
 const (
-	serviceUrl      = "http://localhost:8002"
+	serviceURL      = "http://localhost:8002"
 	secretKey       = "k8@0y%m^4-)ltn%8frs&e6^%dus1)6%s3&_u436h04)hjd6v#o"
 	defaultPageSize = 10
 )
@@ -73,17 +72,30 @@ func openDatabase() {
 }
 
 func parseJWT(request *http.Request) jwt.MapClaims {
+	if len(request.Header.Get(jwtHeader)) < 4 {
+		return nil
+	}
 	token := request.Header.Get(jwtHeader)[4:]
 	claims := jwt.MapClaims{}
 
-	jwt.ParseWithClaims(token, &claims, func(token *jwt.Token) (interface{}, error) {
+	_, err := jwt.ParseWithClaims(token, &claims, func(token *jwt.Token) (interface{}, error) {
 		return []byte(secretKey), nil
 	})
+
+	if err != nil {
+		return nil
+	}
 
 	return claims
 }
 
 func allEvents(response http.ResponseWriter, request *http.Request) {
+	claims := parseJWT(request)
+	if claims == nil {
+		response.WriteHeader(401)
+		return
+	}
+
 	openDatabase()
 	defer db.Close()
 	var events []Event
@@ -94,10 +106,11 @@ func allEvents(response http.ResponseWriter, request *http.Request) {
 	if size == 0 {
 		size = 10
 	}
-	product_id, _ := strconv.Atoi(request.URL.Query().Get("product"))
+	productID, _ := strconv.Atoi(request.URL.Query().Get("product"))
 
-	db.Model(&Event{}).Offset(page*size).Limit(size).Where("product_id = ?", product_id).Find(&events)
-	db.Model(&Event{}).Where("product_id = ?", product_id).Count(&count)
+	db.Model(&Event{}).Offset(page*size).Limit(size).Where("product_id = ?", productID).
+		Order("created_on desc").Find(&events)
+	db.Model(&Event{}).Where("product_id = ?", productID).Count(&count)
 	for index, event := range events {
 		db.Model(&Image{}).Where("event_ref = ?", event.ID).Find(&events[index].Images)
 	}
@@ -112,12 +125,17 @@ func allEvents(response http.ResponseWriter, request *http.Request) {
 
 func createEvent(response http.ResponseWriter, request *http.Request) {
 	claims := parseJWT(request)
+	if claims == nil {
+		response.WriteHeader(401)
+		return
+	}
+
 	openDatabase()
 	defer db.Close()
 	var event Event
 
 	json.NewDecoder(request.Body).Decode(&event)
-	event.CreatedOn = "no date"
+	event.CreatedOn = time.Now().UTC().String()
 	event.UserId = int(claims["user_id"].(float64))
 	event.Email = claims["email"].(string)
 	db.Create(&event)
@@ -129,7 +147,7 @@ func createEvent(response http.ResponseWriter, request *http.Request) {
 		data, _ := base64.StdEncoding.DecodeString(strings.Split(image.Path, ",")[1])
 		path := "image" + strconv.Itoa(count) + "." + strings.Split(strings.Split(image.Path, ";")[0], "/")[1]
 		ioutil.WriteFile(path, data, 0644)
-		image.Path = serviceUrl + "/" + path
+		image.Path = serviceURL + "/" + path
 		db.Create(&image)
 	}
 
@@ -141,6 +159,11 @@ func createEvent(response http.ResponseWriter, request *http.Request) {
 
 func updateEvent(response http.ResponseWriter, request *http.Request) {
 	claims := parseJWT(request)
+	if claims == nil {
+		response.WriteHeader(401)
+		return
+	}
+
 	openDatabase()
 	defer db.Close()
 	var event Event
@@ -167,7 +190,7 @@ func updateEvent(response http.ResponseWriter, request *http.Request) {
 			data, _ := base64.StdEncoding.DecodeString(strings.Split(image.Path, ",")[1])
 			path := "image" + strconv.Itoa(count) + "." + strings.Split(strings.Split(image.Path, ";")[0], "/")[1]
 			ioutil.WriteFile(path, data, 0644)
-			image.Path = serviceUrl + "/" + path
+			image.Path = serviceURL + "/" + path
 		}
 		db.Create(&image)
 	}
@@ -180,6 +203,11 @@ func updateEvent(response http.ResponseWriter, request *http.Request) {
 
 func deleteEvent(response http.ResponseWriter, request *http.Request) {
 	claims := parseJWT(request)
+	if claims == nil {
+		response.WriteHeader(401)
+		return
+	}
+
 	openDatabase()
 	defer db.Close()
 	var event Event
@@ -199,8 +227,8 @@ func deleteEvent(response http.ResponseWriter, request *http.Request) {
 func databaseInit() {
 	openDatabase()
 	defer db.Close()
-	//db.DropTableIfExists("events")
-	//db.DropTableIfExists("images")
+	db.DropTableIfExists("events")
+	db.DropTableIfExists("images")
 	db.AutoMigrate(&Event{})
 	db.AutoMigrate(&Image{})
 }

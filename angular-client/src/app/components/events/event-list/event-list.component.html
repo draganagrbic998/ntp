@@ -1,11 +1,13 @@
+
 <div>
-    <app-event-details
-    *ngFor="let event of events"
-    [event]="event"
-    ></app-event-details>
+    <app-preloader *ngIf="fetchPending"></app-preloader>
     <app-paginator
     [pending]="fetchPending"
     [pagination]="pagination"
     (changedPage)="changePage($event)"
     ></app-paginator>
+    <app-event-details
+    *ngFor="let event of events"
+    [event]="event"
+    ></app-event-details>
 </div>

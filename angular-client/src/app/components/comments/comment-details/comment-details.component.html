@@ -3,7 +3,7 @@
         <mat-card-content>
             <div class="details">
                 <span>
-                    {{comment.created_on}}
+                    {{comment.created_on | date: "dd MMM yyyy"}}
                 </span>
                 <span *ngIf="comment.user_id !== id">{{comment.email}}</span>
                 <span *ngIf="comment.user_id === id">

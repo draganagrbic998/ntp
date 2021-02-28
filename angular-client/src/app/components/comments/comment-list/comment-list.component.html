@@ -1,4 +1,6 @@
+
 <div>
+    <app-preloader *ngIf="fetchPending"></app-preloader>
     <app-paginator
     [pending]="fetchPending"
     [pagination]="pagination"

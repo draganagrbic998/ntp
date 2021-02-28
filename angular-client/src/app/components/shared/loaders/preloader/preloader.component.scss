@@ -8,8 +8,7 @@ div{
     align-items: center;
     height: $full-size;
     width: $full-size;
-    position: absolute;
-    z-index: $z-index-1;
+    min-height: 700px;
 }
 
 .mat-spinner{
