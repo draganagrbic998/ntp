@@ -65,4 +65,7 @@ Users mikroservis pruza koriscenje ugradjene Django admin aplikacije koja omoguc
   <li>
     U URL browsera uneti putanju <b>localhost:4200</b> ako zelite da koristiti Angular klijenta
   </li>
+  <li>
+    Na URL-u <b>localhost:8000/admin</b> mozete vrsiti administraciju korisnika
+  </li>
 </ol>
