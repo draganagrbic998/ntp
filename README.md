@@ -23,11 +23,11 @@ Django REST aplikacija koja omogucava komentarisanje reklamiranih proizvoda, pre
 <br><h2>Klijenti sistema</h2>
 U sistemu implementirana su tri klijenta:
 <h6>Angular klijent</h6>
-Glavni klijent implementiran u Angular jeziku koji omogucava koriscenje glavnih funkcionalnosti sistema.
+Glavni klijent implementiran u Angular jeziku koji omogucava koriscenje glavnih funkcionalnosti sistema. Lokacija klijenta je <b>localhost:4200</b>.
 <h6>Pharo okruzenje</h6>
 TODO :D
 <h6>Django admin aplikacija</h6>
-Users mikroservis pruza koriscenje ugradjene Django admin aplikacije koja omogucava administraciju korisnika - kreiranje, izmena, brisanje i pregled.
+Users mikroservis pruza koriscenje ugradjene Django admin aplikacije koja omogucava administraciju korisnika - kreiranje, izmena, brisanje i pregled. Lokacija klijenta je <b>localhost:8000/admin</b>.
 
 <br><h2>Uputstvo za pokretanje</h2>
 <ol>
