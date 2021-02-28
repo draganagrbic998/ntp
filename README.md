@@ -19,15 +19,17 @@ Golang REST aplikacija koja omogucava authentifikovanim korisnicima kreiranje, i
 Golang REST aplikacija koja omogucava autentifikovanim korisnicima kreiranje, izmenu, brisanje, pregled i paginaciju dogadjaja na kojima se prezentuje neki medni proizvod. <b>Podaci kojima je opisan dogadjaj je: </b>datum objave, ime dogadjaja, kategorija dogadjaja (sajam, manifestacija...), period i mesto odrzavanja dogadjaja, opis dogadjaja i skup slika. <b>Port mikroservisa je 8002.</b>
 <h6>Comments Microservice</h6>
 Django REST aplikacija koja omogucava komentarisanje reklamiranih proizvoda, pregled i paginaciju komantara i podkomentara i like/dislike komentara. <b>Port mikroservisa je 8003.</b>
+<h6>Analitics Microservice</h6>
+TODO :D
 
 <br><h2>Klijenti sistema</h2>
 U sistemu implementirana su tri klijenta:
 <h6>Angular klijent</h6>
-Glavni klijent implementiran u Angular jeziku koji omogucava koriscenje glavnih funkcionalnosti sistema.
+Glavni klijent implementiran u Angular jeziku koji koristi usluge prva cetri servisa. Lokacija klijenta je <b>localhost:4200</b>.
 <h6>Pharo okruzenje</h6>
 TODO :D
 <h6>Django admin aplikacija</h6>
-Users mikroservis pruza koriscenje ugradjene Django admin aplikacije koja omogucava administraciju korisnika - kreiranje, izmena, brisanje i pregled.
+Users mikroservis pruza koriscenje ugradjene Django admin aplikacije koja omogucava administraciju korisnika - kreiranje, izmena, brisanje i pregled. Lokacija klijenta je <b>localhost:8000/admin</b>.
 
 <br><h2>Uputstvo za pokretanje</h2>
 <ol>
@@ -64,5 +66,8 @@ Users mikroservis pruza koriscenje ugradjene Django admin aplikacije koja omoguc
   </li>
   <li>
     U URL browsera uneti putanju <b>localhost:4200</b> ako zelite da koristiti Angular klijenta
+  </li>
+  <li>
+    Na URL-u <b>localhost:8000/admin</b> mozete vrsiti administraciju korisnika
   </li>
 </ol>
