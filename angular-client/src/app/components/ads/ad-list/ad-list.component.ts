@@ -60,6 +60,11 @@ export class AdListComponent implements OnInit {
       this.pagination.pageNumber = 0;
       this.changePage(0);
     });
+    this.adService.listToggle$.subscribe(() => {
+      this.pagination.pageNumber = 0;
+      this.search = '';
+      this.changePage(0);
+    });
   }
 
 }

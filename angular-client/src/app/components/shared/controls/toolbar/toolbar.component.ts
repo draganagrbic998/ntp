@@ -23,6 +23,10 @@ export class ToolbarComponent implements OnInit {
 
   search: FormControl = new FormControl('');
 
+  toggleList(): void{
+    this.adService.announceListToggle();
+  }
+
   create(): void{
     this.adService.selectedAd = null;
     this.router.navigate([environment.adFormRoute]);

@@ -86,6 +86,43 @@ func parseJWT(request *http.Request) jwt.MapClaims {
 	return claims
 }
 
+func myAds(response http.ResponseWriter, request *http.Request) {
+	claims := parseJWT(request)
+	if claims == nil {
+		response.WriteHeader(401)
+		return
+	}
+	userID := int(claims["user_id"].(float64))
+
+	openDatabase()
+	defer db.Close()
+	var ads []Advertisement
+	var count int
+
+	page, _ := strconv.Atoi(request.URL.Query().Get("page"))
+	size, _ := strconv.Atoi(request.URL.Query().Get("size"))
+	if size == 0 {
+		size = defaultPageSize
+	}
+	search := "%" + strings.ToLower(request.URL.Query().Get("search")) + "%"
+
+	db.Model(&Advertisement{}).Offset(page*size).Limit(size).
+		Where("user_id = ? and (lower(name) like ? or lower(category) like ? or lower(description) like ?)", userID, search, search, search).
+		Order("created_on desc").Find(&ads)
+	db.Model(&Advertisement{}).Where("user_id = ? and (lower(name) like ? or lower(category) like ? or lower(description) like ?)", search, search, search).Count(&count)
+	for index, product := range ads {
+		db.Model(&Image{}).Where("prod_ref = ?", product.ID).Find(&ads[index].Images)
+	}
+
+	response.Header().Set(enableHeader, firstPageHeader+", "+lastPageHeader)
+	response.Header().Set(firstPageHeader, strconv.FormatBool(page == 0))
+	response.Header().Set(lastPageHeader, strconv.FormatBool(size*(page+1) >= count))
+
+	enc := json.NewEncoder(response)
+	enc.SetIndent("", "    ")
+	enc.Encode(ads)
+}
+
 func allAds(response http.ResponseWriter, request *http.Request) {
 	claims := parseJWT(request)
 	if claims == nil {
@@ -157,6 +194,11 @@ func createAd(response http.ResponseWriter, request *http.Request) {
 	var ad Advertisement
 
 	json.NewDecoder(request.Body).Decode(&ad)
+	if strings.TrimSpace(ad.Name) == "" || strings.TrimSpace(ad.Category) == "" || strings.TrimSpace(ad.Price) == "" || strings.TrimSpace(ad.Description) == "" {
+		response.WriteHeader(404)
+		return
+	}
+
 	ad.CreatedOn = time.Now().UTC().String()
 	fmt.Println(claims)
 	ad.UserId = int(claims["user_id"].(float64))
@@ -193,6 +235,11 @@ func updateAd(response http.ResponseWriter, request *http.Request) {
 
 	db.Where("id = ?", mux.Vars(request)["id"]).Find(&ad)
 	json.NewDecoder(request.Body).Decode(&ad)
+	if strings.TrimSpace(ad.Name) == "" || strings.TrimSpace(ad.Category) == "" || strings.TrimSpace(ad.Price) == "" || strings.TrimSpace(ad.Description) == "" {
+		response.WriteHeader(404)
+		return
+	}
+
 	if int(claims["user_id"].(float64)) != ad.UserId {
 		response.WriteHeader(403)
 		return
@@ -260,6 +307,7 @@ func databaseInit() {
 
 func routerInit() {
 	router := mux.NewRouter()
+	router.HandleFunc("/api/ads-my", allAds).Methods("GET")
 	router.HandleFunc("/api/ads", allAds).Methods("GET")
 	router.HandleFunc("/api/ads/{id}", oneAd).Methods("GET")
 	router.HandleFunc("/api/ads", createAd).Methods("POST")

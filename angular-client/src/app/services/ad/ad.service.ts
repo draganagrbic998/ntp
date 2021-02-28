@@ -19,11 +19,15 @@ export class AdService {
   refreshData$: Observable<null> = this.refreshData.asObservable();
   private searchData: Subject<string> = new Subject();
   searchData$: Observable<string> = this.searchData.asObservable();
+  private listToggle: Subject<null> = new Subject();
+  listToggle$ = this.listToggle.asObservable();
   selectedAd: Advertisement;
+  myProducts = false;
 
   getAll(page: number, search: string): Observable<HttpResponse<Advertisement[]>>{
     const params = new HttpParams().set('page', page + '').set('size', SMALL_PAGE_SIZE + '').set('search', search);
-    return this.http.get<Advertisement[]>(`${environment.adsApi}`, {observe: 'response', params}).pipe(
+    const url = this.myProducts ? `${environment.adsApi}-my` : environment.adsApi;
+    return this.http.get<Advertisement[]>(url, {observe: 'response', params}).pipe(
       catchError(() => of(null))
     );
   }
@@ -58,6 +62,11 @@ export class AdService {
 
   announceSearchData(search: string): void{
     this.searchData.next(search);
+  }
+
+  announceListToggle(): void{
+    this.myProducts = !this.myProducts;
+    this.listToggle.next();
   }
 
 }

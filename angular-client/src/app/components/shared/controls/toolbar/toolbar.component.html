@@ -3,6 +3,12 @@
         <button
         *ngIf="route==='ad-list'"
         mat-button
+        (click)="toggleList()">
+            {{adService.myProducts ? 'My Products' : 'All Products'}}
+        </button>
+        <button
+        *ngIf="route==='ad-list'"
+        mat-button
         (click)="create()">
             Add Advertisement
         </button>

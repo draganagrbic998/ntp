@@ -135,6 +135,12 @@ func createEvent(response http.ResponseWriter, request *http.Request) {
 	var event Event
 
 	json.NewDecoder(request.Body).Decode(&event)
+	if strings.TrimSpace(event.Name) == "" || strings.TrimSpace(event.Category) == "" || strings.TrimSpace(event.From) == "" ||
+		strings.TrimSpace(event.To) == "" || strings.TrimSpace(event.Place) == "" || strings.TrimSpace(event.Description) == "" {
+		response.WriteHeader(404)
+		return
+	}
+
 	event.CreatedOn = time.Now().UTC().String()
 	event.UserId = int(claims["user_id"].(float64))
 	event.Email = claims["email"].(string)
@@ -170,6 +176,12 @@ func updateEvent(response http.ResponseWriter, request *http.Request) {
 
 	db.Where("id = ?", mux.Vars(request)["id"]).Find(&event)
 	json.NewDecoder(request.Body).Decode(&event)
+	if strings.TrimSpace(event.Name) == "" || strings.TrimSpace(event.Category) == "" || strings.TrimSpace(event.From) == "" ||
+		strings.TrimSpace(event.To) == "" || strings.TrimSpace(event.Place) == "" || strings.TrimSpace(event.Description) == "" {
+		response.WriteHeader(404)
+		return
+	}
+
 	if int(claims["user_id"].(float64)) != event.UserId {
 		response.WriteHeader(403)
 		return
