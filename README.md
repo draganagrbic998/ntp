@@ -7,7 +7,7 @@
 <h2>Opis problema</h2>
 Neophodno je implementirati sistem koji ce omoguciti precalirima i ljubiteljima mednih proizvoda da reklamiraju svoja dobra, pretrazuju i komentarisu tudja i obavestavaju ostale korisnike o dogadjajima na kojima ce prezentovati svoje medne proizvode.
 
-<h2>Arhitektura sistema</h2>
+<br><h2>Arhitektura sistema</h2>
 Arhitektura sistema bazirana je mikroservisima. Svaki mikroservis poseduje zasebnu bazu podataka (konkretno PostgreSQL) i u njoj cuva podatke kojima samo on upravlja. Sva komunikacija izmedju klijenta i servisa odvija se preko REST API-a. Mikroservis za autentifikaciju (Users Microservice) definise SECRET_KEY koji ostali servisi koriste za dekodovanje JWT tokena i dobavljanje podataka o prijavljenom korisniku.
 
 <br><h2>Pregled mikroservisa</h2>
@@ -20,7 +20,7 @@ Golang REST aplikacija koja omogucava autentifikovanim korisnicima kreiranje, iz
 <h6>Comments Microservice</h6>
 Django REST aplikacija koja omogucava komentarisanje reklamiranih proizvoda, pregled i paginaciju komantara i podkomentara i like/dislike komentara. <b>Port mikroservisa je 8003. </b> Mikroservis se pokrece komandom <b>python manage.py runserver 8003</b>.
 
-<h2>Klijenti sistema</h2>
+<br><h2>Klijenti sistema</h2>
 U sistemu implementirana su tri klijenta:
 <h6>Angular klijent</h6>
 Glavni klijent implementiran u Angular jeziku koji omogucava koriscenje glavnih funkcionalnosti sistema
