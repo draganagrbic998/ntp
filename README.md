@@ -25,7 +25,7 @@ TODO :D
 <br><h2>Klijenti sistema</h2>
 U sistemu implementirana su tri klijenta:
 <h6>Angular klijent</h6>
-Glavni klijent implementiran u Angular jeziku koji omogucava koriscenje glavnih funkcionalnosti sistema. Lokacija klijenta je <b>localhost:4200</b>.
+Glavni klijent implementiran u Angular jeziku koji koristi usluge prva cetri servisa. Lokacija klijenta je <b>localhost:4200</b>.
 <h6>Pharo okruzenje</h6>
 TODO :D
 <h6>Django admin aplikacija</h6>
