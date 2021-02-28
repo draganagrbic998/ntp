@@ -1,16 +1,11 @@
+<h1>Projekat iz predmeta Napredne tehnike programiranja</h1>
+
 <div align="center">
   <img src="https://github.com/draganagrbic998/ntp/blob/main/pcelica.jpg" alt="drawing" width="200" height="200"/>
 </div>
 
-# Projekat iz predmeta Napredne tehnike programiranja
-Tema projekta (samostalno definisani projekat):<br>
-
-Implementacija sistema koja ce omogucavati pcelarima da reklamiraju svoje proizvoda i ljubiteljima mednih proizvoda da pretrazuju te proizvode i komentarisu ih.
-Korisnici sistema bice:
-1. pcelari - kreiraju svoje proizvode i dogadjaje na kojima ce ih prezentovati
-2. ljubitelji mednih proizvoda (u daljem tekstu zvacu ih GOST) - komentarisu medne proizvode, pretrazuju i pregledaju ih
-Izgled arhitekture bio bi sledeci:
-<br><br>
+<h2>Opis problema</h2>
+Neophodno je implementirati sistem koji ce omoguciti precalirima i ljubiteljima mednih proizvoda da reklamiraju svoja dobra, pretrazuju i komentarisu tudja i obavestavaju ostale korisnike o dogadjajima na kojima ce prezentovati svoje medne proizvode.
 
 <h2>Arhitektura sistema</h2>
 Arhitektura sistema bazirana je mikroservisima. Svaki mikroservis poseduje zasebnu bazu podataka (konkretno PostgreSQL) i u njoj cuva podatke kojima samo on upravlja. Sva komunikacija izmedju klijenta i servisa odvija se preko REST API-a. Mikroservis za autentifikaciju (Users Microservice) definise SECRET_KEY koji ostali servisi koriste za dekodovanje JWT tokena i dobavljanje podataka o prijavljenom korisniku.
@@ -24,6 +19,15 @@ Golang REST aplikacija koja omogucava authentifikovanim korisnicima kreiranje, i
 Golang REST aplikacija koja omogucava autentifikovanim korisnicima kreiranje, izmenu, brisanje, pregled i paginaciju dogadjaja na kojima se prezentuje neki medni proizvod. <b>Podaci kojima je opisan dogadjaj je: </b>datum objave, ime dogadjaja, kategorija dogadjaja (sajam, manifestacija...), period i mesto odrzavanja dogadjaja, opis dogadjaja i skup slika. <b>Port mikroservisa je 8002. </b>Mikroservis se pokrece komandom <b>go run main.go</b>.
 <h6>Comments Microservice</h6>
 Django REST aplikacija koja omogucava komentarisanje reklamiranih proizvoda, pregled i paginaciju komantara i podkomentara i like/dislike komentara. <b>Port mikroservisa je 8003. </b> Mikroservis se pokrece komandom <b>python manage.py runserver 8003</b>.
+
+<h2>Klijenti sistema</h2>
+U sistemu implementirana su tri klijenta:
+<h6>Angular klijent</h6>
+Glavni klijent implementiran u Angular jeziku koji omogucava koriscenje glavnih funkcionalnosti sistema
+<h6>Pharo okruzenje</h6>
+TODO :D
+<h6>Django admin aplikacija</h6>
+Users mikroservis pruza koriscenje ugradjene Django admin aplikacije koja omogucava administraciju korisnika - kreiranje, izmena, brisanje i pregled
 
 <br><h2>Uputstvo za pokretanje</h2>
 <ol>
@@ -62,7 +66,3 @@ Django REST aplikacija koja omogucava komentarisanje reklamiranih proizvoda, pre
     U URL browsera uneti putanju <b>localhost:4200</b> ako zelite da koristiti Angular klijenta
   </li>
 </ol>
-
-<br><br><br>
-5. Client<br>
-Sistem ce imati jednu frontend aplikaciju koja ce pozivate metode sva cetri navedena servisa i u pitanju ce biti Angular aplikacija. 
