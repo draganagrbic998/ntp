@@ -80,7 +80,16 @@ Users mikroservis pruza koriscenje ugradjene Django admin aplikacije koja omoguc
     Pozicionirati se u <b>angular-client</b> i pokrenuti komande <b>npm install</b> i <b>ng serve</b>
   </li>
   <li>
+    Unutar Pharo okruzenja instalirati biblioteke <b>Roassal</b> i <b>NeoJSON<b>. 
+  </li>
+  <li>
+    Unutar Pharo okruzenja registrovani/kreiratu klasu u proizvonjom paketu i sa proizvolnjim imenom i unutar <b>Class opsega</b> novokreirane klase registrovai metodu koja se nalazi na putanji <b>pharo-client/graphics.txt</b>.
+  </li>
+  <li>
     U URL browsera uneti putanju <b>localhost:4200</b> ako zelite da koristiti Angular klijenta
+  </li>
+  <li>
+    Otvoriti Playground Pharo okruzenja i slati prethodno opisane poruke ukoliko zelite da koristiti Pharo klijenta
   </li>
   <li>
     Na URL-u <b>localhost:8000/admin</b> mozete vrsiti administraciju korisnika
