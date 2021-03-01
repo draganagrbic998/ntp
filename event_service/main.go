@@ -236,11 +236,46 @@ func deleteEvent(response http.ResponseWriter, request *http.Request) {
 	db.Delete(&event)
 }
 
+func statistic(response http.ResponseWriter, request *http.Request) {
+	start, err := strconv.Atoi(mux.Vars(request)["start"])
+	if err != nil {
+		response.WriteHeader(400)
+		return
+	}
+
+	end, err := strconv.Atoi(mux.Vars(request)["end"])
+	if err != nil {
+		response.WriteHeader(400)
+		return
+	}
+
+	if start >= end {
+		response.WriteHeader(400)
+		return
+	}
+
+	openDatabase()
+	defer db.Close()
+	result := make([][2]int, end-start+1)
+	counter := 0
+
+	for i := start; i <= end; i++ {
+		var count int
+		db.Model(&Event{}).Where("substring(created_on, 1, 4) = ?", i).Count(&count)
+		result[counter] = [2]int{i, count}
+		counter++
+	}
+
+	enc := json.NewEncoder(response)
+	enc.SetIndent("", "    ")
+	enc.Encode(result)
+}
+
 func databaseInit() {
 	openDatabase()
 	defer db.Close()
-	db.DropTableIfExists("events")
-	db.DropTableIfExists("images")
+	//db.DropTableIfExists("events")
+	//db.DropTableIfExists("images")
 	db.AutoMigrate(&Event{})
 	db.AutoMigrate(&Image{})
 }
@@ -251,6 +286,7 @@ func routerInit() {
 	router.HandleFunc("/api/events", createEvent).Methods("POST")
 	router.HandleFunc("/api/events/{id}", updateEvent).Methods("PUT")
 	router.HandleFunc("/api/events/{id}", deleteEvent).Methods("DELETE")
+	router.HandleFunc("/api/statistic/{start}/{end}", statistic).Methods("GET")
 
 	cors := cors.New(cors.Options{
 		AllowedOrigins:   []string{"http://localhost:4200"},

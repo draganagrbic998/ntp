@@ -273,6 +273,41 @@ func updateAd(response http.ResponseWriter, request *http.Request) {
 	enc.Encode(ad)
 }
 
+func statistic(response http.ResponseWriter, request *http.Request) {
+	start, err := strconv.Atoi(mux.Vars(request)["start"])
+	if err != nil {
+		response.WriteHeader(400)
+		return
+	}
+
+	end, err := strconv.Atoi(mux.Vars(request)["end"])
+	if err != nil {
+		response.WriteHeader(400)
+		return
+	}
+
+	if start >= end {
+		response.WriteHeader(400)
+		return
+	}
+
+	openDatabase()
+	defer db.Close()
+	result := make([][2]int, end-start+1)
+	counter := 0
+
+	for i := start; i <= end; i++ {
+		var count int
+		db.Model(&Advertisement{}).Where("substring(created_on, 1, 4) = ?", i).Count(&count)
+		result[counter] = [2]int{i, count}
+		counter++
+	}
+
+	enc := json.NewEncoder(response)
+	enc.SetIndent("", "    ")
+	enc.Encode(result)
+}
+
 func deleteAd(response http.ResponseWriter, request *http.Request) {
 	claims := parseJWT(request)
 	if claims == nil {
@@ -299,8 +334,8 @@ func deleteAd(response http.ResponseWriter, request *http.Request) {
 func databaseInit() {
 	openDatabase()
 	defer db.Close()
-	db.DropTableIfExists("advertisements")
-	db.DropTableIfExists("images")
+	//db.DropTableIfExists("advertisements")
+	//db.DropTableIfExists("images")
 	db.AutoMigrate(&Advertisement{})
 	db.AutoMigrate(&Image{})
 }
@@ -313,6 +348,7 @@ func routerInit() {
 	router.HandleFunc("/api/ads", createAd).Methods("POST")
 	router.HandleFunc("/api/ads/{id}", updateAd).Methods("PUT")
 	router.HandleFunc("/api/ads/{id}", deleteAd).Methods("DELETE")
+	router.HandleFunc("/api/statistic/{start}/{end}", statistic).Methods("GET")
 
 	cors := cors.New(cors.Options{
 		AllowedOrigins:   []string{"http://localhost:4200"},

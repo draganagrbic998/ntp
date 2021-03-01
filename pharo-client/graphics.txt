@@ -1,0 +1,63 @@
+entity: entity start: start end: end
+	|url response graph dataset points xcords ycords xmin ymin ylabel|
+
+	
+	(entity ~= 'ads') & (entity ~= 'events') & (entity ~= 'comments') & 
+	(entity ~= 'likes') & (entity ~= 'dislikes')
+		ifTrue: [ self error: 'entity must be "ads", "events", 
+			"comments", "likes" or "dislikes"' ].
+	
+
+	(start < 1000) | (start > 9999)
+		ifTrue: [ self error: 'start must have 4 digits'].
+	(end < 1000) | (end > 9999)
+		ifTrue: [ self error: 'end must have 4 digits' ].
+	start >= end
+		ifTrue: [ self error: 'end must be greater than start' ].
+	
+	
+	entity = 'ads'
+		ifTrue: [ url := 'http://localhost:8001/api/statistic/'. ylabel := 'Ads Number'. ].
+	entity = 'events'
+		ifTrue: [ url := 'http://localhost:8002/api/statistic/'. ylabel := 'Events Number'. ].
+	entity = 'comments'
+		ifTrue: [ url := 'http://localhost:8003/api/statistic-comments/'. ylabel := 'Comments Number'. ].
+	entity = 'likes'
+		ifTrue: [ url := 'http://localhost:8003/api/statistic-likes/'. ylabel := 'Likes Number'. ].
+	entity = 'dislikes'
+		ifTrue: [ url := 'http://localhost:8001/api/statistic-dislikes/'. ylabel := 'Dislikes Number'. ].
+		
+
+	response := (ZnClient new 
+		url: url, (start asString), '/', (end asString);
+		enforceHttpSuccess: true;
+		accept: ZnMimeType applicationJson;
+		contentReader: [ :asd | NeoJSONReader fromString: asd contents ];
+		get).
+	
+
+		graph := RTGrapher new .
+		dataset := RTData new.
+		dataset dotShape color: (Color red trans).
+		dataset connectColor: (Color red alpha: 0.4).
+
+		xcords := response collect: [ :each | each at: 1 ].
+		ycords := response collect: [ :each | each at: 2 ].
+		xmin := xcords min.
+		ymin := ycords min.
+		points :=  response collect: [ :each | ((each at: 1) -xmin) @ ((each at: 2)-ymin) ].
+
+		dataset points: points.
+		dataset x: #x.
+		dataset y: #y.
+		graph add: dataset.
+
+		graph axisX noDecimal .
+		graph axisY noDecimal .
+		graph axisX title: 'Year'.
+		graph axisY title: ylabel.
+		graph axisX labelConversion: [ :x | x + xmin ].
+		graph axisY labelConversion: [ :y | y + ymin ].
+		
+		^graph.
+	
