@@ -85,7 +85,7 @@ Users mikroservis pruza koriscenje ugradjene Django admin aplikacije koja omoguc
     Unutar Pharo okruzenja instalirati biblioteke <b>Roassal</b> i <b>NeoJSON</b>. 
   </li>
   <li>
-    Unutar Pharo okruzenja registrovani/kreiratu klasu u proizvoljnom paketu i sa proizvolnjim nazivom i unutar <b>Class opsega</b> novokreirane klase registrovati metodu koja se nalazi na putanji <b>pharo-client/graphics.txt</b>.
+    Unutar Pharo okruzenja registrovati/kreiratu klasu u proizvoljnom paketu i sa proizvolnjim nazivom i unutar <b>Class opsega</b> novokreirane klase registrovati metodu koja se nalazi na putanji <b>pharo-client/graphics.txt</b>.
   </li>
   <li>
     U URL browsera uneti putanju <b>localhost:4200</b> ukoliko zelite da koristiti Angular klijenta.
