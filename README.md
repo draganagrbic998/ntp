@@ -21,7 +21,7 @@ Golang REST aplikacija koja omogucava autentifikovanim korisnicima kreiranje, iz
 Django REST aplikacija koja omogucava komentarisanje reklamiranih proizvoda, pregled i paginaciju komantara i podkomentara i like/dislike komentara. <b>Port mikroservisa je 8003.</b>
 
 <br><h2>Klijenti sistema</h2>
-U sistemu implementirana su tri klijenta:
+U sistemu implementirana su tri klijenta.
 <h6>Angular klijent</h6>
 Glavni klijent implementiran u Angular jeziku koji koristi usluge prva cetri servisa. Lokacija klijenta je <b>localhost:4200</b>.
 <h6>Pharo klijent</h6>
