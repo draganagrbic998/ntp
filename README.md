@@ -23,7 +23,7 @@ Django REST aplikacija koja omogucava komentarisanje reklamiranih proizvoda, pre
 <br><h2>Klijenti sistema</h2>
 U sistemu implementirana su tri klijenta.
 <h6>Angular klijent</h6>
-Glavni klijent implementiran u Angular jeziku koji koristi usluge prva cetri servisa. Lokacija klijenta je <b>localhost:4200</b>.
+Glavni klijent implementiran u Angular jeziku koji omogucava koriscenje glavnih funkcionalnosti sistema. Lokacija klijenta je <b>localhost:4200</b>.
 <h6>Pharo klijent</h6>
 Klijent koji omogucava uvid u analitiku sistema. Kada administrator unutar Pharo okruzenja registruje klasu sa metodom koja se nalazi na putanji <b>pharo-client/graphics.txt</b>, dobija mogucnost salja poruka okruzenju koje ce mu omoguciti graficki prikaz broja reklama, dogadjaja, komentara, lajkova i dislajkova u odabranom vremenskom intervalu. Format poruka je <b>NAZIV_KLASE entity ENTITET start START end END shape SHAPE</b>, gde su elementi redom:
 <ul>
