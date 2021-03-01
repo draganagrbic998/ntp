@@ -49,16 +49,16 @@ Users mikroservis pruza koriscenje ugradjene Django admin aplikacije koja omoguc
 <br><h2>Uputstvo za pokretanje</h2>
 <ol>
   <li>
-    Koristeci komandu <b>python -m venv venv</b> (ili python3 -m venv venv ako su na racunaru instalirani i pajton2 i pajton3) kreirati virtuelno okruzenje
+    Koristeci komandu <b>python -m venv venv</b> (ili python3 -m venv venv ako su na racunaru instalirani i pajton2 i pajton3) kreirati virtuelno okruzenje.
   </li>
   <li>
-    U virtuelno okruzenje instalirati sve biblioteke navedene u <b>requirements.txt</b> fajlu
+    U virtuelno okruzenje instalirati sve biblioteke navedene u <b>requirements.txt</b> fajlu.
   </li>
   <li>
-    Aktivirati virtuelno okruzenje, pozicionirati se u <b>user_service</b> i pokrenuti komandu <b>python manage.py runserver</b>
+    Aktivirati virtuelno okruzenje, pozicionirati se u <b>user_service</b> i pokrenuti komandu <b>python manage.py runserver</b>.
   </li>
   <li>
-    Aktivirati virtuelno okruzenje, pozitionirati se u <b>comment_service</b> i pokrenuti komandu <b>python manage.py runserver 8003</b>
+    Aktivirati virtuelno okruzenje, pozitionirati se u <b>comment_service</b> i pokrenuti komandu <b>python manage.py runserver 8003</b>.
   </li>
   <li>
     Pokrenuti komande za preuzimanje neophodnih Golang biblioteka:
@@ -71,27 +71,27 @@ Users mikroservis pruza koriscenje ugradjene Django admin aplikacije koja omoguc
     </ul>
   </li>
   <li>
-    Pozicionirati se u <b>ad_service</b> i pokrenuti komandu <b>go run main.go</b>
+    Pozicionirati se u <b>ad_service</b> i pokrenuti komandu <b>go run main.go</b>.
   </li>
   <li>
-    Pozicionirati se u <b>event_service</b> i pokrenuti komandru <b>go run main.go</b>
+    Pozicionirati se u <b>event_service</b> i pokrenuti komandru <b>go run main.go</b>.
   </li>
   <li>
-    Pozicionirati se u <b>angular-client</b> i pokrenuti komande <b>npm install</b> i <b>ng serve</b>
+    Pozicionirati se u <b>angular-client</b> i pokrenuti komande <b>npm install</b> i <b>ng serve</b>.
   </li>
   <li>
     Unutar Pharo okruzenja instalirati biblioteke <b>Roassal</b> i <b>NeoJSON</b>. 
   </li>
   <li>
-    Unutar Pharo okruzenja registrovani/kreiratu klasu u proizvonjom paketu i sa proizvolnjim imenom i unutar <b>Class opsega</b> novokreirane klase registrovai metodu koja se nalazi na putanji <b>pharo-client/graphics.txt</b>.
+    Unutar Pharo okruzenja registrovani/kreiratu klasu u proizvoljnom paketu i sa proizvolnjim nazivom i unutar <b>Class opsega</b> novokreirane klase registrovati metodu koja se nalazi na putanji <b>pharo-client/graphics.txt</b>.
   </li>
   <li>
-    U URL browsera uneti putanju <b>localhost:4200</b> ako zelite da koristiti Angular klijenta
+    U URL browsera uneti putanju <b>localhost:4200</b> ukoliko zelite da koristiti Angular klijenta.
   </li>
   <li>
-    Otvoriti Playground Pharo okruzenja i slati prethodno opisane poruke ukoliko zelite da koristiti Pharo klijenta
+    Otvoriti Playground Pharo okruzenja i slati prethodno opisane poruke ukoliko zelite da koristiti Pharo klijenta.
   </li>
   <li>
-    Na URL-u <b>localhost:8000/admin</b> mozete vrsiti administraciju korisnika
+    Na URL-u <b>localhost:8000/admin</b> mozete vrsiti administraciju korisnika.
   </li>
 </ol>
