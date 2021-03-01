@@ -19,15 +19,30 @@ Golang REST aplikacija koja omogucava authentifikovanim korisnicima kreiranje, i
 Golang REST aplikacija koja omogucava autentifikovanim korisnicima kreiranje, izmenu, brisanje, pregled i paginaciju dogadjaja na kojima se prezentuje neki medni proizvod. <b>Podaci kojima je opisan dogadjaj je: </b>datum objave, ime dogadjaja, kategorija dogadjaja (sajam, manifestacija...), period i mesto odrzavanja dogadjaja, opis dogadjaja i skup slika. <b>Port mikroservisa je 8002.</b>
 <h6>Comments Microservice</h6>
 Django REST aplikacija koja omogucava komentarisanje reklamiranih proizvoda, pregled i paginaciju komantara i podkomentara i like/dislike komentara. <b>Port mikroservisa je 8003.</b>
-<h6>Analitics Microservice</h6>
-TODO :D
 
 <br><h2>Klijenti sistema</h2>
 U sistemu implementirana su tri klijenta:
 <h6>Angular klijent</h6>
 Glavni klijent implementiran u Angular jeziku koji koristi usluge prva cetri servisa. Lokacija klijenta je <b>localhost:4200</b>.
 <h6>Pharo okruzenje</h6>
-TODO :D
+Administratoru omogucen je uvid u analitiku sistema. Kada admin unutar Pharo okruzenja registruje klasu sa metodom koja se nalazi na putanji <b>pharo-client/graphics.txt</b>, moze da salje poruke okruzenju koje ce mu omoguciti graficki prikaz broja reklama, dogadjaja, komentara, lajkova i dislajkova u odabranom vremenskom periodu. Format poruka je <b>NAZIV_KLASE entity ENTITET start START end END shape SHAPE</b>, gde su elementi redom:
+<ul>
+  <li>
+    NAZIV_KLASE predstavlja naziv pod kojim je korisnik/admin registrovao klasu koja ce implementirati metodu za graficke prikaze.
+  </li>
+  <li>
+    ENTITET predstavlja izbor entiteta ciji graficki prikaz se zeli prikazati. Validne vrednosti su "ads", "events", "comments", "likes" i "dislikes".
+  </li>
+  <li>
+    START predstavlja pocetnu godinu od koje se analizira statistika odabranog entiteta. Godina mora biti cetvorocifren broj.
+  </li>
+  <li>
+    END predstavlja krajnju godinu do koje se analizira statistika odabranog entiteta. Godina mora biti cetvorocifren broj i mora biti veci od pocetne godine.
+  </li>
+  <li>
+    SHAPE omogucava korisniku odabir prikaza grafika u vidu plot-a (ako se unese "dots") i bar-ova (ako se unese "bar").
+  </li>
+</ul>
 <h6>Django admin aplikacija</h6>
 Users mikroservis pruza koriscenje ugradjene Django admin aplikacije koja omogucava administraciju korisnika - kreiranje, izmena, brisanje i pregled. Lokacija klijenta je <b>localhost:8000/admin</b>.
 
