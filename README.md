@@ -48,6 +48,9 @@ Users mikroservis pruza koriscenje ugradjene Django admin aplikacije koja omoguc
 <br><h2>Uputstvo za pokretanje</h2>
 <ol>
   <li>
+    Kreirati lokalno Postgre baze koje ce se zvati: <b>users</b>, <b>ads</b>, <b>events</b> i <b>comments</b>.
+  </li>
+  <li>
     Koristeci komandu <b>python -m venv venv</b> (ili python3 -m venv venv ako su na racunaru instalirani i pajton2 i pajton3) kreirati virtuelno okruzenje.
   </li>
   <li>
