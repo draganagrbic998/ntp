@@ -3,7 +3,45 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework_jwt.utils import jwt_decode_handler
 from comments.models import Comment, Like
-from comments.serializers import CommentSerializer
+
+
+@api_view(['GET'])
+def comments_statistic(request, start, end):
+    if start >= end:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    result = []
+    for i in range(start, end+1):
+        result.append([
+            i, len(Comment.objects.filter(created_on__year=i))
+        ])
+    return Response(status=status.HTTP_200_OK, data=result, content_type='application/json')
+
+
+@api_view(['GET'])
+def likes_statistic(request, start, end):
+    if start >= end:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    result = []
+    for i in range(start, end+1):
+        result.append([
+            i, len(Like.objects.filter(created_on__year=i, dislike=False))
+        ])
+    return Response(status=status.HTTP_200_OK, data=result, content_type='application/json')
+
+
+@api_view(['GET'])
+def dislikes_statistic(request, start, end):
+    if start >= end:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    result = []
+    for i in range(start, end+1):
+        result.append([
+            i, len(Like.objects.filter(created_on__year=i, dislike=True))
+        ])
+    return Response(status=status.HTTP_200_OK, data=result, content_type='application/json')
 
 
 def get_user_id(request):
