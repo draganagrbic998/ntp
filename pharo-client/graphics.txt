@@ -53,10 +53,10 @@ entity: entity start: start end: end
 		graph add: dataset.
 
 		graph axisX noDecimal .
-		graph axisY noDecimal .
+		graph axisY decimal: 1 .
 		graph axisX title: 'Year'.
 		graph axisY title: ylabel.
-		graph axisX labelConversion: [ :x | x + xmin ].
+		graph axisX labelConversion: [ :x | (x + xmin) asInteger ].
 		graph axisY labelConversion: [ :y | y + ymin ].
 		
 		^graph.

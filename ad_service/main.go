@@ -110,7 +110,7 @@ func myAds(response http.ResponseWriter, request *http.Request) {
 	db.Model(&Advertisement{}).Offset(page*size).Limit(size).
 		Where("(user_id = ? and active=true) and (lower(name) like ? or lower(category) like ? or lower(description) like ?)", userID, search, search, search).
 		Order("created_on desc").Find(&ads)
-	db.Model(&Advertisement{}).Where("(user_id = ? and active=true) and (lower(name) like ? or lower(category) like ? or lower(description) like ?)", search, search, search).Count(&count)
+	db.Model(&Advertisement{}).Where("(user_id = ? and active=true) and (lower(name) like ? or lower(category) like ? or lower(description) like ?)", userID, search, search, search).Count(&count)
 	for index, product := range ads {
 		db.Model(&Image{}).Where("prod_ref = ?", product.ID).Find(&ads[index].Images)
 	}
