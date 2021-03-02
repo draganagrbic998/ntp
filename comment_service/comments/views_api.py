@@ -46,7 +46,7 @@ def dislikes_statistic(request, start, end):
 
 def get_user_id(request):
     try:
-        return jwt_decode_handler(request.headers["Authorization"][4:])["user_id"]
+        return int(jwt_decode_handler(request.headers["Authorization"][4:])["user_id"])
     except:
         return None
 
@@ -171,13 +171,14 @@ def replies(request, key):
     return Response(status=status.HTTP_200_OK, data=data, content_type='application/json')
 
 
+@api_view(['DELETE'])
 def delete_comment(request, key):
     user_id = get_user_id(request)
     if not user_id:
         return Response(status=status.HTTP_401_UNAUTHORIZED)
     try:
         comment = Comment.objects.get(id=key)
-        if comment.user_id != get_user_id(request):
+        if comment.user_id != user_id:
             return Response(status=status.HTTP_403_FORBIDDEN)
         comment.delete()
         return Response(status=status.HTTP_200_OK)

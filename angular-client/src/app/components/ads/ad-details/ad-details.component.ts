@@ -8,6 +8,7 @@ import { Comment } from 'src/app/models/comment';
 import { AdService } from 'src/app/services/ad/ad.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CommentService } from 'src/app/services/comment/comment.service';
+import { EventService } from 'src/app/services/event/event.service';
 import { environment } from 'src/environments/environment';
 import { DeleteConfirmationComponent } from '../../shared/controls/delete-confirmation/delete-confirmation.component';
 
@@ -23,7 +24,8 @@ export class AdDetailsComponent implements OnInit {
     private adService: AdService,
     private commentService: CommentService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private eventService: EventService
   ) { }
 
   @Input() ad: Advertisement;
@@ -45,6 +47,7 @@ export class AdDetailsComponent implements OnInit {
   }
 
   create(): void{
+    this.eventService.selectedEvent = null;
     this.router.navigate([`${environment.eventFormRoute}/${this.ad.ID}`]);
   }
 

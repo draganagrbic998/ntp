@@ -36,6 +36,10 @@ export class ToolbarComponent implements OnInit {
     return this.router.url.substr(1);
   }
 
+  get onPage(): boolean{
+    return this.route.includes('ad-page');
+  }
+
   openProfile(): void{
     const options: MatDialogConfig = {
       panelClass: 'no-padding',
