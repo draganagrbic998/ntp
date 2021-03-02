@@ -4,7 +4,7 @@
         *ngIf="route==='ad-list'"
         mat-button
         (click)="toggleList()">
-            {{adService.myProducts ? 'My Products' : 'All Products'}}
+            {{adService.myProducts ? 'All Products' : 'My Products'}}
         </button>
         <button
         *ngIf="route==='ad-list'"
@@ -34,7 +34,7 @@
             placeholder="Search..."
             [formControl]="search">    
         </form>
-        <button *ngIf="route==='ad-list' || route==='profile'" mat-icon-button [matMenuTriggerFor]="more">
+        <button *ngIf="route==='ad-list' || route==='profile' || onPage" mat-icon-button [matMenuTriggerFor]="more">
             <mat-icon matTooltip="more">more_vert</mat-icon>
         </button>
         <mat-menu #more="matMenu">

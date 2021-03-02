@@ -52,6 +52,7 @@ type Advertisement struct {
 	Price       string
 	Description string
 	Images      []Image
+	Active      bool
 }
 
 type Image struct {
@@ -107,9 +108,9 @@ func myAds(response http.ResponseWriter, request *http.Request) {
 	search := "%" + strings.ToLower(request.URL.Query().Get("search")) + "%"
 
 	db.Model(&Advertisement{}).Offset(page*size).Limit(size).
-		Where("user_id = ? and (lower(name) like ? or lower(category) like ? or lower(description) like ?)", userID, search, search, search).
+		Where("(user_id = ? and active=true) and (lower(name) like ? or lower(category) like ? or lower(description) like ?)", userID, search, search, search).
 		Order("created_on desc").Find(&ads)
-	db.Model(&Advertisement{}).Where("user_id = ? and (lower(name) like ? or lower(category) like ? or lower(description) like ?)", search, search, search).Count(&count)
+	db.Model(&Advertisement{}).Where("(user_id = ? and active=true) and (lower(name) like ? or lower(category) like ? or lower(description) like ?)", search, search, search).Count(&count)
 	for index, product := range ads {
 		db.Model(&Image{}).Where("prod_ref = ?", product.ID).Find(&ads[index].Images)
 	}
@@ -143,9 +144,9 @@ func allAds(response http.ResponseWriter, request *http.Request) {
 	search := "%" + strings.ToLower(request.URL.Query().Get("search")) + "%"
 
 	db.Model(&Advertisement{}).Offset(page*size).Limit(size).
-		Where("lower(name) like ? or lower(category) like ? or lower(description) like ?", search, search, search).
+		Where("(active=true) and (lower(name) like ? or lower(category) like ? or lower(description) like ?)", search, search, search).
 		Order("created_on desc").Find(&ads)
-	db.Model(&Advertisement{}).Where("lower(name) like ? or lower(category) like ? or lower(description) like ?", search, search, search).Count(&count)
+	db.Model(&Advertisement{}).Where("(active=true) and (lower(name) like ? or lower(category) like ? or lower(description) like ?)", search, search, search).Count(&count)
 	for index, product := range ads {
 		db.Model(&Image{}).Where("prod_ref = ?", product.ID).Find(&ads[index].Images)
 	}
@@ -171,7 +172,7 @@ func oneAd(response http.ResponseWriter, request *http.Request) {
 	var ad Advertisement
 	var count int
 
-	db.Model(&Advertisement{}).Where("id = ?", mux.Vars(request)["id"]).Find(&ad).Count(&count)
+	db.Model(&Advertisement{}).Where("id = ? and active=true", mux.Vars(request)["id"]).Find(&ad).Count(&count)
 	if count == 0 {
 		response.WriteHeader(404)
 	}
@@ -199,6 +200,7 @@ func createAd(response http.ResponseWriter, request *http.Request) {
 		return
 	}
 
+	ad.Active = true
 	ad.CreatedOn = time.Now().UTC().String()
 	fmt.Println(claims)
 	ad.UserId = int(claims["user_id"].(float64))
@@ -233,7 +235,7 @@ func updateAd(response http.ResponseWriter, request *http.Request) {
 	defer db.Close()
 	var ad Advertisement
 
-	db.Where("id = ?", mux.Vars(request)["id"]).Find(&ad)
+	db.Model(&Advertisement{}).Where("id = ? and active=true", mux.Vars(request)["id"]).Find(&ad)
 	json.NewDecoder(request.Body).Decode(&ad)
 	if strings.TrimSpace(ad.Name) == "" || strings.TrimSpace(ad.Category) == "" || strings.TrimSpace(ad.Price) == "" || strings.TrimSpace(ad.Description) == "" {
 		response.WriteHeader(404)
@@ -320,7 +322,7 @@ func deleteAd(response http.ResponseWriter, request *http.Request) {
 	var ad Advertisement
 	var count int
 
-	db.Model(&Advertisement{}).Where("id = ?", mux.Vars(request)["id"]).Find(&ad).Count(&count)
+	db.Model(&Advertisement{}).Where("id = ? and active=true", mux.Vars(request)["id"]).Find(&ad).Count(&count)
 	if count == 0 {
 		response.WriteHeader(404)
 	}
@@ -328,21 +330,31 @@ func deleteAd(response http.ResponseWriter, request *http.Request) {
 		response.WriteHeader(403)
 		return
 	}
-	db.Delete(&ad)
+	ad.Active = false
+	db.Save(&ad)
+}
+
+func demoData() {
+	sql, err := ioutil.ReadFile("data.sql")
+	if err != nil {
+		panic(err)
+	}
+	db.Exec(string(sql))
 }
 
 func databaseInit() {
 	openDatabase()
 	defer db.Close()
-	//db.DropTableIfExists("advertisements")
-	//db.DropTableIfExists("images")
+	db.DropTableIfExists("advertisements")
+	db.DropTableIfExists("images")
 	db.AutoMigrate(&Advertisement{})
 	db.AutoMigrate(&Image{})
+	//demoData()
 }
 
 func routerInit() {
 	router := mux.NewRouter()
-	router.HandleFunc("/api/ads-my", allAds).Methods("GET")
+	router.HandleFunc("/api/ads-my", myAds).Methods("GET")
 	router.HandleFunc("/api/ads", allAds).Methods("GET")
 	router.HandleFunc("/api/ads/{id}", oneAd).Methods("GET")
 	router.HandleFunc("/api/ads", createAd).Methods("POST")

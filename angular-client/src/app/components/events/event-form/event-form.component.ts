@@ -7,6 +7,7 @@ import { SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS, SNACKBAR_SUCCES
 import { Event } from 'src/app/models/event';
 import { Image } from 'src/app/models/image';
 import { EventService } from 'src/app/services/event/event.service';
+import { DateValidatorService } from './date-validator.service';
 
 @Component({
   selector: 'app-event-form',
@@ -19,15 +20,16 @@ export class EventFormComponent implements OnInit {
     private eventService: EventService,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
-    public location: Location
+    public location: Location,
+    private dateValidator: DateValidatorService
   ) { }
 
   savePending = false;
   eventForm: FormGroup = new FormGroup({
     Category: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
     Name: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
-    From: new FormControl('', [Validators.required]),
-    To: new FormControl('', [Validators.required]),
+    From: new FormControl('', [Validators.required, this.dateValidator.dateValidator()]),
+    To: new FormControl('', [Validators.required, this.dateValidator.dateValidator()]),
     Place: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
     Description: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))])
   });

@@ -157,7 +157,7 @@ func createEvent(response http.ResponseWriter, request *http.Request) {
 		db.Create(&image)
 	}
 
-	db.Where("event_ref = ?", event.ID).Find(&event.Images)
+	db.Model(&Image{}).Where("event_ref = ?", event.ID).Find(&event.Images)
 	enc := json.NewEncoder(response)
 	enc.SetIndent("", "    ")
 	enc.Encode(event)
@@ -174,7 +174,7 @@ func updateEvent(response http.ResponseWriter, request *http.Request) {
 	defer db.Close()
 	var event Event
 
-	db.Where("id = ?", mux.Vars(request)["id"]).Find(&event)
+	db.Model(&Event{}).Where("id = ?", mux.Vars(request)["id"]).Find(&event)
 	json.NewDecoder(request.Body).Decode(&event)
 	if strings.TrimSpace(event.Name) == "" || strings.TrimSpace(event.Category) == "" || strings.TrimSpace(event.From) == "" ||
 		strings.TrimSpace(event.To) == "" || strings.TrimSpace(event.Place) == "" || strings.TrimSpace(event.Description) == "" {
@@ -192,7 +192,9 @@ func updateEvent(response http.ResponseWriter, request *http.Request) {
 	db.Save(&event)
 	var images []Image
 	db.Model(&Image{}).Where("event_ref = ?", event.ID).Find(&images)
-	db.Model(&Image{}).Delete(&images)
+	for _, image := range images {
+		db.Delete(&image)
+	}
 
 	for _, image := range event.Images {
 		image.EventRef = event.ID
@@ -207,7 +209,7 @@ func updateEvent(response http.ResponseWriter, request *http.Request) {
 		db.Create(&image)
 	}
 
-	db.Where("event_ref = ?", event.ID).Find(&event.Images)
+	db.Model(&Image{}).Where("event_ref = ?", event.ID).Find(&event.Images)
 	enc := json.NewEncoder(response)
 	enc.SetIndent("", "    ")
 	enc.Encode(event)
@@ -271,13 +273,22 @@ func statistic(response http.ResponseWriter, request *http.Request) {
 	enc.Encode(result)
 }
 
+func demoData() {
+	sql, err := ioutil.ReadFile("data.sql")
+	if err != nil {
+		panic(err)
+	}
+	db.Exec(string(sql))
+}
+
 func databaseInit() {
 	openDatabase()
 	defer db.Close()
-	//db.DropTableIfExists("events")
-	//db.DropTableIfExists("images")
+	db.DropTableIfExists("events")
+	db.DropTableIfExists("images")
 	db.AutoMigrate(&Event{})
 	db.AutoMigrate(&Image{})
+	//demoData()
 }
 
 func routerInit() {
