@@ -36,7 +36,7 @@ Klijent koji omogucava uvid u analitiku sistema. Kada administrator unutar Pharo
     START predstavlja pocetnu godinu od koje se analizira statistika odabranog entiteta. Godina mora biti cetvorocifren broj.
   </li>
   <li>
-    END predstavlja krajnju godinu do koje se analizira statistika odabranog entiteta. Godina mora biti cetvorocifren broj i mora biti veci od pocetne godine.
+    END predstavlja krajnju godinu do koje se analizira statistika odabranog entiteta. Godina mora biti cetvorocifren broj, mora biti veca od pocetne godine i ne sme biti veca od tekuce godine. 
   </li>
   <li>
     SHAPE omogucava korisniku odabir prikaza grafika u vidu plot-a (ako se unese "dots") i bar-ova (ako se unese "bars").
