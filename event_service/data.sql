@@ -1,15 +1,15 @@
 insert into events(id, created_on, user_id, email, product_id, name, category, "from", "to", place, description)
-values (1, '2015-03-02', 1, 'draganaasd@gmail.com', 1, 'Advertisement One', 'FAIR', '2015-03-02', '2015-03-10', 'Novi Sad', 'Description One');
+values (1, '2014-03-02', 1, 'draganaasd@gmail.com', 1, 'Advertisement One', 'FAIR', '2015-03-02', '2015-03-10', 'Novi Sad', 'Description One');
 insert into events(id, created_on, user_id, email, product_id, name, category, "from", "to", place, description)
-values (2, '2015-03-02', 1, 'draganaasd@gmail.com', 2, 'Advertisement Two', 'MANIFESTATION', '2015-03-02', '2015-03-10', 'Novi Sad', 'Description Two');
+values (2, '2014-03-02', 1, 'draganaasd@gmail.com', 2, 'Advertisement Two', 'MANIFESTATION', '2015-03-02', '2015-03-10', 'Novi Sad', 'Description Two');
 insert into events(id, created_on, user_id, email, product_id, name, category, "from", "to", place, description)
-values (3, '2015-03-02', 1, 'draganaasd@gmail.com', 3, 'Advertisement Three', 'OTHER', '2015-03-02', '2015-03-10', 'Novi Sad', 'Description Three');
+values (3, '2014-03-02', 1, 'draganaasd@gmail.com', 3, 'Advertisement Three', 'OTHER', '2015-03-02', '2015-03-10', 'Novi Sad', 'Description Three');
 insert into events(id, created_on, user_id, email, product_id, name, category, "from", "to", place, description)
-values (4, '2015-03-02', 1, 'draganaasd@gmail.com', 4, 'Advertisement Four', 'FAIR', '2015-03-02', '2015-03-10', 'Novi Sad', 'Description Four');
+values (4, '2014-03-02', 1, 'draganaasd@gmail.com', 4, 'Advertisement Four', 'FAIR', '2015-03-02', '2015-03-10', 'Novi Sad', 'Description Four');
 insert into events(id, created_on, user_id, email, product_id, name, category, "from", "to", place, description)
 values (5, '2015-03-02', 1, 'draganaasd@gmail.com', 5, 'Advertisement Five', 'MANIFESTATION', '2015-03-02', '2015-03-10', 'Novi Sad', 'Description Five');
 insert into events(id, created_on, user_id, email, product_id, name, category, "from", "to", place, description)
-values (6, '2016-03-02', 1, 'draganaasd@gmail.com', 6, 'Advertisement Six', 'OTHER', '2015-03-02', '2015-03-10', 'Novi Sad', 'Description Six');
+values (6, '2015-03-02', 1, 'draganaasd@gmail.com', 6, 'Advertisement Six', 'OTHER', '2015-03-02', '2015-03-10', 'Novi Sad', 'Description Six');
 insert into events(id, created_on, user_id, email, product_id, name, category, "from", "to", place, description)
 values (7, '2016-03-02', 1, 'draganaasd@gmail.com', 7, 'Advertisement Seven', 'OTHER', '2015-03-02', '2015-03-10', 'Novi Sad', 'Description Seven');
 insert into events(id, created_on, user_id, email, product_id, name, category, "from", "to", place, description)
@@ -24,11 +24,11 @@ values (11, '2017-03-02', 2, 'draganagrbicnet@gmail.com', 11, 'Advertisement Ele
 insert into events(id, created_on, user_id, email, product_id, name, category, "from", "to", place, description)
 values (12, '2017-03-02', 2, 'draganagrbicnet@gmail.com', 12, 'Advertisement Twelve', 'MANIFESTATION', '2015-03-02', '2015-03-10', 'Novi Sad', 'Description Twelve');
 insert into events(id, created_on, user_id, email, product_id, name, category, "from", "to", place, description)
-values (13, '2017-03-02', 2, 'draganagrbicnet@gmail.com', 13, 'Advertisement Thirteen', 'OTHER', '2015-03-02', '2015-03-10', 'Novi Sad', 'Description Thirteen');
+values (13, '2018-03-02', 2, 'draganagrbicnet@gmail.com', 13, 'Advertisement Thirteen', 'OTHER', '2015-03-02', '2015-03-10', 'Novi Sad', 'Description Thirteen');
 insert into events(id, created_on, user_id, email, product_id, name, category, "from", "to", place, description)
-values (14, '2017-03-02', 2, 'draganagrbicnet@gmail.com', 14, 'Advertisement Fourteen', 'FAIR', '2015-03-02', '2015-03-10', 'Novi Sad', 'Description Fourteen');
+values (14, '2018-03-02', 2, 'draganagrbicnet@gmail.com', 14, 'Advertisement Fourteen', 'FAIR', '2015-03-02', '2015-03-10', 'Novi Sad', 'Description Fourteen');
 insert into events(id, created_on, user_id, email, product_id, name, category, "from", "to", place, description)
-values (15, '2017-03-02', 2, 'draganagrbicnet@gmail.com', 15, 'Advertisement Fifteen', 'MANIFESTATION', '2015-03-02', '2015-03-10', 'Novi Sad', 'Description Fifteen');
+values (15, '2018-03-02', 2, 'draganagrbicnet@gmail.com', 15, 'Advertisement Fifteen', 'MANIFESTATION', '2015-03-02', '2015-03-10', 'Novi Sad', 'Description Fifteen');
 insert into events(id, created_on, user_id, email, product_id, name, category, "from", "to", place, description)
 values (16, '2018-03-02', 2, 'draganagrbicnet@gmail.com', 16, 'Advertisement Sixteen', 'OTHER', '2015-03-02', '2015-03-10', 'Novi Sad', 'Description Sixteen');
 insert into events(id, created_on, user_id, email, product_id, name, category, "from", "to", place, description)
@@ -41,7 +41,7 @@ insert into events(id, created_on, user_id, email, product_id, name, category, "
 values (20, '2018-03-02', 2, 'draganagrbicnet@gmail.com', 20, 'Advertisement Twenty', 'FAIR', '2015-03-02', '2015-03-10', 'Novi Sad', 'Description Twenty');
 
 insert into events(id, created_on, user_id, email, product_id, name, category, "from", "to", place, description)
-values (21, '2019-03-02', 3, 'dragana.grbic.98@uns.ac.rs', 21, 'Advertisement Twenty One', 'FAIR', '2015-03-02', '2015-03-10', 'Novi Sad', 'Description Twenty One');
+values (21, '2018-03-02', 3, 'dragana.grbic.98@uns.ac.rs', 21, 'Advertisement Twenty One', 'FAIR', '2015-03-02', '2015-03-10', 'Novi Sad', 'Description Twenty One');
 insert into events(id, created_on, user_id, email, product_id, name, category, "from", "to", place, description)
 values (22, '2019-03-02', 3, 'dragana.grbic.98@uns.ac.rs', 22, 'Advertisement Twenty Two', 'MANIFESTATION', '2015-03-02', '2015-03-10', 'Novi Sad', 'Description Twenty Two');
 insert into events(id, created_on, user_id, email, product_id, name, category, "from", "to", place, description)
@@ -49,7 +49,7 @@ values (23, '2019-03-02', 3, 'dragana.grbic.98@uns.ac.rs', 23, 'Advertisement Tw
 insert into events(id, created_on, user_id, email, product_id, name, category, "from", "to", place, description)
 values (24, '2019-03-02', 3, 'dragana.grbic.98@uns.ac.rs', 24, 'Advertisement Twenty Four', 'FAIR', '2015-03-02', '2015-03-10', 'Novi Sad', 'Description Twenty Four');
 insert into events(id, created_on, user_id, email, product_id, name, category, "from", "to", place, description)
-values (25, '2019-03-02', 3, 'dragana.grbic.98@uns.ac.rscom', 25, 'Advertisement Twenty Five', 'MANIFESTATION', '2015-03-02', '2015-03-10', 'Novi Sad', 'Description Twenty Five');
+values (25, '2020-03-02', 3, 'dragana.grbic.98@uns.ac.rscom', 25, 'Advertisement Twenty Five', 'MANIFESTATION', '2015-03-02', '2015-03-10', 'Novi Sad', 'Description Twenty Five');
 insert into events(id, created_on, user_id, email, product_id, name, category, "from", "to", place, description)
 values (26, '2020-03-02', 3, 'dragana.grbic.98@uns.ac.rs', 26, 'Advertisement Twenty Six', 'OTHER', '2015-03-02', '2015-03-10', 'Novi Sad', 'Description Twenty Six');
 insert into events(id, created_on, user_id, email, product_id, name, category, "from", "to", place, description)

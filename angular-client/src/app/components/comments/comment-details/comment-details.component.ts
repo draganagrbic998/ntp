@@ -73,7 +73,7 @@ export class CommentDetailsComponent implements OnInit {
           this.comment.disliked = !this.comment.disliked;
           if (this.comment.disliked){
             this.comment.dislikes += 1;
-            if (this.comment.likes){
+            if (this.comment.liked){
               this.comment.likes -= 1;
               this.comment.liked = false;
             }

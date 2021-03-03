@@ -1,5 +1,5 @@
-entity: entity start: start end: end
-	|url response graph dataset points xcords ycords xmin ymin ylabel|
+entity: entity start: start end: end shape: shape
+	|url response graph dataset points xcords ycords xmin ymin xmax ymax ylabel|
 
 	
 	(entity ~= 'ads') & (entity ~= 'events') & (entity ~= 'comments') & 
@@ -14,6 +14,12 @@ entity: entity start: start end: end
 		ifTrue: [ self error: 'end must have 4 digits' ].
 	start >= end
 		ifTrue: [ self error: 'end must be greater than start' ].
+	end > (Date today year)
+		ifTrue: [ self error: 'end cant be greater than current year' ].
+	
+	
+	(shape ~= 'dots') & (shape ~= 'bars')
+		ifTrue: [ self error: 'shape must be "dots" or "bars"' ].
 	
 	
 	entity = 'ads'
@@ -25,7 +31,7 @@ entity: entity start: start end: end
 	entity = 'likes'
 		ifTrue: [ url := 'http://localhost:8003/api/statistic-likes/'. ylabel := 'Likes Number'. ].
 	entity = 'dislikes'
-		ifTrue: [ url := 'http://localhost:8001/api/statistic-dislikes/'. ylabel := 'Dislikes Number'. ].
+		ifTrue: [ url := 'http://localhost:8003/api/statistic-dislikes/'. ylabel := 'Dislikes Number'. ].
 		
 
 	response := (ZnClient new 
@@ -36,28 +42,39 @@ entity: entity start: start end: end
 		get).
 	
 
-		graph := RTGrapher new .
-		dataset := RTData new.
-		dataset dotShape color: (Color red trans).
-		dataset connectColor: (Color red alpha: 0.4).
-
 		xcords := response collect: [ :each | each at: 1 ].
 		ycords := response collect: [ :each | each at: 2 ].
 		xmin := xcords min.
 		ymin := ycords min.
-		points :=  response collect: [ :each | ((each at: 1) -xmin) @ ((each at: 2)-ymin) ].
-
+		xmax := xcords max.
+		ymax := ycords max.
+		
+		
+		graph := RTGrapher new .
+		dataset := RTData new.
+		shape = 'dots'
+			ifTrue: [ dataset dotShape color: (Color red trans). ]
+			ifFalse: [ dataset barShape color: (Color red trans). ].
+		dataset connectColor: (Color red alpha: 0.4).
+		
+		
+		points :=  response collect: [ :each | ((each at: 1) - xmin) @ ((each at: 2) - ymin) ].
 		dataset points: points.
 		dataset x: #x.
 		dataset y: #y.
 		graph add: dataset.
 
-		graph axisX noDecimal .
-		graph axisY decimal: 1 .
+
+		graph axisX numberOfTicks: (xmax-xmin).
+		graph axisX numberOfLabels: (xmax-xmin).
+		graph axisY numberOfTicks: (ymax-ymin).
+		graph axisY numberOfLabels: (ymax-ymin).
+		
+		
+		graph axisX labelConversion: [ :x | x + xmin].
+		graph axisY labelConversion: [ :y | y + ymin ].
 		graph axisX title: 'Year'.
 		graph axisY title: ylabel.
-		graph axisX labelConversion: [ :x | (x + xmin) asInteger ].
-		graph axisY labelConversion: [ :y | y + ymin ].
+		
 		
 		^graph.
-	

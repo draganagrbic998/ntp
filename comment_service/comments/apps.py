@@ -12,6 +12,6 @@ class CommentsConfig(AppConfig):
         insert_path = os.path.join(os.path.dirname(__file__), 'insert.sql')
         with connection.cursor() as c:
             c.execute(open(delete_path).read())
-            #c.execute(open(insert_path).read())
+            c.execute(open(insert_path).read())
 
 

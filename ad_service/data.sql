@@ -1,7 +1,7 @@
 insert into advertisements(id, created_on, user_id, email, name, category, price, description, active)
-values (1, '2015-03-02', 1, 'draganaasd@gmail.com', 'Advertisement One', 'HONEY', 123, 'Description One', true);
+values (1, '2014-03-02', 1, 'draganaasd@gmail.com', 'Advertisement One', 'HONEY', 123, 'Description One', true);
 insert into advertisements(id, created_on, user_id, email, name, category, price, description, active)
-values (2, '2015-03-02', 1, 'draganaasd@gmail.com', 'Advertisement Two', 'POLLEN', 456, 'Description Two', true);
+values (2, '2014-03-02', 1, 'draganaasd@gmail.com', 'Advertisement Two', 'POLLEN', 456, 'Description Two', true);
 insert into advertisements(id, created_on, user_id, email, name, category, price, description, active)
 values (3, '2015-03-02', 1, 'draganaasd@gmail.com', 'Advertisement Three', 'ROYAL JELLY', 789, 'Description Three', true);
 insert into advertisements(id, created_on, user_id, email, name, category, price, description, active)
@@ -15,9 +15,9 @@ values (7, '2016-03-02', 1, 'draganaasd@gmail.com', 'Advertisement Seven', 'OTHE
 insert into advertisements(id, created_on, user_id, email, name, category, price, description, active)
 values (8, '2016-03-02', 1, 'draganaasd@gmail.com', 'Advertisement Eight', 'HONEY', 456, 'Description Eight', true);
 insert into advertisements(id, created_on, user_id, email, name, category, price, description, active)
-values (9, '2016-03-02', 1, 'draganaasd@gmail.com', 'Advertisement Nine', 'POLLEN', 789, 'Description Nine', true);
+values (9, '2017-03-02', 1, 'draganaasd@gmail.com', 'Advertisement Nine', 'POLLEN', 789, 'Description Nine', true);
 insert into advertisements(id, created_on, user_id, email, name, category, price, description, active)
-values (10, '2016-03-02', 1, 'draganaasd@gmail.com', 'Advertisement Ten', 'PROPOLIS', 123, 'Description Ten', true);
+values (10, '2017-03-02', 1, 'draganaasd@gmail.com', 'Advertisement Ten', 'PROPOLIS', 123, 'Description Ten', true);
 
 insert into advertisements(id, created_on, user_id, email, name, category, price, description, active)
 values (11, '2017-03-02', 2, 'draganagrbicnet@gmail.com', 'Advertisement Eleven', 'HONEY', 123, 'Description Eleven', true);
@@ -47,9 +47,9 @@ values (22, '2019-03-02', 3, 'dragana.grbic.98@uns.ac.rs', 'Advertisement Twenty
 insert into advertisements(id, created_on, user_id, email, name, category, price, description, active)
 values (23, '2019-03-02', 3, 'dragana.grbic.98@uns.ac.rs', 'Advertisement Twenty Three', 'ROYAL JELLY', 789, 'Description Twenty Three', true);
 insert into advertisements(id, created_on, user_id, email, name, category, price, description, active)
-values (24, '2019-03-02', 3, 'dragana.grbic.98@uns.ac.rs', 'Advertisement Twenty Four', 'PROPOLIS', 123, 'Description Twenty Four', true);
+values (24, '2020-03-02', 3, 'dragana.grbic.98@uns.ac.rs', 'Advertisement Twenty Four', 'PROPOLIS', 123, 'Description Twenty Four', true);
 insert into advertisements(id, created_on, user_id, email, name, category, price, description, active)
-values (25, '2019-03-02', 3, 'dragana.grbic.98@uns.ac.rscom', 'Advertisement Twenty Five', 'WAX', 456, 'Description Twenty Five', true);
+values (25, '2020-03-02', 3, 'dragana.grbic.98@uns.ac.rscom', 'Advertisement Twenty Five', 'WAX', 456, 'Description Twenty Five', true);
 insert into advertisements(id, created_on, user_id, email, name, category, price, description, active)
 values (26, '2020-03-02', 3, 'dragana.grbic.98@uns.ac.rs', 'Advertisement Twenty Six', 'BEE VENOM', 789, 'Description Twenty Six', true);
 insert into advertisements(id, created_on, user_id, email, name, category, price, description, active)
@@ -59,7 +59,7 @@ values (28, '2020-03-02', 3, 'dragana.grbic.98@uns.ac.rs', 'Advertisement Twenty
 insert into advertisements(id, created_on, user_id, email, name, category, price, description, active)
 values (29, '2020-03-02', 3, 'dragana.grbic.98@uns.ac.rs', 'Advertisement Twenty Nine', 'POLLEN', 789, 'Description Twenty Nine', true);
 insert into advertisements(id, created_on, user_id, email, name, category, price, description, active)
-values (30, '2020-03-02', 3, 'dragana.grbic.98@uns.ac.rs', 'Advertisement Thirty Two', 'PROPOLIS', 123, 'Thirty Twenty', true);
+values (30, '2020-03-02', 3, 'dragana.grbic.98@uns.ac.rs', 'Advertisement Thirty', 'PROPOLIS', 123, 'Twenty', true);
 
 insert into images (id, path, prod_ref) values (1, 'http://localhost:8001/image.jpeg', 1);
 insert into images (id, path, prod_ref) values (2, 'http://localhost:8001/image.jpeg', 2);

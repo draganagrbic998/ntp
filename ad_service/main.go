@@ -118,7 +118,6 @@ func myAds(response http.ResponseWriter, request *http.Request) {
 	response.Header().Set(enableHeader, firstPageHeader+", "+lastPageHeader)
 	response.Header().Set(firstPageHeader, strconv.FormatBool(page == 0))
 	response.Header().Set(lastPageHeader, strconv.FormatBool(size*(page+1) >= count))
-
 	enc := json.NewEncoder(response)
 	enc.SetIndent("", "    ")
 	enc.Encode(ads)
@@ -154,7 +153,6 @@ func allAds(response http.ResponseWriter, request *http.Request) {
 	response.Header().Set(enableHeader, firstPageHeader+", "+lastPageHeader)
 	response.Header().Set(firstPageHeader, strconv.FormatBool(page == 0))
 	response.Header().Set(lastPageHeader, strconv.FormatBool(size*(page+1) >= count))
-
 	enc := json.NewEncoder(response)
 	enc.SetIndent("", "    ")
 	enc.Encode(ads)
@@ -202,20 +200,24 @@ func createAd(response http.ResponseWriter, request *http.Request) {
 
 	ad.Active = true
 	ad.CreatedOn = time.Now().UTC().String()
-	fmt.Println(claims)
 	ad.UserId = int(claims["user_id"].(float64))
 	ad.Email = claims["email"].(string)
-	db.Create(&ad)
+
+	var count int
+	db.Table("advertisements").Select("max(id)").Row().Scan(&count)
+	ad.ID = count + 1
+	db.Save(&ad)
+	db.Table("images").Select("max(id)").Row().Scan(&count)
 
 	for _, image := range ad.Images {
+		count++
 		image.ProdRef = ad.ID
-		var count int
-		db.Model(&Image{}).Count(&count)
+		image.ID = count
 		data, _ := base64.StdEncoding.DecodeString(strings.Split(image.Path, ",")[1])
 		path := "image" + strconv.Itoa(count) + "." + strings.Split(strings.Split(image.Path, ";")[0], "/")[1]
 		ioutil.WriteFile(path, data, 0644)
 		image.Path = serviceURL + "/" + path
-		db.Create(&image)
+		db.Save(&image)
 	}
 
 	db.Model(&Image{}).Where("prod_ref = ?", ad.ID).Find(&ad.Images)
@@ -250,29 +252,55 @@ func updateAd(response http.ResponseWriter, request *http.Request) {
 	ad.UserId = int(claims["user_id"].(float64))
 	ad.Email = claims["email"].(string)
 	db.Save(&ad)
-	var images []Image
-	db.Model(&Image{}).Where("prod_ref = ?", ad.ID).Find(&images)
-	for _, image := range images {
-		db.Delete(&image)
-	}
+
+	var count int
+	db.Table("images").Select("max(id)").Row().Scan(&count)
+	db.Where("prod_ref = ?", ad.ID).Delete(&Image{})
 
 	for _, image := range ad.Images {
+		count++
 		image.ProdRef = ad.ID
 		if image.ID == 0 {
-			var count int
-			db.Model(&Image{}).Count(&count)
+			image.ID = count
 			data, _ := base64.StdEncoding.DecodeString(strings.Split(image.Path, ",")[1])
 			path := "image" + strconv.Itoa(count) + "." + strings.Split(strings.Split(image.Path, ";")[0], "/")[1]
 			ioutil.WriteFile(path, data, 0644)
 			image.Path = serviceURL + "/" + path
+		} else {
+			image.ID = count
 		}
-		db.Create(&image)
+		db.Save(&image)
 	}
 
 	db.Model(&Image{}).Where("prod_ref = ?", ad.ID).Find(&ad.Images)
 	enc := json.NewEncoder(response)
 	enc.SetIndent("", "    ")
 	enc.Encode(ad)
+}
+
+func deleteAd(response http.ResponseWriter, request *http.Request) {
+	claims := parseJWT(request)
+	if claims == nil {
+		response.WriteHeader(401)
+		return
+	}
+
+	openDatabase()
+	defer db.Close()
+	var ad Advertisement
+	var count int
+
+	db.Model(&Advertisement{}).Where("id = ? and active=true", mux.Vars(request)["id"]).Find(&ad).Count(&count)
+	if count == 0 {
+		response.WriteHeader(404)
+	}
+	if int(claims["user_id"].(float64)) != ad.UserId {
+		response.WriteHeader(403)
+		return
+	}
+	ad.Active = false
+	db.Save(&ad)
+	db.Where("prod_ref = ?", ad.ID).Delete(&Image{})
 }
 
 func statistic(response http.ResponseWriter, request *http.Request) {
@@ -310,30 +338,6 @@ func statistic(response http.ResponseWriter, request *http.Request) {
 	enc.Encode(result)
 }
 
-func deleteAd(response http.ResponseWriter, request *http.Request) {
-	claims := parseJWT(request)
-	if claims == nil {
-		response.WriteHeader(401)
-		return
-	}
-
-	openDatabase()
-	defer db.Close()
-	var ad Advertisement
-	var count int
-
-	db.Model(&Advertisement{}).Where("id = ? and active=true", mux.Vars(request)["id"]).Find(&ad).Count(&count)
-	if count == 0 {
-		response.WriteHeader(404)
-	}
-	if int(claims["user_id"].(float64)) != ad.UserId {
-		response.WriteHeader(403)
-		return
-	}
-	ad.Active = false
-	db.Save(&ad)
-}
-
 func demoData() {
 	sql, err := ioutil.ReadFile("data.sql")
 	if err != nil {
@@ -349,7 +353,7 @@ func databaseInit() {
 	db.DropTableIfExists("images")
 	db.AutoMigrate(&Advertisement{})
 	db.AutoMigrate(&Image{})
-	//demoData()
+	demoData()
 }
 
 func routerInit() {

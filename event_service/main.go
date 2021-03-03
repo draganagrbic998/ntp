@@ -144,17 +144,22 @@ func createEvent(response http.ResponseWriter, request *http.Request) {
 	event.CreatedOn = time.Now().UTC().String()
 	event.UserId = int(claims["user_id"].(float64))
 	event.Email = claims["email"].(string)
-	db.Create(&event)
+
+	var count int
+	db.Table("events").Select("max(id)").Row().Scan(&count)
+	event.ID = count + 1
+	db.Save(&event)
+	db.Table("images").Select("max(id)").Row().Scan(&count)
 
 	for _, image := range event.Images {
+		count++
 		image.EventRef = event.ID
-		var count int
-		db.Model(&Image{}).Count(&count)
+		image.ID = count
 		data, _ := base64.StdEncoding.DecodeString(strings.Split(image.Path, ",")[1])
 		path := "image" + strconv.Itoa(count) + "." + strings.Split(strings.Split(image.Path, ";")[0], "/")[1]
 		ioutil.WriteFile(path, data, 0644)
 		image.Path = serviceURL + "/" + path
-		db.Create(&image)
+		db.Save(&image)
 	}
 
 	db.Model(&Image{}).Where("event_ref = ?", event.ID).Find(&event.Images)
@@ -190,23 +195,24 @@ func updateEvent(response http.ResponseWriter, request *http.Request) {
 	event.UserId = int(claims["user_id"].(float64))
 	event.Email = claims["email"].(string)
 	db.Save(&event)
-	var images []Image
-	db.Model(&Image{}).Where("event_ref = ?", event.ID).Find(&images)
-	for _, image := range images {
-		db.Delete(&image)
-	}
+
+	var count int
+	db.Table("images").Select("max(id)").Row().Scan(&count)
+	db.Where("event_ref = ?", event.ID).Delete(&Image{})
 
 	for _, image := range event.Images {
+		count++
 		image.EventRef = event.ID
 		if image.ID == 0 {
-			var count int
-			db.Model(&Image{}).Count(&count)
+			image.ID = count
 			data, _ := base64.StdEncoding.DecodeString(strings.Split(image.Path, ",")[1])
 			path := "image" + strconv.Itoa(count) + "." + strings.Split(strings.Split(image.Path, ";")[0], "/")[1]
 			ioutil.WriteFile(path, data, 0644)
 			image.Path = serviceURL + "/" + path
+		} else {
+			image.ID = count
 		}
-		db.Create(&image)
+		db.Save(&image)
 	}
 
 	db.Model(&Image{}).Where("event_ref = ?", event.ID).Find(&event.Images)
@@ -236,6 +242,7 @@ func deleteEvent(response http.ResponseWriter, request *http.Request) {
 		return
 	}
 	db.Delete(&event)
+	db.Where("event_ref = ?", event.ID).Delete(&Image{})
 }
 
 func statistic(response http.ResponseWriter, request *http.Request) {
@@ -288,7 +295,7 @@ func databaseInit() {
 	db.DropTableIfExists("images")
 	db.AutoMigrate(&Event{})
 	db.AutoMigrate(&Image{})
-	//demoData()
+	demoData()
 }
 
 func routerInit() {
