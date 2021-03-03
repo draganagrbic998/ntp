@@ -39,7 +39,7 @@ Klijent koji omogucava uvid u analitiku sistema. Kada administrator unutar Pharo
     END predstavlja krajnju godinu do koje se analizira statistika odabranog entiteta. Godina mora biti cetvorocifren broj i mora biti veci od pocetne godine.
   </li>
   <li>
-    SHAPE omogucava korisniku odabir prikaza grafika u vidu plot-a (ako se unese "dots") i bar-ova (ako se unese "bar").
+    SHAPE omogucava korisniku odabir prikaza grafika u vidu plot-a (ako se unese "dots") i bar-ova (ako se unese "bars").
   </li>
 </ul>
 <h6>Django admin aplikacija</h6>
@@ -57,10 +57,10 @@ Users mikroservis pruza koriscenje ugradjene Django admin aplikacije koja omoguc
     U virtuelno okruzenje instalirati sve biblioteke navedene u <b>requirements.txt</b> fajlu.
   </li>
   <li>
-    Aktivirati virtuelno okruzenje, pozicionirati se u <b>user_service</b> i pokrenuti komandu <b>python manage.py runserver</b>.
+    Aktivirati virtuelno okruzenje, pozicionirati se u <b>user_service</b> i pokrenuti komande <b>python manage.py migrate</b> i <b>python manage.py runserver</b>.
   </li>
   <li>
-    Aktivirati virtuelno okruzenje, pozitionirati se u <b>comment_service</b> i pokrenuti komandu <b>python manage.py runserver 8003</b>.
+    Aktivirati virtuelno okruzenje, pozitionirati se u <b>comment_service</b> i pokrenuti komande <b>python manage.py migrate</b> i <b>python manage.py runserver 8003</b>.
   </li>
   <li>
     Pokrenuti komande za preuzimanje neophodnih Golang biblioteka:
