@@ -18,13 +18,10 @@ func init() {
 
 func TestGetAdsEmpty(t *testing.T) {
 
-	req, err := http.NewRequest("GET", "/api/ads", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
-
+	req, _ := http.NewRequest("GET", "/api/ads", nil)
 	token := createToken(1)
 	req.Header.Set("Authorization", "JWT "+token)
+
 	rr := httptest.NewRecorder()
 	handler := http.HandlerFunc(getAdsEndpoint)
 	handler.ServeHTTP(rr, req)
@@ -43,13 +40,10 @@ func TestGetAdsEmpty(t *testing.T) {
 
 func TestGetAdsWithLimit(t *testing.T) {
 
-	req, err := http.NewRequest("GET", "/api/ads?size=5", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
-
+	req, _ := http.NewRequest("GET", "/api/ads?size=5", nil)
 	token := createToken(1)
 	req.Header.Set("Authorization", "JWT "+token)
+
 	rr := httptest.NewRecorder()
 	handler := http.HandlerFunc(getAdsEndpoint)
 	handler.ServeHTTP(rr, req)
@@ -73,13 +67,10 @@ func TestGetAdsWithLimit(t *testing.T) {
 
 func TestGetAdsWithOffset(t *testing.T) {
 
-	req, err := http.NewRequest("GET", "/api/ads?page=1&size=5", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
-
+	req, _ := http.NewRequest("GET", "/api/ads?page=1&size=5", nil)
 	token := createToken(1)
 	req.Header.Set("Authorization", "JWT "+token)
+
 	rr := httptest.NewRecorder()
 	handler := http.HandlerFunc(getAdsEndpoint)
 	handler.ServeHTTP(rr, req)
@@ -103,13 +94,10 @@ func TestGetAdsWithOffset(t *testing.T) {
 
 func TestGetAdsWithSearch(t *testing.T) {
 
-	req, err := http.NewRequest("GET", "/api/ads?size=5&search=3", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
-
+	req, _ := http.NewRequest("GET", "/api/ads?size=5&search=3", nil)
 	token := createToken(1)
 	req.Header.Set("Authorization", "JWT "+token)
+
 	rr := httptest.NewRecorder()
 	handler := http.HandlerFunc(getAdsEndpoint)
 	handler.ServeHTTP(rr, req)
@@ -133,13 +121,10 @@ func TestGetAdsWithSearch(t *testing.T) {
 
 func TestGetMyAdsEmpty(t *testing.T) {
 
-	req, err := http.NewRequest("GET", "/api/ads-my", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
-
+	req, _ := http.NewRequest("GET", "/api/ads-my", nil)
 	token := createToken(1)
 	req.Header.Set("Authorization", "JWT "+token)
+
 	rr := httptest.NewRecorder()
 	handler := http.HandlerFunc(getMyAdsEndpoint)
 	handler.ServeHTTP(rr, req)
@@ -158,13 +143,10 @@ func TestGetMyAdsEmpty(t *testing.T) {
 
 func TestGetMyAdsWithLimit(t *testing.T) {
 
-	req, err := http.NewRequest("GET", "/api/ads-my?size=5", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
-
+	req, _ := http.NewRequest("GET", "/api/ads-my?size=5", nil)
 	token := createToken(1)
 	req.Header.Set("Authorization", "JWT "+token)
+
 	rr := httptest.NewRecorder()
 	handler := http.HandlerFunc(getMyAdsEndpoint)
 	handler.ServeHTTP(rr, req)
@@ -188,13 +170,10 @@ func TestGetMyAdsWithLimit(t *testing.T) {
 
 func TestGetMyAdsWithOffset(t *testing.T) {
 
-	req, err := http.NewRequest("GET", "/api/ads-my?page=1&size=5", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
-
+	req, _ := http.NewRequest("GET", "/api/ads-my?page=1&size=5", nil)
 	token := createToken(1)
 	req.Header.Set("Authorization", "JWT "+token)
+
 	rr := httptest.NewRecorder()
 	handler := http.HandlerFunc(getMyAdsEndpoint)
 	handler.ServeHTTP(rr, req)
@@ -218,13 +197,10 @@ func TestGetMyAdsWithOffset(t *testing.T) {
 
 func TestGetMyAdsWithSearch(t *testing.T) {
 
-	req, err := http.NewRequest("GET", "/api/ads-my?size=5&search=3", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
-
+	req, _ := http.NewRequest("GET", "/api/ads-my?size=5&search=3", nil)
 	token := createToken(1)
 	req.Header.Set("Authorization", "JWT "+token)
+
 	rr := httptest.NewRecorder()
 	handler := http.HandlerFunc(getMyAdsEndpoint)
 	handler.ServeHTTP(rr, req)
@@ -245,17 +221,13 @@ func TestGetMyAdsWithSearch(t *testing.T) {
 	}
 }
 
-func TestGetAddNotFound(t *testing.T) {
+func TestGetAdNotFound(t *testing.T) {
 
-	req, err := http.NewRequest("GET", "/api/ads/31", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
-
+	req, _ := http.NewRequest("GET", "/api/ads/31", nil)
 	token := createToken(1)
 	req.Header.Set("Authorization", "JWT "+token)
-	rr := httptest.NewRecorder()
 
+	rr := httptest.NewRecorder()
 	r := mux.NewRouter()
 	r.HandleFunc("/api/ads/{id:[0-9]+}", getAdEndpoint).Methods("GET")
 	r.ServeHTTP(rr, req)
@@ -266,17 +238,13 @@ func TestGetAddNotFound(t *testing.T) {
 
 }
 
-func TestGetAdd(t *testing.T) {
+func TestGetAd(t *testing.T) {
 
-	req, err := http.NewRequest("GET", "/api/ads/1", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
-
+	req, _ := http.NewRequest("GET", "/api/ads/1", nil)
 	token := createToken(1)
 	req.Header.Set("Authorization", "JWT "+token)
-	rr := httptest.NewRecorder()
 
+	rr := httptest.NewRecorder()
 	r := mux.NewRouter()
 	r.HandleFunc("/api/ads/{id:[0-9]+}", getAdEndpoint).Methods("GET")
 	r.ServeHTTP(rr, req)
@@ -287,8 +255,9 @@ func TestGetAdd(t *testing.T) {
 
 	var ad advertisement
 	json.NewDecoder(rr.Body).Decode(&ad)
+
 	order := ad.ID == 1 && ad.Active && ad.UserID == 1 &&
-		ad.Name == "Advertisement 1" && ad.Category == "HONEY" && ad.Price == "123" &&
+		ad.Name == "Advertisement 1" && ad.Category == "HONEY" && ad.Price == 123 &&
 		ad.Description == "Description 1" && len(ad.Images) == 1 &&
 		ad.Images[0].ID == 1 && ad.Images[0].Path == "http://localhost:8001/image.jpeg" &&
 		ad.Images[0].ProdRef == 1
@@ -299,23 +268,20 @@ func TestGetAdd(t *testing.T) {
 
 func TestCreateAd(t *testing.T) {
 
-	req, err := http.NewRequest("POST", "/api/ads", bytes.NewBuffer([]byte(fmt.Sprintf(`{
+	req, _ := http.NewRequest("POST", "/api/ads", bytes.NewBuffer([]byte(fmt.Sprintf(`{
 		"name": "test name",
 		"category": "test category",
-		"price": "test price",
+		"price": 123,
 		"description": "test description",
-		"Images": [{
-			"Path": "%s"
+		"images": [{
+			"path": "%s"
 		},{
-			"Path": "%s"
+			"path": "%s"
 		}]
 	}`, base64image(), base64image()))))
-	if err != nil {
-		t.Fatal(err)
-	}
-
 	token := createToken(1)
 	req.Header.Set("Authorization", "JWT "+token)
+
 	rr := httptest.NewRecorder()
 	handler := http.HandlerFunc(createAdEndpoint)
 	handler.ServeHTTP(rr, req)
@@ -323,11 +289,12 @@ func TestCreateAd(t *testing.T) {
 	if status := rr.Code; status != http.StatusOK {
 		t.Error("status code should be 200 OK")
 	}
+
 	var ad advertisement
 	json.NewDecoder(rr.Body).Decode(&ad)
 
 	order := ad.ID == 31 && ad.Active && ad.UserID == 1 &&
-		ad.Name == "test name" && ad.Category == "test category" && ad.Price == "test price" &&
+		ad.Name == "test name" && ad.Category == "test category" && ad.Price == 123 &&
 		ad.Description == "test description" && len(ad.Images) == 2 &&
 		ad.Images[0].ID == 31 && ad.Images[0].Path == "http://localhost:8001/image31.jpeg" && ad.Images[0].ProdRef == 31 &&
 		ad.Images[1].ID == 32 && ad.Images[1].Path == "http://localhost:8001/image32.jpeg" && ad.Images[1].ProdRef == 31
@@ -340,7 +307,7 @@ func TestCreateAd(t *testing.T) {
 	}
 
 	if count := detachedImagesNumber(); count != 0 {
-		t.Error("invalid number of images")
+		t.Error("invalid number of detached images")
 	}
 
 	_, err1 := os.Stat("image31.jpeg")
@@ -355,23 +322,20 @@ func TestCreateAd(t *testing.T) {
 
 func TestCreateAdBadRequest(t *testing.T) {
 
-	req, err := http.NewRequest("POST", "/api/ads", bytes.NewBuffer([]byte(fmt.Sprintf(`{
+	req, _ := http.NewRequest("POST", "/api/ads", bytes.NewBuffer([]byte(fmt.Sprintf(`{
 		"name": "",
 		"category": "",
 		"price": "",
 		"description": "",
-		"Images": [{
-			"Path": "%s"
+		"images": [{
+			"path": "%s"
 		},{
-			"Path": "%s"
+			"path": "%s"
 		}]
 	}`, base64image(), base64image()))))
-	if err != nil {
-		t.Fatal(err)
-	}
-
 	token := createToken(1)
 	req.Header.Set("Authorization", "JWT "+token)
+
 	rr := httptest.NewRecorder()
 	handler := http.HandlerFunc(createAdEndpoint)
 	handler.ServeHTTP(rr, req)
@@ -383,25 +347,21 @@ func TestCreateAdBadRequest(t *testing.T) {
 
 func TestUpdateAd(t *testing.T) {
 
-	req, err := http.NewRequest("PUT", "/api/ads/31", bytes.NewBuffer([]byte(fmt.Sprintf(`{
-		"name": "test name",
+	req, _ := http.NewRequest("PUT", "/api/ads/31", bytes.NewBuffer([]byte(fmt.Sprintf(`{
+		"name": "test name 2",
 		"category": "test category",
-		"price": "test price",
+		"price": 123,
 		"description": "test description",
-		"Images": [{
-			"Path": "%s"
+		"images": [{
+			"path": "%s"
 		},{
-			"Path": "%s"
+			"path": "%s"
 		}]
 	}`, base64image(), base64image()))))
-	if err != nil {
-		t.Fatal(err)
-	}
-
 	token := createToken(1)
 	req.Header.Set("Authorization", "JWT "+token)
-	rr := httptest.NewRecorder()
 
+	rr := httptest.NewRecorder()
 	r := mux.NewRouter()
 	r.HandleFunc("/api/ads/{id:[0-9]+}", updateAdEndpoint).Methods("PUT")
 	r.ServeHTTP(rr, req)
@@ -409,11 +369,12 @@ func TestUpdateAd(t *testing.T) {
 	if status := rr.Code; status != http.StatusOK {
 		t.Error("status code should be 200 OK")
 	}
+
 	var ad advertisement
 	json.NewDecoder(rr.Body).Decode(&ad)
 
 	order := ad.ID == 31 && ad.Active && ad.UserID == 1 &&
-		ad.Name == "test name" && ad.Category == "test category" && ad.Price == "test price" &&
+		ad.Name == "test name 2" && ad.Category == "test category" && ad.Price == 123 &&
 		ad.Description == "test description" && len(ad.Images) == 2 &&
 		ad.Images[0].ID == 33 && ad.Images[0].Path == "http://localhost:8001/image33.jpeg" && ad.Images[0].ProdRef == 31 &&
 		ad.Images[1].ID == 34 && ad.Images[1].Path == "http://localhost:8001/image34.jpeg" && ad.Images[1].ProdRef == 31
@@ -441,25 +402,21 @@ func TestUpdateAd(t *testing.T) {
 
 func TestUpdateAdBadRequest(t *testing.T) {
 
-	req, err := http.NewRequest("PUT", "/api/ads/1", bytes.NewBuffer([]byte(fmt.Sprintf(`{
+	req, _ := http.NewRequest("PUT", "/api/ads/1", bytes.NewBuffer([]byte(fmt.Sprintf(`{
 		"name": "",
 		"category": "",
 		"price": "",
 		"description": "",
-		"Images": [{
-			"Path": "%s"
+		"images": [{
+			"path": "%s"
 		},{
-			"Path": "%s"
+			"path": "%s"
 		}]
 	}`, base64image(), base64image()))))
-	if err != nil {
-		t.Fatal(err)
-	}
-
 	token := createToken(1)
 	req.Header.Set("Authorization", "JWT "+token)
-	rr := httptest.NewRecorder()
 
+	rr := httptest.NewRecorder()
 	r := mux.NewRouter()
 	r.HandleFunc("/api/ads/{id:[0-9]+}", updateAdEndpoint).Methods("PUT")
 	r.ServeHTTP(rr, req)
@@ -471,25 +428,21 @@ func TestUpdateAdBadRequest(t *testing.T) {
 
 func TestUpdateAdNotFound(t *testing.T) {
 
-	req, err := http.NewRequest("PUT", "/api/ads/40", bytes.NewBuffer([]byte(fmt.Sprintf(`{
+	req, _ := http.NewRequest("PUT", "/api/ads/40", bytes.NewBuffer([]byte(fmt.Sprintf(`{
 		"name": "test name",
 		"category": "test category",
-		"price": "test price",
+		"price": 123,
 		"description": "test description",
-		"Images": [{
-			"Path": "%s"
+		"images": [{
+			"path": "%s"
 		},{
-			"Path": "%s"
+			"path": "%s"
 		}]
 	}`, base64image(), base64image()))))
-	if err != nil {
-		t.Fatal(err)
-	}
-
 	token := createToken(1)
 	req.Header.Set("Authorization", "JWT "+token)
-	rr := httptest.NewRecorder()
 
+	rr := httptest.NewRecorder()
 	r := mux.NewRouter()
 	r.HandleFunc("/api/ads/{id:[0-9]+}", updateAdEndpoint).Methods("PUT")
 	r.ServeHTTP(rr, req)
@@ -501,25 +454,21 @@ func TestUpdateAdNotFound(t *testing.T) {
 
 func TestUpdateAdForbidden(t *testing.T) {
 
-	req, err := http.NewRequest("PUT", "/api/ads/11", bytes.NewBuffer([]byte(fmt.Sprintf(`{
+	req, _ := http.NewRequest("PUT", "/api/ads/11", bytes.NewBuffer([]byte(fmt.Sprintf(`{
 		"name": "test name",
 		"category": "test category",
-		"price": "test price",
+		"price": 123,
 		"description": "test description",
-		"Images": [{
-			"Path": "%s"
+		"images": [{
+			"path": "%s"
 		},{
-			"Path": "%s"
+			"path": "%s"
 		}]
 	}`, base64image(), base64image()))))
-	if err != nil {
-		t.Fatal(err)
-	}
-
 	token := createToken(1)
 	req.Header.Set("Authorization", "JWT "+token)
-	rr := httptest.NewRecorder()
 
+	rr := httptest.NewRecorder()
 	r := mux.NewRouter()
 	r.HandleFunc("/api/ads/{id:[0-9]+}", updateAdEndpoint).Methods("PUT")
 	r.ServeHTTP(rr, req)
@@ -531,15 +480,11 @@ func TestUpdateAdForbidden(t *testing.T) {
 
 func TestDeleteAd(t *testing.T) {
 
-	req, err := http.NewRequest("DELETE", "/api/ads/31", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
-
+	req, _ := http.NewRequest("DELETE", "/api/ads/31", nil)
 	token := createToken(1)
 	req.Header.Set("Authorization", "JWT "+token)
-	rr := httptest.NewRecorder()
 
+	rr := httptest.NewRecorder()
 	r := mux.NewRouter()
 	r.HandleFunc("/api/ads/{id:[0-9]+}", deleteAdEndpoint).Methods("DELETE")
 	r.ServeHTTP(rr, req)
@@ -547,6 +492,7 @@ func TestDeleteAd(t *testing.T) {
 	if status := rr.Code; status != http.StatusOK {
 		t.Error("status code should be 200 OK")
 	}
+
 	var ad advertisement
 	json.NewDecoder(rr.Body).Decode(&ad)
 
@@ -566,15 +512,11 @@ func TestDeleteAd(t *testing.T) {
 
 func TestDeleteAdNotFound(t *testing.T) {
 
-	req, err := http.NewRequest("DELETE", "/api/ads/40", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
-
+	req, _ := http.NewRequest("DELETE", "/api/ads/40", nil)
 	token := createToken(1)
 	req.Header.Set("Authorization", "JWT "+token)
-	rr := httptest.NewRecorder()
 
+	rr := httptest.NewRecorder()
 	r := mux.NewRouter()
 	r.HandleFunc("/api/ads/{id:[0-9]+}", deleteAdEndpoint).Methods("DELETE")
 	r.ServeHTTP(rr, req)
@@ -586,15 +528,11 @@ func TestDeleteAdNotFound(t *testing.T) {
 
 func TestDeleteAdForbidden(t *testing.T) {
 
-	req, err := http.NewRequest("DELETE", "/api/ads/11", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
-
+	req, _ := http.NewRequest("DELETE", "/api/ads/11", nil)
 	token := createToken(1)
 	req.Header.Set("Authorization", "JWT "+token)
-	rr := httptest.NewRecorder()
 
+	rr := httptest.NewRecorder()
 	r := mux.NewRouter()
 	r.HandleFunc("/api/ads/{id:[0-9]+}", deleteAdEndpoint).Methods("DELETE")
 	r.ServeHTTP(rr, req)
@@ -605,35 +543,25 @@ func TestDeleteAdForbidden(t *testing.T) {
 }
 
 func TestStatisticBadRequest(t *testing.T) {
-	req, err := http.NewRequest("GET", "/api/statistic/2020/2020", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
-
+	req, _ := http.NewRequest("GET", "/api/statistic/2020/2020", nil)
 	rr := httptest.NewRecorder()
 	r := mux.NewRouter()
 	r.HandleFunc("/api/statistic/{start:[0-9]+}/{end:[0-9]+}", statisticEndpoint).Methods("GET")
 	r.ServeHTTP(rr, req)
 
 	if status := rr.Code; status != http.StatusBadRequest {
-		fmt.Println(rr.Code)
 		t.Error("status code should be 400 Bad Request")
 	}
 }
 
 func TestStatistic(t *testing.T) {
-	req, err := http.NewRequest("GET", "/api/statistic/2014/2020", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
-
+	req, _ := http.NewRequest("GET", "/api/statistic/2014/2020", nil)
 	rr := httptest.NewRecorder()
 	r := mux.NewRouter()
 	r.HandleFunc("/api/statistic/{start:[0-9]+}/{end:[0-9]+}", statisticEndpoint).Methods("GET")
 	r.ServeHTTP(rr, req)
 
 	if status := rr.Code; status != http.StatusOK {
-		fmt.Println(rr.Code)
 		t.Error("status code should be 200 OK")
 	}
 

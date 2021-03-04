@@ -28,7 +28,7 @@ func getAds(page int, size int, search string) ([]advertisement, int) {
 	return ads, count
 }
 
-func getMyAds(userID, page int, size int, search string) ([]advertisement, int) {
+func getMyAds(userID int, page int, size int, search string) ([]advertisement, int) {
 	openDatabase()
 	defer db.Close()
 	var ads []advertisement
@@ -70,7 +70,7 @@ func createAd(ad advertisement) advertisement {
 	var count int
 	db.Table("images").Select("max(id)").Row().Scan(&count)
 
-	for i, image := range ad.Images {
+	for index, image := range ad.Images {
 		count++
 		image.ProdRef = ad.ID
 		data, _ := base64.StdEncoding.DecodeString(strings.Split(image.Path, ",")[1])
@@ -78,7 +78,7 @@ func createAd(ad advertisement) advertisement {
 		ioutil.WriteFile(path, data, 0644)
 		image.Path = serviceURL + "/" + path
 		db.Create(&image)
-		ad.Images[i] = image
+		ad.Images[index] = image
 	}
 
 	return ad
@@ -93,7 +93,7 @@ func updateAd(ad advertisement) advertisement {
 	var count int
 	db.Table("images").Select("max(id)").Row().Scan(&count)
 
-	for i, image := range ad.Images {
+	for index, image := range ad.Images {
 		count++
 		image.ProdRef = ad.ID
 		if image.ID == 0 {
@@ -105,7 +105,7 @@ func updateAd(ad advertisement) advertisement {
 		} else {
 			db.Save(&image)
 		}
-		ad.Images[i] = image
+		ad.Images[index] = image
 	}
 
 	return ad

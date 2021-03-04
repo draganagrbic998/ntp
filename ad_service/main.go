@@ -15,8 +15,8 @@ var router *mux.Router = nil
 
 func initRouter() {
 	router = mux.NewRouter()
-	router.HandleFunc("/api/ads-my", getMyAdsEndpoint).Methods("GET")
 	router.HandleFunc("/api/ads", getAdsEndpoint).Methods("GET")
+	router.HandleFunc("/api/ads-my", getMyAdsEndpoint).Methods("GET")
 	router.HandleFunc("/api/ads/{id:[0-9]+}", getAdEndpoint).Methods("GET")
 	router.HandleFunc("/api/ads", createAdEndpoint).Methods("POST")
 	router.HandleFunc("/api/ads/{id:[0-9]+}", updateAdEndpoint).Methods("PUT")
@@ -45,7 +45,6 @@ func initRouter() {
 }
 
 func main() {
-	//dodaj resetovanje sekvence za id na 31
 	initDatabase()
 	initRouter()
 }

@@ -1,19 +1,22 @@
 package main
 
-type advertisement struct {
+type event struct {
 	ID          int
 	Active      bool
 	CreatedOn   string
 	UserID      int
+	ProductID   int `json:"product_id"`
 	Name        string
 	Category    string
-	Price       int `json:"price"`
+	From        string
+	To          string
+	Place       string
 	Description string
 	Images      []image
 }
 
 type image struct {
-	ID      int
-	Path    string
-	ProdRef int
+	ID       int
+	Path     string
+	EventRef int
 }
