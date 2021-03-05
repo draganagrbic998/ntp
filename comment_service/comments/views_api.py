@@ -60,11 +60,11 @@ def listing(request):
 
 def create(request):
     try:
-        parent = Comment.objects.get(id=int(request.data['parent_id']))
+        parent_id = request.data['parent_id']
     except:
-        parent = None
+        parent_id = None
 
-    comment = Comment.objects.create(product_id=int(request.data['product_id']), text=request.data['text'], parent=parent)
+    comment = Comment.objects.create(product_id=int(request.data['product_id']), text=request.data['text'], parent_id=parent_id)
     comment.user_id = get_user_id(request)
     comment.email = jwt_decode_handler(request.headers["Authorization"][4:])["email"]
     comment.save()

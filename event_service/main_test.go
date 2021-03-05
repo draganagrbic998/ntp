@@ -92,14 +92,14 @@ func TestGetEventsWithOffset(t *testing.T) {
 func TestCreateEvent(t *testing.T) {
 
 	req, _ := http.NewRequest("POST", "/api/events", bytes.NewBuffer([]byte(fmt.Sprintf(`{
-		"product_id": 1,
-		"name": "test name",
-		"category": "test category",
-		"from": "2-2-2020",
-		"to": "2-2-2020",
-		"place": "test place",	
-		"description": "test description",
-		"images": [{
+		"ProductID": 1,
+		"Name": "test name",
+		"Category": "test category",
+		"From": "2-2-2020",
+		"To": "2-2-2020",
+		"Place": "test place",	
+		"Description": "test description",
+		"Images": [{
 			"path": "%s"
 		},{
 			"path": "%s"
@@ -150,14 +150,14 @@ func TestCreateEvent(t *testing.T) {
 func TestCreateEventBadRequest(t *testing.T) {
 
 	req, _ := http.NewRequest("POST", "/api/events", bytes.NewBuffer([]byte(fmt.Sprintf(`{
-		"product_id": 0,
-		"name": "",
-		"category": "",
-		"from": "",
-		"to": "",
-		"place": "",	
-		"description": "",
-		"images": [{
+		"ProductID": "",
+		"Name": "",
+		"Category": "",
+		"From": "",
+		"To": "",
+		"Place": "",	
+		"Description": "",
+		"Images": [{
 			"path": "%s"
 		},{
 			"path": "%s"
@@ -178,14 +178,14 @@ func TestCreateEventBadRequest(t *testing.T) {
 func TestUpdateEvent(t *testing.T) {
 
 	req, _ := http.NewRequest("PUT", "/api/events/31", bytes.NewBuffer([]byte(fmt.Sprintf(`{
-		"product_id": 1,
-		"name": "test name 2",
-		"category": "test category",
-		"from": "2-2-2020",
-		"to": "2-2-2020",
-		"place": "test place",	
-		"description": "test description",
-		"images": [{
+		"ProductID": 1,
+		"Name": "test name 2",
+		"Category": "test category",
+		"From": "2-2-2020",
+		"To": "2-2-2020",
+		"Place": "test place",	
+		"Description": "test description",
+		"Images": [{
 			"path": "%s"
 		},{
 			"path": "%s"
@@ -237,14 +237,14 @@ func TestUpdateEvent(t *testing.T) {
 func TestUpdateEventBadRequest(t *testing.T) {
 
 	req, _ := http.NewRequest("PUT", "/api/events/1", bytes.NewBuffer([]byte(fmt.Sprintf(`{
-		"product_id": 0,
-		"name": "",
-		"category": "",
-		"from": "",
-		"to": "",
-		"place": "",	
-		"description": "",
-		"images": [{
+		"ProductID": "",
+		"Name": "",
+		"Category": "",
+		"From": "",
+		"To": "",
+		"Place": "",	
+		"Description": "",
+		"Images": [{
 			"path": "%s"
 		},{
 			"path": "%s"
@@ -266,14 +266,14 @@ func TestUpdateEventBadRequest(t *testing.T) {
 func TestUpdateUpdateNotFound(t *testing.T) {
 
 	req, _ := http.NewRequest("PUT", "/api/events/40", bytes.NewBuffer([]byte(fmt.Sprintf(`{
-		"product_id": 1,
-		"name": "test name",
-		"category": "test category",
-		"from": "2-2-2020",
-		"to": "2-2-2020",
-		"place": "test place",	
-		"description": "test description",
-		"images": [{
+		"ProductID": 1,
+		"Name": "test name",
+		"Category": "test category",
+		"From": "2-2-2020",
+		"To": "2-2-2020",
+		"Place": "test place",	
+		"Description": "test description",
+		"Images": [{
 			"path": "%s"
 		},{
 			"path": "%s"
@@ -295,14 +295,14 @@ func TestUpdateUpdateNotFound(t *testing.T) {
 func TestUpdateEventForbidden(t *testing.T) {
 
 	req, _ := http.NewRequest("PUT", "/api/events/11", bytes.NewBuffer([]byte(fmt.Sprintf(`{
-		"product_id": 1,
-		"name": "test name",
-		"category": "test category",
-		"from": "2-2-2020",
-		"to": "2-2-2020",
-		"place": "test place",	
-		"description": "test description",
-		"images": [{
+		"ProductID": 1,
+		"Name": "test name",
+		"Category": "test category",
+		"From": "2-2-2020",
+		"To": "2-2-2020",
+		"Place": "test place",	
+		"Description": "test description",
+		"Images": [{
 			"path": "%s"
 		},{
 			"path": "%s"

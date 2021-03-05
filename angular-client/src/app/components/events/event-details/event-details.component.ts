@@ -26,7 +26,7 @@ export class EventDetailsComponent implements OnInit {
 
   edit(): void{
     this.eventService.selectedEvent = this.event;
-    this.router.navigate([`${environment.eventFormRoute}/${this.event.ProductId}`]);
+    this.router.navigate([`${environment.eventFormRoute}/${this.event.ProductID}`]);
   }
 
   delete(): void{

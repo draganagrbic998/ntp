@@ -74,7 +74,7 @@ func createAdEndpoint(response http.ResponseWriter, request *http.Request) {
 	json.NewDecoder(request.Body).Decode(&ad)
 
 	if strings.TrimSpace(ad.Name) == "" || strings.TrimSpace(ad.Category) == "" ||
-		ad.Price == 0 || strings.TrimSpace(ad.Description) == "" {
+		strings.TrimSpace(ad.Description) == "" {
 		response.WriteHeader(400)
 		return
 	}
@@ -104,7 +104,7 @@ func updateAdEndpoint(response http.ResponseWriter, request *http.Request) {
 	ad.Images = nil
 	json.NewDecoder(request.Body).Decode(&ad)
 	if strings.TrimSpace(ad.Name) == "" || strings.TrimSpace(ad.Category) == "" ||
-		ad.Price == 0 || strings.TrimSpace(ad.Description) == "" {
+		strings.TrimSpace(ad.Description) == "" {
 		response.WriteHeader(400)
 		return
 	}

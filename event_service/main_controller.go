@@ -69,6 +69,7 @@ func updateEventEndpoint(response http.ResponseWriter, request *http.Request) {
 
 	event.Images = nil
 	json.NewDecoder(request.Body).Decode(&event)
+
 	if strings.TrimSpace(event.Name) == "" || strings.TrimSpace(event.Category) == "" || strings.TrimSpace(event.From) == "" ||
 		strings.TrimSpace(event.To) == "" || strings.TrimSpace(event.Place) == "" || strings.TrimSpace(event.Description) == "" {
 		response.WriteHeader(400)

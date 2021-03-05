@@ -29,7 +29,7 @@
             <app-spacer-container>
                 <button 
                 matTooltip="Delete"
-                *ngIf="event.UserId===id"
+                *ngIf="event.UserID===id"
                 mat-button 
                 color="warn"
                 (click)="delete()">
@@ -37,7 +37,7 @@
                 </button>
                 <button 
                 matTooltip="Edit"
-                *ngIf="event.UserId===id"
+                *ngIf="event.UserID===id"
                 mat-button 
                 color="primary"
                 (click)="edit()">

@@ -3,11 +3,10 @@ import { Image } from './image';
 export interface Advertisement{
     ID: number;
     CreatedOn: string;
-    UserId: number;
-    Email: string;
+    UserID: number;
     Name: string;
     Category: string;
-    Price: number;
+    Price: string;
     Description: string;
     Images: Image[];
 }

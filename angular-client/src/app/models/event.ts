@@ -3,9 +3,8 @@ import { Image } from './image';
 export interface Event{
     ID: number;
     CreatedOn: string;
-    UserId: number;
-    Email: string;
-    ProductId: number;
+    UserID: number;
+    ProductID: string;
     Name: string;
     Category: string;
     From: string;

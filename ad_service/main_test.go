@@ -269,11 +269,11 @@ func TestGetAd(t *testing.T) {
 func TestCreateAd(t *testing.T) {
 
 	req, _ := http.NewRequest("POST", "/api/ads", bytes.NewBuffer([]byte(fmt.Sprintf(`{
-		"name": "test name",
-		"category": "test category",
-		"price": 123,
-		"description": "test description",
-		"images": [{
+		"Name": "test name",
+		"Category": "test category",
+		"Price": 123,
+		"Description": "test description",
+		"Images": [{
 			"path": "%s"
 		},{
 			"path": "%s"
@@ -323,11 +323,11 @@ func TestCreateAd(t *testing.T) {
 func TestCreateAdBadRequest(t *testing.T) {
 
 	req, _ := http.NewRequest("POST", "/api/ads", bytes.NewBuffer([]byte(fmt.Sprintf(`{
-		"name": "",
-		"category": "",
-		"price": "",
-		"description": "",
-		"images": [{
+		"Name": "",
+		"Category": "",
+		"Price": "",
+		"Description": "",
+		"Images": [{
 			"path": "%s"
 		},{
 			"path": "%s"
@@ -348,11 +348,11 @@ func TestCreateAdBadRequest(t *testing.T) {
 func TestUpdateAd(t *testing.T) {
 
 	req, _ := http.NewRequest("PUT", "/api/ads/31", bytes.NewBuffer([]byte(fmt.Sprintf(`{
-		"name": "test name 2",
-		"category": "test category",
-		"price": 123,
-		"description": "test description",
-		"images": [{
+		"Name": "test name 2",
+		"Category": "test category",
+		"Price": 123,
+		"Description": "test description",
+		"Images": [{
 			"path": "%s"
 		},{
 			"path": "%s"
@@ -403,11 +403,11 @@ func TestUpdateAd(t *testing.T) {
 func TestUpdateAdBadRequest(t *testing.T) {
 
 	req, _ := http.NewRequest("PUT", "/api/ads/1", bytes.NewBuffer([]byte(fmt.Sprintf(`{
-		"name": "",
-		"category": "",
-		"price": "",
-		"description": "",
-		"images": [{
+		"Name": "",
+		"Category": "",
+		"Price": "",
+		"Description": "",
+		"Images": [{
 			"path": "%s"
 		},{
 			"path": "%s"
@@ -429,11 +429,11 @@ func TestUpdateAdBadRequest(t *testing.T) {
 func TestUpdateAdNotFound(t *testing.T) {
 
 	req, _ := http.NewRequest("PUT", "/api/ads/40", bytes.NewBuffer([]byte(fmt.Sprintf(`{
-		"name": "test name",
-		"category": "test category",
-		"price": 123,
-		"description": "test description",
-		"images": [{
+		"Name": "test name",
+		"Category": "test category",
+		"Price": 123,
+		"Description": "test description",
+		"Images": [{
 			"path": "%s"
 		},{
 			"path": "%s"
@@ -455,11 +455,11 @@ func TestUpdateAdNotFound(t *testing.T) {
 func TestUpdateAdForbidden(t *testing.T) {
 
 	req, _ := http.NewRequest("PUT", "/api/ads/11", bytes.NewBuffer([]byte(fmt.Sprintf(`{
-		"name": "test name",
-		"category": "test category",
-		"price": 123,
-		"description": "test description",
-		"images": [{
+		"Name": "test name",
+		"Category": "test category",
+		"Price": 123,
+		"Description": "test description",
+		"Images": [{
 			"path": "%s"
 		},{
 			"path": "%s"
