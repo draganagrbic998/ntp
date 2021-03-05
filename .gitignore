@@ -1,5 +1,7 @@
 /venv/
 /comment_service/comment_service/__pycache__/
 /comment_service/comments/__pycache__/
+/comment_service/comments/migrations/__pycache__/
 /user_service/user_service/__pycache__/
 /user_service/users/__pycache__/
+/user_service/users/migrations/__pycache__/
