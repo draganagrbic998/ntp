@@ -43,7 +43,7 @@ Klijent koji omogucava uvid u analitiku sistema. Kada administrator unutar Pharo
   </li>
 </ul>
 <h6>Django admin aplikacija</h6>
-Users mikroservis pruza koriscenje ugradjene Django admin aplikacije koja omogucava administraciju korisnika - kreiranje, izmena, brisanje i pregled. Lokacija klijenta je <b>localhost:8000/admin</b>.
+Users mikroservis pruza koriscenje ugradjene Django admin aplikacije koja omogucava administraciju korisnika - kreiranje, izmena, brisanje i pregled. Lokacija klijenta je <b>localhost:8000/admin</b>. Da biste mogli da koristite ovog klijenta, morati registrovati Django super korisnika, koristeci komandu <b>python manage.py createsuperuser</b.
 
 <br><h2>Uputstvo za pokretanje</h2>
 <ol>
