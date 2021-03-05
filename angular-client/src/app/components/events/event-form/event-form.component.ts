@@ -41,7 +41,7 @@ export class EventFormComponent implements OnInit {
     }
     this.savePending = true;
     this.eventService.save({...this.eventForm.value, ...{Images: this.images,
-      ID: this.eventService.selectedEvent?.ID, ProductId: +this.route.snapshot.params.productId}}).subscribe(
+      ID: this.eventService.selectedEvent?.ID, ProductID: +this.route.snapshot.params.productId}}).subscribe(
       (event: Event) => {
         this.savePending = false;
         if (event){

@@ -5,8 +5,8 @@ from django.utils import timezone
 class Comment(models.Model):
     created_on = models.DateTimeField(default=timezone.now)
     user_id = models.IntegerField(default=0)
-    email = models.CharField(max_length=100)
     product_id = models.IntegerField(default=0)
+    email = models.CharField(max_length=100)
     text = models.TextField(max_length=1000)
     parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
 

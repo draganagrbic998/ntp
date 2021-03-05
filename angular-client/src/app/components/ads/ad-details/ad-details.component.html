@@ -20,7 +20,7 @@
                     <span>
                         <button 
                         matTooltip="Delete"
-                        *ngIf="ad.UserId===id && !onPage"
+                        *ngIf="ad.UserID===id && !onPage"
                         mat-icon-button 
                         color="warn"
                         (click)="delete()">
@@ -28,7 +28,7 @@
                         </button>
                         <button 
                         matTooltip="Edit"
-                        *ngIf="ad.UserId===id && !onPage"
+                        *ngIf="ad.UserID===id && !onPage"
                         mat-icon-button 
                         color="primary"
                         (click)="edit()">
@@ -44,7 +44,7 @@
                             Open Page
                         </button>
                         <button 
-                        *ngIf="ad.UserId===id && onPage"
+                        *ngIf="ad.UserID===id && onPage"
                         mat-button
                         color="accent"
                         (click)="create()">
