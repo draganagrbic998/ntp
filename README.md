@@ -73,10 +73,10 @@ Users mikroservis pruza koriscenje ugradjene Django admin aplikacije koja omoguc
     </ul>
   </li>
   <li>
-    Pozicionirati se u <b>ad_service</b> i pokrenuti komandu <b>go run main.go</b>.
+    Pozicionirati se u <b>ad_service</b> i pokrenuti komandu <b>go run .</b>.
   </li>
   <li>
-    Pozicionirati se u <b>event_service</b> i pokrenuti komandu <b>go run main.go</b>.
+    Pozicionirati se u <b>event_service</b> i pokrenuti komandu <b>go run .</b>.
   </li>
   <li>
     Pozicionirati se u <b>angular-client</b> i pokrenuti komande <b>npm install</b> i <b>ng serve</b>.
@@ -97,3 +97,9 @@ Users mikroservis pruza koriscenje ugradjene Django admin aplikacije koja omoguc
     Na URL-u <b>localhost:8000/admin</b> mozete vrsiti administraciju korisnika.
   </li>
 </ol>
+
+<br><h2>Pokretanje testova</h2>
+<h6>Pokretanje jedinicnih testova mikroservisa napisanih u Python-u</h6>
+Pozicionirati se u direktorijum mikroservisa i pokrenuti komandu <b>python manage.py test</b>.
+<h6>Pokretanje jedinicnih testova mikroservisa napisanih u Golang-u</h6>
+Pozicionirati se u direktorijum mikroservisa i pokrenuti komandu <b>go test -v</b>.
