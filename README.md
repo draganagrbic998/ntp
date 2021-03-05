@@ -73,10 +73,10 @@ Users mikroservis pruza koriscenje ugradjene Django admin aplikacije koja omoguc
     </ul>
   </li>
   <li>
-    Pozicionirati se u <b>ad_service</b> i pokrenuti komandu <b>go run .</b>.
+    Pozicionirati se u <b>ad_service</b> i pokrenuti komandu <b>go run .</b>
   </li>
   <li>
-    Pozicionirati se u <b>event_service</b> i pokrenuti komandu <b>go run .</b>.
+    Pozicionirati se u <b>event_service</b> i pokrenuti komandu <b>go run .</b>
   </li>
   <li>
     Pozicionirati se u <b>angular-client</b> i pokrenuti komande <b>npm install</b> i <b>ng serve</b>.
