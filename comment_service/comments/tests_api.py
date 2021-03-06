@@ -144,3 +144,29 @@ class CommentsTest(TestCase):
         self.assertEqual(len(Like.objects.filter(dislike=False)), 3)
         self.assertEqual(len(Like.objects.filter(dislike=True)), 1)
 
+    def test_statistic_comments_invalid(self):
+        response = self.client.get(f'/api/statistic-comments/2020/2020')
+        self.assertEqual(response.status_code, 400)
+
+    def test_statistic_comments(self):
+        response = self.client.get(f'/api/statistic-comments/2020/2021')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data, [[2020, 0], [2021, 3]])
+
+    def test_statistic_likes_invalid(self):
+        response = self.client.get(f'/api/statistic-likes/2020/2020')
+        self.assertEqual(response.status_code, 400)
+
+    def test_statistic_likes(self):
+        response = self.client.get(f'/api/statistic-likes/2020/2021')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data, [[2020, 0], [2021, 3]])
+
+    def test_statistic_dislikes_invalid(self):
+        response = self.client.get(f'/api/statistic-dislikes/2020/2020')
+        self.assertEqual(response.status_code, 400)
+
+    def test_statistic_dislikes(self):
+        response = self.client.get(f'/api/statistic-dislikes/2020/2021')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data, [[2020, 0], [2021, 2]])

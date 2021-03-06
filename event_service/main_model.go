@@ -16,7 +16,7 @@ type event struct {
 }
 
 type image struct {
-	ID       int
-	Path     string
-	EventRef int
+	ID       int    `json:"ID"`
+	Path     string `json:"Path"`
+	EventRef int    `json:"EventRef"`
 }

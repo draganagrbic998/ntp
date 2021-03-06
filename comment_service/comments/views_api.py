@@ -149,7 +149,7 @@ def replies(request, key):
 
 
 @api_view(['GET'])
-def comments_statistic(request, start, end):
+def comments_statistic(_, start, end):
     if start >= end:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
@@ -162,7 +162,7 @@ def comments_statistic(request, start, end):
 
 
 @api_view(['GET'])
-def likes_statistic(request, start, end):
+def likes_statistic(_, start, end):
     if start >= end:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
@@ -175,7 +175,7 @@ def likes_statistic(request, start, end):
 
 
 @api_view(['GET'])
-def dislikes_statistic(request, start, end):
+def dislikes_statistic(_, start, end):
     if start >= end:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 

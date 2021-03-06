@@ -13,7 +13,7 @@ type advertisement struct {
 }
 
 type image struct {
-	ID      int
-	Path    string
-	ProdRef int
+	ID      int    `json:"ID"`
+	Path    string `json:"Path"`
+	ProdRef int    `json:"ProdRef"`
 }
