@@ -1,4 +1,4 @@
-## Пројекат из предмета Напредне технике програмирања
+# Пројекат из предмета Напредне технике програмирања
 
 ## Опис проблема
 Неопходно је имплементирати систем који ће омогућавати пчеларима и љубитељима медних производа да рекламирају своја добра, претражују и коментаришу туђа и обавештавају остале кориснике о догађајима на којима ће презентовати своје медне производе.
@@ -43,19 +43,19 @@ Users Mikroservice омогућава коришћење уграђене Django
 4. Активирати виртуелно окружење, позиционирати се у <b>user_service</b> и покренути команде <b>python manage.py migrate</b> и <b>python manage.py runserver</b>.
 5. Активирати виртуелно окружење, позиционирати се у <b>comment_service</b> и покренути команде <b>python manage.py migrate</b> и <b>python manage.py runserver 8003</b>.
 6. Покренути команде за преузимање неопходних Golang библиотека:
-- go get -u -v github.com/dgrijalva/jwt-go
-- go get -u -v github.com/gorilla/mux
-- go get -u -v github.com/jinzhu/gorm
-- go get -u -v github.com/lib/pq
-- go get -u -v github.com/rs/cors
-8. Позиционирати се у <b>ad_service</b> и покренути команду <b>go run .</b>.
-9. Позиционирати се у <b>event_service</b> и покренути команду <b>go run .</b>.
-10. Позиционирати се у <b>angular-client</b> и покренути команде <b>npm install</b> и <b>ng serve</b>.
-11. Унутар Pharo окружења инсталирати библиотеке <b>Roassal2</b> и <b>NeoJSON</b>.
-12. Унутар Pharo окружења регистровати/креирати класу у произвољном пакету са произвољним називом и унутар <b>Class опсега</b> новокреиране класе регистровати методу која се налази на путањи <b>pharo-client/graphics.txt</b>.
-13. За коришћење Angular клијента у URL претраживача унети путању <b>localhost:4200</b>.
-14. За коришћење Pharo клијента отворити <b>Playground Pharo окружења</b> и слати претходно описане поруке.
-15. За коришћење Django Admin апликације у URL претраживача унети путању <b>localhost:8000/admin</b>.
+  * go get -u -v github.com/dgrijalva/jwt-go
+  * go get -u -v github.com/gorilla/mux
+  * go get -u -v github.com/jinzhu/gorm
+  * go get -u -v github.com/lib/pq
+  * go get -u -v github.com/rs/cors
+7. Позиционирати се у <b>ad_service</b> и покренути команду <b>go run .</b>.
+8. Позиционирати се у <b>event_service</b> и покренути команду <b>go run .</b>.
+9. Позиционирати се у <b>angular-client</b> и покренути команде <b>npm install</b> и <b>ng serve</b>.
+10. Унутар Pharo окружења инсталирати библиотеке <b>Roassal2</b> и <b>NeoJSON</b>.
+11. Унутар Pharo окружења регистровати/креирати класу у произвољном пакету са произвољним називом и унутар <b>Class опсега</b> новокреиране класе регистровати методу која се налази на путањи <b>pharo-client/graphics.txt</b>.
+12. За коришћење Angular клијента у URL претраживача унети путању <b>localhost:4200</b>.
+13. За коришћење Pharo клијента отворити <b>Playground Pharo окружења</b> и слати претходно описане поруке.
+14. За коришћење Django Admin апликације у URL претраживача унети путању <b>localhost:8000/admin</b>.
 
 ## Покретање тестова
 
