@@ -43,11 +43,11 @@ Users Mikroservice омогућава коришћење уграђене Django
 4. Активирати виртуелно окружење, позиционирати се у <b>user_service</b> и покренути команде <b>python manage.py migrate</b> и <b>python manage.py runserver</b>.
 5. Активирати виртуелно окружење, позиционирати се у <b>comment_service</b> и покренути команде <b>python manage.py migrate</b> и <b>python manage.py runserver 8003</b>.
 6. Покренути команде за преузимање неопходних Golang библиотека:
->> - go get -u -v github.com/dgrijalva/jwt-go
->> - go get -u -v github.com/gorilla/mux
->> - go get -u -v github.com/jinzhu/gorm
->> - go get -u -v github.com/lib/pq
->> - go get -u -v github.com/rs/cors
+> - go get -u -v github.com/dgrijalva/jwt-go
+> - go get -u -v github.com/gorilla/mux
+> - go get -u -v github.com/jinzhu/gorm
+> - go get -u -v github.com/lib/pq
+> - go get -u -v github.com/rs/cors
 7. Позиционирати се у <b>ad_service</b> и покренути команду <b>go run .</b>
 8. Позиционирати се у <b>event_service</b> и покренути команду <b>go run .</b>
 9. Позиционирати се у <b>angular-client</b> и покренути команде <b>npm install</b> и <b>ng serve</b>.
