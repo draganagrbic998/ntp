@@ -1,105 +1,66 @@
-<h1>Projekat iz predmeta Napredne tehnike programiranja</h1>
+# Пројекат из предмета Напредне технике програмирања
 
-<div align="center">
-  <img src="https://github.com/draganagrbic998/ntp/blob/main/pcelica.jpg" alt="drawing" width="200" height="200"/>
-</div>
+## Опис проблема
+Неопходно је имплементирати систем који ће омогућавати пчеларима и љубитељима медних производа да рекламирају своја добра, претражују и коментаришу туђа и обавештавају остале кориснике о догађајима на којима ће презентовати своје медне производе.
 
-<h2>Opis problema</h2>
-Neophodno je implementirati sistem koji ce omoguciti precalirima i ljubiteljima mednih proizvoda da reklamiraju svoja dobra, pretrazuju i komentarisu tudja i obavestavaju ostale korisnike o dogadjajima na kojima ce prezentovati svoje medne proizvode.
+## Архитектура система
+Архитектура система базирана је на микросервисима. Сваки микросервис поседује засебну базу података (конкретно PostgreSQL) у којој чува податке којима само он управља. Сва комуникација између клијента и сервиса одвија се преко REST API-а. Микросервис за аутентификацију (Users Microservice) дефинише SECRET KEY који остали микросервиси користе за декодовање JWT токена и добављање података о пријављеном кориснику.
 
-<br><h2>Arhitektura sistema</h2>
-Arhitektura sistema bazirana je mikroservisima. Svaki mikroservis poseduje zasebnu bazu podataka (konkretno PostgreSQL) i u njoj cuva podatke kojima samo on upravlja. Sva komunikacija izmedju klijenta i servisa odvija se preko REST API-a. Mikroservis za autentifikaciju (Users Microservice) definise SECRET_KEY koji ostali servisi koriste za dekodovanje JWT tokena i dobavljanje podataka o prijavljenom korisniku.
+## Преглед микросервиса
 
-<br><h2>Pregled mikroservisa</h2>
-<h6>Users Microservice</h6>
-Django REST aplikacija koja omogucava prijavu, registraciju (uz verifikaciju email-a), izmenu profila korisnika i koriscenje ugradjenog Django admin sistema za administraciju korisnika (kreiranje, brisanje, izmena i pregled). Servis prilikom prijave generise JWT token koji ce korisnik koristiti za autentifikaciju na svim servisima i definise SECRET_KEY koji ce ostali servisi koristiti za dekodovanje JWT tokena. <b>Port mikroservisa je 8000.</b> 
-<h6>Advertisements Microservice</h6>
-Golang REST aplikacija koja omogucava authentifikovanim korisnicima kreiranje, izmenu, brisanje, pregled, paginaciju i pretragu reklama mednih proizvoda. <b>Podaci kojima je opisana reklama je: </b>datum objave, ime proizvoda koji se reklamira, kategorija proizvoda, cena proizvoda, opis proizvoda i skup slika proizvoda. <b>Port mikroservisa je 8001.</b>
-<h6>Events Microservice</h6>
-Golang REST aplikacija koja omogucava autentifikovanim korisnicima kreiranje, izmenu, brisanje, pregled i paginaciju dogadjaja na kojima se prezentuje neki medni proizvod. <b>Podaci kojima je opisan dogadjaj je: </b>datum objave, ime dogadjaja, kategorija dogadjaja (sajam, manifestacija...), period i mesto odrzavanja dogadjaja, opis dogadjaja i skup slika. <b>Port mikroservisa je 8002.</b>
-<h6>Comments Microservice</h6>
-Django REST aplikacija koja omogucava komentarisanje reklamiranih proizvoda, pregled i paginaciju komantara i podkomentara i like/dislike komentara. <b>Port mikroservisa je 8003.</b>
+###### Users Microservice
+Django REST апликација која омогућава пријаву, регистрацију (уз верификацију email-а), измену профила корисника и коришћење уграђене Django Admin апликације за администрацију корисника (креирање, брисање, измена и преглед). Сервис приликом пријаве генерише JWT токен који ће корисник користити за аутентификацију на свим сервисима и дефинише SECRET KEY који ће остали сервиси користити за декодовање JWT tokena.
 
-<br><h2>Klijenti sistema</h2>
-<h6>Angular klijent</h6>
-Glavni klijent implementiran u Angular jeziku koji omogucava koriscenje glavnih funkcionalnosti sistema. Lokacija klijenta je <b>localhost:4200</b>.
-<h6>Pharo klijent</h6>
-Klijent koji omogucava uvid u analitiku sistema. Kada administrator unutar Pharo okruzenja registruje klasu sa metodom koja se nalazi na putanji <b>pharo-client/graphics.txt</b>, dobija mogucnost slanja poruka okruzenju koje ce mu omoguciti graficki prikaz broja reklama, dogadjaja, komentara, lajkova i dislajkova u odabranom vremenskom intervalu. Format poruka je <b>NAZIV_KLASE entity ENTITET start START end END shape SHAPE</b>, gde su elementi redom:
-<ul>
-  <li>
-    NAZIV_KLASE predstavlja naziv pod kojim je korisnik/admin registrovao klasu koja ce implementirati metodu za graficke prikaze.
-  </li>
-  <li>
-    ENTITET predstavlja izbor entiteta ciji graficki prikaz se zeli prikazati. Validne vrednosti su "ads", "events", "comments", "likes" i "dislikes".
-  </li>
-  <li>
-    START predstavlja pocetnu godinu od koje se analizira statistika odabranog entiteta. Godina mora biti cetvorocifren broj.
-  </li>
-  <li>
-    END predstavlja krajnju godinu do koje se analizira statistika odabranog entiteta. Godina mora biti cetvorocifren broj, mora biti veca od pocetne godine i ne sme biti veca od tekuce godine. 
-  </li>
-  <li>
-    SHAPE omogucava korisniku odabir prikaza grafika u vidu plot-a (ako se unese "dots") i bar-ova (ako se unese "bars").
-  </li>
-</ul>
-<h6>Django admin aplikacija</h6>
-Users mikroservis pruza koriscenje ugradjene Django admin aplikacije koja omogucava administraciju korisnika - kreiranje, izmena, brisanje i pregled. Lokacija klijenta je <b>localhost:8000/admin</b>. Da biste mogli da koristite ovog klijenta, morati registrovati Django super korisnika, koristeci komandu <b>python manage.py createsuperuser</b>.
+###### Advertisements Microservice
+Golang REST апликација која омогућава аутентификованим корисницима креирање, брисање, измену, преглед, пагинацију и претрагу реклама медних производа. <b>Подаци којима је описана реклама су: </b>датум објаве, име производа који се рекламира, категорија производа, цена производа, опис производа и скуп слика.
 
-<br><h2>Uputstvo za pokretanje</h2>
-<ol>
-  <li>
-    Lolalno kreirati Postgre baze koje ce se zvati: <b>users</b>, <b>ads</b>, <b>events</b> i <b>comments</b>.
-  </li>
-  <li>
-    Koristeci komandu <b>python -m venv venv</b> (ili python3 -m venv venv ako su na racunaru instalirani i pajton2 i pajton3) kreirati virtuelno okruzenje.
-  </li>
-  <li>
-    U virtuelno okruzenje instalirati sve biblioteke navedene u <b>requirements.txt</b> fajlu.
-  </li>
-  <li>
-    Aktivirati virtuelno okruzenje, pozicionirati se u <b>user_service</b> i pokrenuti komande <b>python manage.py migrate</b> i <b>python manage.py runserver</b>.
-  </li>
-  <li>
-    Aktivirati virtuelno okruzenje, pozitionirati se u <b>comment_service</b> i pokrenuti komande <b>python manage.py migrate</b> i <b>python manage.py runserver 8003</b>.
-  </li>
-  <li>
-    Pokrenuti komande za preuzimanje neophodnih Golang biblioteka:
-    <ul>
-      <li>go get -u -v github.com/dgrijalva/jwt-go</li>
-      <li>go get -u -v github.com/gorilla/mux</li>
-      <li>go get -u -v github.com/jinzhu/gorm</li>
-      <li>go get -u -v github.com/lib/pq</li>
-      <li>go get -u -v github.com/rs/cors</li>
-    </ul>
-  </li>
-  <li>
-    Pozicionirati se u <b>ad_service</b> i pokrenuti komandu <b>go run .</b>
-  </li>
-  <li>
-    Pozicionirati se u <b>event_service</b> i pokrenuti komandu <b>go run .</b>
-  </li>
-  <li>
-    Pozicionirati se u <b>angular-client</b> i pokrenuti komande <b>npm install</b> i <b>ng serve</b>.
-  </li>
-  <li>
-    Unutar Pharo okruzenja instalirati biblioteke <b>Roassal</b> i <b>NeoJSON</b>. 
-  </li>
-  <li>
-    Unutar Pharo okruzenja registrovati/kreiratu klasu u proizvoljnom paketu i sa proizvolnjim nazivom i unutar <b>Class opsega</b> novokreirane klase registrovati metodu koja se nalazi na putanji <b>pharo-client/graphics.txt</b>.
-  </li>
-  <li>
-    U URL browsera uneti putanju <b>localhost:4200</b> ukoliko zelite da koristiti Angular klijenta.
-  </li>
-  <li>
-    Otvoriti Playground Pharo okruzenja i slati prethodno opisane poruke ukoliko zelite da koristiti Pharo klijenta.
-  </li>
-  <li>
-    Na URL-u <b>localhost:8000/admin</b> mozete vrsiti administraciju korisnika.
-  </li>
-</ol>
+###### Events Microservice
+Golang REST апликација која омогућава аутентификованим корисницима креирање, брисање, измену, преглед и пагинацију догађаја на којима се презентује одређени медни производ. <b>Подаци којима је описан догађај је: </b>датум објаве, име догађаја, категорија догађаја (сајам, манифестација...), период и место одржавања, опис и скуп слика.
 
-<br><h2>Pokretanje testova</h2>
-<h6>Pokretanje jedinicnih testova mikroservisa napisanih u Python-u</h6>
-Pozicionirati se u direktorijum mikroservisa i pokrenuti komandu <b>python manage.py test</b>.
-<h6>Pokretanje jedinicnih testova mikroservisa napisanih u Golang-u</h6>
-Pozicionirati se u direktorijum mikroservisa i pokrenuti komandu <b>go test -v</b>.
+###### Comments Microservice
+Django REST апликација која омогућава аутентификованим корисницима коментарисање рекламираних производа, брисање, преглед и пагинацију коментара и подкоментара, like и dislike.
+
+## Клијенти система
+
+###### Angular клијент
+Главни клијент имплементиран у Angular језику који омогућава коришћење главних функционалности система. <b>Локација клијента је localhost:4200.</b>
+
+###### Pharo клијент
+Клијент који омогућава увид у аналитику система. Када администратор унутар Pharo окружења регистријe класу са методом која се налази путањи pharo-client/graphics.txt, добија могућност слања порука окружењу које ће му омогућавати графички приказ броја реклама, догађаја, коментара, like-ова и dislike-ова у одређеном временском интервалу. <b>Формат порука је CLASS_NAME entity ENTITY start START end END shape SHAPE</b>, где су елементи редом:
+- CLASS_NAME представља назив под којим је администратор регистровао класу која ће имплементирати методу за графичке приказе.
+- ENTITY представља ентитет чији се графички приказ жели увидети. Валидне вредности су "ads", "events", "comments", "likes" и "dislikes".
+- START представља почетну годину од које се анализира статистика одабраног ентитета. Година мора бити четвороцифрен број.
+- END представља крајњу годину до које се анализира статистика одабраног ентитета. Година мора бити четвороцифрен број, мора бити већа од почетне године и не сме бити већа од текуће године.
+- SHAPE омогућава кориснику одабир приказа у виду plot-а (уколико се унесе "dots") и bar-ова (уколико се унесе "bars").
+
+###### Django Admin апликација
+Users Mikroservice омогућава коришћење уграђене Django Admin апликације која омогућава администрацију корисника - креирање, брисање, измена и преглед. <b>Локација клијента је localhost:8000/admin.</b>. Да би се апликација могла користити, неопходно је регистроваи Django супер корисника, користећи команду <b>python manage.py createsuperuser.</b>.
+
+## Упутство за покретање
+1. Локално креирати Postgre базе са називима <i>"users", "ads", "events" и "comments"</i>.
+2. Користећи команду <i>python -m venv venv</i> креирати виртуелно окружење.
+3. У виртуелно окружење инсталирати све библиотеке наведене у <i>requirements.txt</i> фајлу.
+4. Активирати виртуелно окружење, позиционирати се у <i>user_service</i> и покренути команде <i>python manage.py migrate</i> и <i>python manage.py runserver</i>.
+5. Активирати виртуелно окружење, позиционирати се у <i>comment_service</i> и покренути команде <i>python manage.py migrate</i> и <i>python manage.py runserver 8003</i>.
+6. Покренути команде за преузимање неопходних Golang библиотека:
+- go get -u -v github.com/dgrijalva/jwt-go
+- go get -u -v github.com/gorilla/mux
+- go get -u -v github.com/jinzhu/gorm
+- go get -u -v github.com/lib/pq
+- go get -u -v github.com/rs/cors
+8. Позиционирати се у <i>ad_service</i> и покренути команду <i>go run .</i>.
+9. Позиционирати се у <i>event_service</i> и покренути команду <i>go run .</i>.
+10. Позиционирати се у <i>angular-client</i> и покренути команде <i>npm install</i> и <i>ng serve</i>.
+11. Унутар Pharo окружења инсталирати библиотеке <i>Roassal2</i> и <i>NeoJSON</i>.
+12. Унутар Pharo окружења регистровати/креирати класу у произвољном пакету са произвољним називом и унутар <i>Class опсега</i> новокреиране класе регистровати методу која се налази на путањи <i>pharo-client/graphics.txt</i>.
+13. За коришћење Angular клијента у URL претраживача унети путању <i>localhost:4200</i>.
+14. За коришћење Pharo клијента отворити <i>Playground Pharo окружења</i> и слати претходно описане поруке.
+15. За коришћење Django Admin апликације у URL претраживача унети путању <i>localhost:8000/admin</i>.
+
+## Покретање тестова
+
+###### Покретање јединичних тестова микросервиса написаних у Python-у
+Активирати виртулено окружење, позиционирати се у директоријум микросервиса и покренути команду <i>python manage.py test</i>.
+
+###### Покретање јединичних тестова микросервиса написаних у Golang-у
+Позиционирати се у директоријум микросервиса и покренути команду <i>go test -v</i>.
