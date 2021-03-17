@@ -48,8 +48,8 @@ Users Mikroservice омогућава коришћење уграђене Django
   * go get -u -v github.com/jinzhu/gorm
   * go get -u -v github.com/lib/pq
   * go get -u -v github.com/rs/cors
-7. Позиционирати се у <b>ad_service</b> и покренути команду <b>go run .</b>.
-8. Позиционирати се у <b>event_service</b> и покренути команду <b>go run .</b>.
+7. Позиционирати се у <b>ad_service</b> и покренути команду <b>go run .</b>
+8. Позиционирати се у <b>event_service</b> и покренути команду <b>go run .</b>
 9. Позиционирати се у <b>angular-client</b> и покренути команде <b>npm install</b> и <b>ng serve</b>.
 10. Унутар Pharo окружења инсталирати библиотеке <b>Roassal2</b> и <b>NeoJSON</b>.
 11. Унутар Pharo окружења регистровати/креирати класу у произвољном пакету са произвољним називом и унутар <b>Class опсега</b> новокреиране класе регистровати методу која се налази на путањи <b>pharo-client/graphics.txt</b>.
