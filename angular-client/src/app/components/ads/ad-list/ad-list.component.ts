@@ -32,6 +32,7 @@ export class AdListComponent implements OnInit {
 
   fetchAds(): void{
     this.fetchPending = true;
+    // tslint:disable-next-line: deprecation
     this.adService.getAll(this.pagination.pageNumber, this.search).subscribe(
       (data: HttpResponse<Advertisement[]>) => {
         this.fetchPending = false;
@@ -52,14 +53,17 @@ export class AdListComponent implements OnInit {
 
   ngOnInit(): void {
     this.changePage(0);
+    // tslint:disable-next-line: deprecation
     this.adService.refreshData$.subscribe(() => {
       this.changePage(0);
     });
+    // tslint:disable-next-line: deprecation
     this.adService.searchData$.subscribe((search: string) => {
       this.search = search;
       this.pagination.pageNumber = 0;
       this.changePage(0);
     });
+    // tslint:disable-next-line: deprecation
     this.adService.listToggle$.subscribe(() => {
       this.pagination.pageNumber = 0;
       this.search = '';

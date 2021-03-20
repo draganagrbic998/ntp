@@ -41,6 +41,7 @@ export class EventFormComponent implements OnInit {
     }
     this.savePending = true;
     this.eventService.save({...this.eventForm.value, ...{Images: this.images,
+      // tslint:disable-next-line: deprecation
       ID: this.eventService.selectedEvent?.ID, ProductID: +this.route.snapshot.params.productId}}).subscribe(
       (event: Event) => {
         this.savePending = false;

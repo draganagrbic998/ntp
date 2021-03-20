@@ -33,6 +33,7 @@ export class LoginFormComponent implements OnInit {
       return;
     }
     this.loginPending = true;
+    // tslint:disable-next-line: deprecation
     this.userService.login(this.loginForm.value).subscribe(
       (user: User) => {
         this.loginPending = false;

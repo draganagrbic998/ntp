@@ -21,6 +21,7 @@ export class AdPageComponent implements OnInit {
   ad: Advertisement;
 
   ngOnInit(): void {
+    // tslint:disable-next-line: deprecation
     this.adService.getOne(+this.route.snapshot.params.id).subscribe(
       (ad: Advertisement) => {
         this.fetchPending = false;

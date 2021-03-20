@@ -1,9 +1,8 @@
-@import "../../../../styles/constants";
 @import "../../../../styles/theme";
 
 .root{
     display: inline-block;
-    margin: $padding-30;
+    margin: 30px;
 }
 
 .mat-card{
@@ -27,7 +26,7 @@
 }
 
 .mat-card{
-    padding: $zero;
+    padding: 0;
 }
 
 .main{
@@ -35,5 +34,5 @@
 }
 
 .padding{
-    padding: $padding-10;
+    padding: 10px;
 }

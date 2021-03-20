@@ -48,6 +48,7 @@ export class ProfileFormComponent implements OnInit {
       return;
     }
     this.savePending = true;
+    // tslint:disable-next-line: deprecation
     this.userService.save(this.profileForm.value).subscribe(
       (user: User) => {
         this.savePending = false;

@@ -32,6 +32,7 @@ export class CommentListComponent implements OnInit {
 
   fetchComments(): void{
     this.fetchPending = true;
+    // tslint:disable-next-line: deprecation
     this.commentService.getAll(this.pagination.pageNumber, this.productId).subscribe(
       (data: HttpResponse<Comment[]>) => {
         this.fetchPending = false;
@@ -52,6 +53,7 @@ export class CommentListComponent implements OnInit {
 
   ngOnInit(): void {
     this.changePage(0);
+    // tslint:disable-next-line: deprecation
     this.commentService.refreshData$.subscribe(() => {
       this.changePage(0);
     });

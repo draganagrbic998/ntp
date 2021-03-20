@@ -39,6 +39,7 @@ export class AdDetailsComponent implements OnInit {
 
   delete(): void{
     const options: MatDialogConfig = {...DIALOG_OPTIONS, ...{data: () => this.adService.delete(this.ad.ID)}};
+    // tslint:disable-next-line: deprecation
     this.dialog.open(DeleteConfirmationComponent, options).afterClosed().subscribe(result => {
       if (result){
         this.adService.announceRefreshData();
@@ -65,6 +66,7 @@ export class AdDetailsComponent implements OnInit {
 
   sendReply(): void{
     this.replyPending = true;
+    // tslint:disable-next-line: deprecation
     this.commentService.save({text: this.reply.value, product_id: this.ad.ID} as Comment).subscribe(() => {
         this.replyPending = false;
         this.reply.reset();

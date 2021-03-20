@@ -1,11 +1,9 @@
-@import "./constants";
-
 .mat-form-field-wrapper{
-    padding-bottom: $zero;
+    padding-bottom: 0;
 }
 
 .mat-form-field-appearance-outline .mat-form-field-wrapper{
-    margin: $zero;
+    margin: 0;
 }
 
 .mat-form-field-appearance-outline .mat-form-field-infix{

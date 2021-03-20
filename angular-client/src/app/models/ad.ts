@@ -6,7 +6,7 @@ export interface Advertisement{
     UserID: number;
     Name: string;
     Category: string;
-    Price: string;
+    Price: number;
     Description: string;
     Images: Image[];
 }

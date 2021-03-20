@@ -1,12 +1,11 @@
-@import "./constants";
 @import "./theme";
 
 html, body{
-    height: $full-size;
+    height: 100%;
 }    
 
 body{
-    margin: $zero;
+    margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
     background-color: $background-primary !important;
     background-image: url('../assets/background.png');

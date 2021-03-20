@@ -21,6 +21,7 @@ export class DeleteConfirmationComponent implements OnInit {
 
   confirm(): void{
     this.deletePending = true;
+    // tslint:disable-next-line: deprecation
     this.deleteFunction().subscribe(
       (param: boolean) => {
         this.deletePending = false;

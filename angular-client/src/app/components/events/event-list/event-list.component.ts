@@ -32,6 +32,7 @@ export class EventListComponent implements OnInit {
 
   fetchEvents(): void{
     this.fetchPending = true;
+    // tslint:disable-next-line: deprecation
     this.eventService.getAll(this.pagination.pageNumber, this.productId).subscribe(
       (data: HttpResponse<Event[]>) => {
         this.fetchPending = false;
@@ -52,6 +53,7 @@ export class EventListComponent implements OnInit {
 
   ngOnInit(): void {
     this.changePage(0);
+    // tslint:disable-next-line: deprecation
     this.eventService.refreshData$.subscribe(() => {
       this.changePage(0);
     });

@@ -34,6 +34,7 @@ export class AdFormComponent implements OnInit {
       return;
     }
     this.savePending = true;
+    // tslint:disable-next-line: deprecation
     this.adService.save({...this.adForm.value, ...{Images: this.images, ID: this.adService.selectedAd?.ID}}).subscribe(
       (ad: Advertisement) => {
         this.savePending = false;

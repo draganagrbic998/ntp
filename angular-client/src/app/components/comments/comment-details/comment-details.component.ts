@@ -34,6 +34,7 @@ export class CommentDetailsComponent implements OnInit {
 
   delete(): void{
     const options: MatDialogConfig = {...DIALOG_OPTIONS, ...{data: () => this.commentService.delete(this.comment.id)}};
+    // tslint:disable-next-line: deprecation
     this.dialog.open(DeleteConfirmationComponent, options).afterClosed().subscribe(result => {
       if (result){
         this.commentService.announceRefreshData();
@@ -48,6 +49,7 @@ export class CommentDetailsComponent implements OnInit {
     else{
       this.dislikePending = true;
     }
+    // tslint:disable-next-line: deprecation
     this.commentService.like(this.comment.id, dislike).subscribe((response: boolean) => {
       if (!dislike){
         this.likePending = false;
@@ -89,6 +91,7 @@ export class CommentDetailsComponent implements OnInit {
   sendReply(replies: MatExpansionPanel): void{
     this.replyPending = true;
     this.commentService.save({text: this.reply.value, parent_id: this.comment.id,
+      // tslint:disable-next-line: deprecation
       product_id: this.comment.product_id} as Comment).subscribe(() => {
         this.replyPending = false;
         this.reply.reset();
@@ -97,6 +100,7 @@ export class CommentDetailsComponent implements OnInit {
   }
 
   fetchReplies(): void{
+    // tslint:disable-next-line: deprecation
     this.commentService.replies(this.comment.id).subscribe((comments: Comment[]) => {
       this.replies = comments;
     });

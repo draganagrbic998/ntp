@@ -40,6 +40,7 @@ export class AdService {
   }
 
   save(ad: Advertisement): Observable<Advertisement>{
+    ad.Price = parseInt(ad.Price + '', 10);
     if (!ad.ID){
       return this.http.post<Advertisement>(environment.adsApi, ad).pipe(
         catchError(() => of(null))

@@ -1,15 +1,13 @@
-@import "../../../../../styles/constants";
-
 div{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: $padding-30;
-    width: $full-size;
+    padding: 30px;
+    width: 100%;
 }
 
 .mat-card{
-    padding: $padding-20;
+    padding: 20px;
     width: 500px;
 }

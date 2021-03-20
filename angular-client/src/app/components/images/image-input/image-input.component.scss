@@ -1,19 +1,17 @@
-@import "../../../../styles/constants";
-    
-.root{
+    .root{
     height: 150px;
     width: 150px;
     background: white;
-    margin: $padding-15;
+    margin: 15px;
 }
 
 .img{
     height: 75%;
-    width: $full-size;
+    width: 100%;
     overflow: hidden;
 }
 
 img{
-    height: $full-size;
-    width: $full-size;
+    height: 100%;
+    width: 100%;
 }

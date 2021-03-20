@@ -36,6 +36,7 @@ export class RegisterFormComponent implements OnInit {
     }
     this.registerPending = true;
     this.authService.deleteUser();
+    // tslint:disable-next-line: deprecation
     this.userService.register(this.registerForm.value).subscribe(
       (response: boolean) => {
         this.registerPending = false;
@@ -52,6 +53,7 @@ export class RegisterFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // tslint:disable-next-line: deprecation
     this.registerForm.get('password').valueChanges.subscribe(
       () => {
         this.registerForm.get('password_confirmation').updateValueAndValidity();

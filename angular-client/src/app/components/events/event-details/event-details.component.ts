@@ -31,6 +31,7 @@ export class EventDetailsComponent implements OnInit {
 
   delete(): void{
     const options: MatDialogConfig = {...DIALOG_OPTIONS, ...{data: () => this.eventService.delete(this.event.ID)}};
+    // tslint:disable-next-line: deprecation
     this.dialog.open(DeleteConfirmationComponent, options).afterClosed().subscribe(result => {
       if (result){
         this.eventService.announceRefreshData();

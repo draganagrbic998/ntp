@@ -16,6 +16,7 @@ export class ImagesInputComponent implements OnInit {
   @Input() images: Image[] = [];
 
   addImage(upload: Blob): void{
+    // tslint:disable-next-line: deprecation
     this.imageService.getBase64(upload).subscribe(
       (Path: string) => {
         this.images.push({Path} as Image);
