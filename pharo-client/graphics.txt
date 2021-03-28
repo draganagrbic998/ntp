@@ -58,7 +58,7 @@ entity: entity start: start end: end shape: shape
 		dataset connectColor: (Color red alpha: 0.4).
 		
 		
-		points :=  response collect: [ :each | ((each at: 1) - xmin) @ ((each at: 2) - ymin) ].
+		points :=  response collect: [ :each | ((each at: 1) - xmin) @ ((each at: 2)) ].
 		dataset points: points.
 		dataset x: #x.
 		dataset y: #y.
@@ -72,7 +72,7 @@ entity: entity start: start end: end shape: shape
 		
 		
 		graph axisX labelConversion: [ :x | x + xmin].
-		graph axisY labelConversion: [ :y | y + ymin ].
+		graph axisY labelConversion: [ :y | y  ].
 		graph axisX title: 'Year'.
 		graph axisY title: ylabel.
 		
